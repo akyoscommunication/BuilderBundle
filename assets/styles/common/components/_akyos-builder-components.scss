@@ -1,0 +1,259 @@
+.aky-builder-components{
+    background-color: $white;
+    position: fixed;
+    top: 175px;
+    bottom: 0;
+    right: 0;
+    width: 40%;
+    z-index: 999;
+    padding: 3rem;
+    transform: translateX(100%);
+    transition: ease .3s;
+
+    &-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+    }
+    &-content {
+        overflow-y: scroll;
+        display: flex;
+        flex-wrap: wrap;
+
+        /* width */
+        &::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        /* Track */
+        &::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        /* Handle */
+        &::-webkit-scrollbar-thumb {
+            background: #888;
+        }
+
+        /* Handle on hover */
+        &::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+
+        .aky-builder-component{
+            box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+            flex: 1 0 30%;
+            margin: 10px;
+            max-width: calc(100%/3);
+            height: 15vh;
+            background-color: $second;
+            color: $white;
+            cursor: pointer;
+            font-family: 'Montserrat', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: flex-start;
+            padding: 1rem;
+
+            &__title {
+                font-size: 1rem;
+                font-weight: bold;
+            }
+            &__desc {
+                font-size: .8rem;
+                font-weight: lighter;
+            }
+
+            &-header {
+                display: none;
+            }
+
+            &.active {
+                .aky-builder-component-header {
+                    display: flex;
+                    justify-content: flex-end;
+                }
+            }
+        }
+    }
+    &.active {
+        transform: translateX(0%);
+        box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.30);
+        border-top-left-radius: 5px;
+    }
+}
+
+
+#componentsRenderContainer{
+    > .aky-builder-component-sortable {
+        .aky-builder-component {
+            padding: 1.5rem 2.5rem;
+            background-color: #f1f1f1;
+        }
+    }
+
+    &Add {
+        > .toggleComponentTab {
+            border: 1px dotted $black;
+            border-radius: 15px;
+            padding: 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            transition: ease .3s;
+
+            &:hover {
+                background-color: $grey;
+            }
+        }
+    }
+    .aky-builder-component{
+        //box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
+        flex: initial;
+        max-width: 100%;
+        height: auto;
+        margin-bottom: 1rem;
+        padding-bottom: 1rem;
+        cursor: grab;
+        position: relative;
+        text-align: left;
+        width: 100%;
+
+        &-sortable{
+            &.ui-sortable-helper {
+                background-color: transparent !important;
+                border: none;
+                > .aky-builder-component {
+                    background-color: $second !important;
+                    color: $white;
+                    .aky-builder-component-child-render {
+                        color: $black;
+                    }
+                }
+            }
+
+        }
+
+        &:active {
+            cursor: grabbing;
+        }
+
+        &__title {
+            font-weight: bold;
+            font-size: 1.15rem;
+            line-height: 1;
+        }
+
+        &__desc {
+            font-weight: lighter;
+            font-size: 1rem;
+        }
+
+        &-info{
+            position: relative;
+            cursor: help;
+            display: inline-flex;
+            &-content{
+                display: none;
+                color: $white;
+                background-color: $black;
+                padding: 1rem 2rem;
+                position: absolute;
+                font-family: 'Montserrat', sans-serif;
+                z-index: 9;
+                border-radius: 5px;
+
+                &__title {
+                    font-size: 1rem;
+                    font-weight: bold;
+                }
+                &__value {
+                    font-size: .8rem;
+                    font-weight: lighter;
+                    &:last-child {
+                        margin-bottom: 0;
+                    }
+                }
+            }
+
+            &:hover {
+                .aky-builder-component-info-content {
+                    display: block;
+                }
+            }
+        }
+
+        &.isParent{
+            padding: 1.5rem 2.5rem;
+            background-color: #f1f1f1;
+        }
+        &.onDeleting{
+            .aky-builder-component{
+                &-header {
+                    right: 15px;
+                    top: 15px;
+                }
+            }
+        }
+
+        &-header {
+            transition: ease .3s;
+            position: absolute;
+            right: -5px;
+            top: -5px;
+        }
+
+        &:has( > .aky-builder-component-sortable) {
+            padding: 1.5rem 2.5rem;
+            background-color: #f1f1f1;
+            border: 1px solid #c7c7c7;
+        }
+
+        &-child-render {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            min-height: 20px;
+
+            .aky-builder-component{
+                padding: 1.5rem 2.5rem;
+                background-color: $white;
+
+                &.isParent {
+                    padding: 1.5rem 2.5rem;
+                    background-color: #f1f1f1;
+                    border: 1px solid #c7c7c7;
+                }
+                &:first-child {
+                    margin-top: 1rem;
+                }
+            }
+        }
+    }
+}
+
+.aky-builder-component{
+    border-radius: 15px;
+    position: relative;
+    .loader {
+        z-index: 9999;
+        background-color: rgba(0,0,0,.5);
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        right: 0;
+        border-radius: 15px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    &.active {
+        .aky-builder-component-header {
+            display: flex;
+            justify-content: flex-end;
+        }
+    }
+}

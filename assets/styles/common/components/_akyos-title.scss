@@ -1,0 +1,111 @@
+// Shortcode akyos-title
+.akyos-title{
+    position: relative;
+    .title {
+        position: relative;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1;
+        margin-bottom: 40px;
+        padding-bottom: 20px;
+        &.primary {
+            color: $primary;
+        }
+        &.second {
+            color: $second;
+        }
+        &.white {
+            color: $white;
+        }
+        &.black {
+            color: $black;
+        }
+        &:after {
+            display: block;
+            position: absolute;
+            width: 45px;
+            height: 7px;
+        }
+        &.separator-primary {
+            &:after {
+                background-color: $primary;
+            }
+        }
+        &.separator-second {
+            &:after {
+                background-color: $second;
+            }
+        }
+        &.separator-black {
+            &:after {
+                background-color: $black;
+            }
+        }
+        &.separator-white {
+            &:after {
+                background-color: $white;
+            }
+        }
+        &.bottom {
+            padding-bottom: 30px;
+            &:after {
+                content: "";
+                bottom: 0;
+            }
+        }
+        &.top {
+            padding-top: 30px;
+            &:after {
+                content: "";
+                top: 0;
+            }
+        }
+        &.center {
+            text-align: center;
+            &:after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+        }
+        &.left {
+            text-align: left;
+            &:after {
+                left: 0;
+            }
+        }
+        &.right {
+            text-align: right;
+            &:after {
+                right: 0;
+            }
+        }
+        &.uppercase {
+            text-transform: uppercase;
+        }
+    }
+    .sub-title {
+        font-size: 1rem;
+        margin-bottom: 30px;
+        &.center {
+            text-align: center;
+        }
+        &.left {
+            text-align: left;
+        }
+        &.right {
+            text-align: right;
+        }
+        &.primary {
+            color: $primary;
+        }
+        &.second {
+            color: $second;
+        }
+        &.white {
+            color: $white;
+        }
+        &.black {
+            color: $black;
+        }
+    }
+}

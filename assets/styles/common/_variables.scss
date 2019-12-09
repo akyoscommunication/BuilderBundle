@@ -1,0 +1,26 @@
+/** Import Bootstrap functions */
+@import "~bootstrap/scss/functions";
+
+// Vars colors
+$black : rgba(10,10,10, 1.0);
+$white : rgba(255,255,255, 1.0);
+
+$primary : #093EAB;
+$second : #041D53;
+$grey : #F3F3F3;
+
+$darkgrey : #252525;
+
+$theme-colors: (
+        primary: $primary
+);
+
+
+$akyos: #154797;
+// ------------------------
+
+//Some others colors
+$twitter  :    rgba(0,172,237,1);
+$facebook :    rgba(59,89,152,1);
+$linkedin :    rgba(0,123,182,1);
+$google-plus : rgba(223,81,56,1);

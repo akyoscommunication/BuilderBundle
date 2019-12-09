@@ -1,0 +1,6 @@
+{# RENDER COMPONENTS -- NEEDS 'COMPONENTS' VAR #}
+
+{% for component in components %}
+    {{ renderComponent(component)|raw }}
+{% endfor %}
+

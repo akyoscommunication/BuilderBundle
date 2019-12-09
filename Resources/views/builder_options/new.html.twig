@@ -1,0 +1,10 @@
+{% extends '@AkyosCore/layout.html.twig' %}
+
+{% block title %}BuilderBundle - Options{% endblock %}
+
+{% block page_content %}
+    <h1>BuilderBundle - Options</h1>
+    <div class="form mt20">
+        {{ include('@AkyosBuilder/builder_options/_form.html.twig') }}
+    </div>
+{% endblock %}

@@ -1,0 +1,151 @@
+// Shortcode contact
+
+.akyos-contact {
+
+    &.vertical {
+
+        .phone, .mail, .address {
+            @include flex(row, nowrap, flex-start, center);
+            margin-bottom: 15px;
+            font-size: 18px;
+
+            i {
+                font-size: 22px !important;
+                margin-right: 10px;
+            }
+        }
+
+        .phone {
+            font-weight: bold;
+        }
+
+        .mail {
+            font-weight: bold;
+
+            i {
+                font-size: 18px !important;
+                margin-right: 7px;
+            }
+        }
+
+        .address {
+            align-items: flex-start;
+            line-height: 20px;
+        }
+
+        .socials {
+            @include flex(row, nowrap, flex-start, center);
+
+            .social {
+                @include flex(row, nowrap, center, center);
+                margin-right: 10px;
+                background-color: white;
+                padding: 2px;
+                height: 22px;
+                width: 22px;
+
+                i {
+                    color: $white !important;
+                    font-size: 15px !important;
+                    height: 28px !important;
+                }
+
+                &:hover {
+                    background-color: $primary;
+
+                    i {
+                        color: $white !important;
+                    }
+                }
+            }
+        }
+    }
+
+    &.horizontal {
+        @include flex(row, nowrap, flex-start, stretch);
+        margin: 30px;
+
+        .phone, .mail, .address {
+            @include flex(row, nowrap, flex-start, center);
+            margin-bottom: 15px;
+            font-size: 17px;
+            color: $black;
+
+            i {
+                font-size: 22px !important;
+                margin-right: 10px;
+                color: $black;
+            }
+        }
+
+        .contact {
+            @include flex(column, nowrap, center, flex-start);
+            padding: 0 60px;
+
+            .phone {
+                font-weight: bold;
+            }
+
+            .mail {
+                font-weight: bold;
+                align-items: flex-start;
+
+                i {
+                    font-size: 18px !important;
+                    margin-right: 7px;
+                }
+            }
+        }
+
+        .address {
+            align-items: flex-start;
+        }
+
+        .socials {
+            @include flex(column, nowrap, flex-start, flex-start);
+            .title {
+                font-size: 17px;
+                color: black;
+                margin-bottom: 24px;
+            }
+
+            .icons {
+                @include flex(row, nowrap, flex-start, center);
+
+                .social {
+                    @include flex(row, nowrap, center, center);
+                    margin-right: 10px;
+                    background-color: $black;
+                    padding: 2px;
+                    height: 22px;
+                    width: 22px;
+                    transition: 0.4s background-color;
+
+                    i {
+                        color: $white !important;
+                        font-size: 15px !important;
+                        height: 28px !important;
+                    }
+
+                    &:hover {
+                        background-color: $primary;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    .akyos-contact {
+        &.horizontal {
+            flex-wrap: wrap;
+            margin: 30px 0;
+
+            .contact {
+                width: 100%;
+                padding: 0 0;
+            }
+        }
+    }
+}

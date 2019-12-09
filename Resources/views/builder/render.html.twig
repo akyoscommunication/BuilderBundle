@@ -1,0 +1,108 @@
+{% import _self as macros %}
+
+<div class="tab-pane fade" id="builder" role="tabpanel" aria-labelledby="builder-tab">
+     <div id="akyTabBuilderHeader">
+        <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
+    </div>
+    <div id="componentsRenderContainer" class="aky-sortable-component-container row" data-componentid="main">
+        {% for component in instance_components if instance_components and component.parentComponent is null %}
+            {{ _self.componentLoop(component, type, typeId) }}
+        {% endfor %}
+        <div class="col-md-12 ui-state-disabled" id="componentsRenderContainerAdd">
+            <div class="toggleComponentTab">
+                <i class="fas fa-plus"></i>
+                <i>Ajouter un composant</i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="aky-builder-components" id="componentTab">
+    <div class="aky-builder-components-header">
+        <h2>Liste des composants disponibles</h2>
+        <button type="button" class="btn toggleComponentTab"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="aky-builder-components-content">
+        {% for component in components if components is not empty %}
+            <div class="aky-builder-component" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
+                <div class="aky-builder-component-header">
+                    {% if component.prototype == 'col' %}
+                        <input class="form-control changeColInput" type="number" name="col" value="12" min="1" max="12"/>
+                    {% endif %}
+                    {% if component.isContainer %}
+                        <button type="button" class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab"><i class="fas fa-plus"></i></button>
+                    {% endif %}
+                    <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i class="fas fa-times"></i></button>
+                </div>
+                <h3 class="aky-builder-component__title">{{ component.name }}</h3>
+                <i class="aky-builder-component__desc">{{ component.shortDescription }}</i>
+                <div class="aky-builder-component-child-render aky-sortable-component-container {{ component.prototype ? 'row' : '' }}"></div>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+
+{% macro componentLoop(component, type, typeId) %}
+    {% set proto = '' %}
+    {% if component.componentTemplate.prototype == 'col' %}
+        {% for val in component.componentValues if val.componentField.slug == 'col' %}
+            {% set proto = 'col-md-'~val.value %}
+        {% endfor %}
+    {% else %}
+        {% set proto = 'col-md-12' %}
+    {% endif %}
+    <div class="aky-builder-component-sortable {{ proto }}">
+        <div class="aky-builder-component active {{ component.parentComponent is null or component.childComponents is not empty ? 'isParent' : '' }}" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
+            <div class="aky-builder-component-header">
+                {% if component.componentTemplate.prototype == 'col' %}
+                    {% for val in component.componentValues if val.componentField.slug == 'col' %}
+                        <input class="form-control changeColInput" type="number" name="col" value="{{ val.value }}" min="1" max="12"/>
+                    {% endfor %}
+                {% endif %}
+                {% if component.componentTemplate.isContainer %}
+                    <button type="button" class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab"><i class="fas fa-plus"></i></button>
+                {% endif %}
+                <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i class="fas fa-times"></i></button>
+            </div>
+            <h3 class="aky-builder-component__title">{{ component.componentTemplate.name }}</h3>
+            <i class="aky-builder-component__desc">{{ component.componentTemplate.shortDescription }}</i>
+            {% if component.componentValues|length > 0 %}
+                <div class="aky-builder-component-info">
+                    <i class="fas fa-database"></i>
+                    <div class="aky-builder-component-info-content">
+                        {% for value in component.componentValues %}
+                            <span class="aky-builder-component-info-content__title">{{ value.componentField.name }}</span>
+                            <p class="aky-builder-component-info-content__value">{{ value.value }}</p>
+                        {% endfor %}
+                    </div>
+                </div>
+            {% endif %}
+            {% if component.componentTemplate.isContainer is not null %}
+                <div class="aky-builder-component-child-render aky-sortable-component-container {{ component.componentTemplate.prototype ? 'row' : '' }}">
+                    {% for childComponent in component.childComponents if component.childComponents|length > 0 %}
+                        {{ _self.componentLoop(childComponent) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro componentLoop %}
+
+<div class="aky-modal" id="modalEdit">
+    <div class="aky-modal-content">
+        <div class="aky-modal-content-header">
+            <h5 class="aky-modal-content-header__title">Modifier</h5>
+            <button type="button" class="close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="aky-modal-content-body" id="modalEditComponent">
+            <img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader" width="128" height="128">
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="{{ asset('bundles/akyosbuilder/main.css') }}">
+<script src="{{ asset("bundles/akyosbuilder/main.js") }}" type="application/javascript"></script>
