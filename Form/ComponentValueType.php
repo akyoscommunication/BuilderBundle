@@ -3,7 +3,7 @@
 namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\ComponentValue;
-use Artgris\Bundle\MediaBundle\Form\Type\MediaType;
+use Akyos\FileManagerBundle\Form\Type\FileManagerType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -100,10 +100,8 @@ class ComponentValueType extends AbstractType
                         break;
 
                     case 'image':
-                        $form->add('value',MediaType::class, [
-                            'conf' => 'images',
+                        $form->add('value',FileManagerType::class, [
                             'label' => $field->getName(),
-
                         ]);
                         break;
 
