@@ -1,0 +1,445 @@
+/** Import Bootstrap functions */
+
+/** Import theme styles */
+
+/** Import Bootstrap functions */
+
+/*******************************************************************************************/
+
+.aky-builder-components {
+  background-color: white;
+  position: fixed;
+  top: 175px;
+  bottom: 0;
+  right: 0;
+  width: 40%;
+  z-index: 999;
+  padding: 3rem;
+  -webkit-transform: translateX(100%);
+       -o-transform: translateX(100%);
+          transform: translateX(100%);
+  -webkit-transition: ease .3s;
+  -o-transition: ease .3s;
+  transition: ease .3s;
+}
+
+.aky-builder-components-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  margin-bottom: 2rem;
+}
+
+.aky-builder-components-content {
+  overflow-y: scroll;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.aky-builder-components-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.aky-builder-components-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.aky-builder-components-content::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.aky-builder-components-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.aky-builder-components-content .aky-builder-component {
+  -webkit-box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+          box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 30%;
+          flex: 1 0 30%;
+  margin: 10px;
+  max-width: calc(100%/3);
+  height: 15vh;
+  background-color: #041D53;
+  color: white;
+  cursor: pointer;
+  font-family: 'Montserrat', sans-serif;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  padding: 1rem;
+}
+
+.aky-builder-components-content .aky-builder-component__title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.aky-builder-components-content .aky-builder-component__desc {
+  font-size: .8rem;
+  font-weight: lighter;
+}
+
+.aky-builder-components-content .aky-builder-component-header {
+  display: none;
+}
+
+.aky-builder-components-content .aky-builder-component.active .aky-builder-component-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.aky-builder-components.active {
+  -webkit-transform: translateX(0%);
+       -o-transform: translateX(0%);
+          transform: translateX(0%);
+  -webkit-box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+          box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.3);
+  border-top-left-radius: 5px;
+}
+
+#componentsRenderContainer > .aky-builder-component-sortable .aky-builder-component {
+  padding: 1.5rem 2.5rem;
+  background-color: #f1f1f1;
+}
+
+#componentsRenderContainerAdd > .toggleComponentTab {
+  border: 1px dotted #0a0a0a;
+  border-radius: 15px;
+  padding: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-transition: ease .3s;
+  -o-transition: ease .3s;
+  transition: ease .3s;
+}
+
+#componentsRenderContainerAdd > .toggleComponentTab:hover {
+  background-color: #F3F3F3;
+}
+
+#componentsRenderContainer .aky-builder-component {
+  -webkit-box-flex: initial;
+      -ms-flex: initial;
+          flex: initial;
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  cursor: -webkit-grab;
+  cursor: grab;
+  position: relative;
+  text-align: left;
+  width: 100%;
+}
+
+#componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper {
+  background-color: transparent !important;
+  border: none;
+}
+
+#componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper > .aky-builder-component {
+  background-color: #041D53 !important;
+  color: white;
+}
+
+#componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper > .aky-builder-component .aky-builder-component-child-render {
+  color: #0a0a0a;
+}
+
+#componentsRenderContainer .aky-builder-component:active {
+  cursor: -webkit-grabbing;
+  cursor: grabbing;
+}
+
+#componentsRenderContainer .aky-builder-component__title {
+  font-weight: bold;
+  font-size: 1.15rem;
+  line-height: 1;
+}
+
+#componentsRenderContainer .aky-builder-component__desc {
+  font-weight: lighter;
+  font-size: 1rem;
+}
+
+#componentsRenderContainer .aky-builder-component-info {
+  position: relative;
+  cursor: help;
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+}
+
+#componentsRenderContainer .aky-builder-component-info-content {
+  display: none;
+  color: white;
+  background-color: #0a0a0a;
+  padding: 1rem 2rem;
+  position: absolute;
+  font-family: 'Montserrat', sans-serif;
+  z-index: 9;
+  border-radius: 5px;
+}
+
+#componentsRenderContainer .aky-builder-component-info-content__title {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+#componentsRenderContainer .aky-builder-component-info-content__value {
+  font-size: .8rem;
+  font-weight: lighter;
+}
+
+#componentsRenderContainer .aky-builder-component-info-content__value:last-child {
+  margin-bottom: 0;
+}
+
+#componentsRenderContainer .aky-builder-component-info:hover .aky-builder-component-info-content {
+  display: block;
+}
+
+#componentsRenderContainer .aky-builder-component.isParent {
+  padding: 1.5rem 2.5rem;
+  background-color: #f1f1f1;
+}
+
+#componentsRenderContainer .aky-builder-component.onDeleting .aky-builder-component-header {
+  right: 15px;
+  top: 15px;
+}
+
+#componentsRenderContainer .aky-builder-component-header {
+  -webkit-transition: ease .3s;
+  -o-transition: ease .3s;
+  transition: ease .3s;
+  position: absolute;
+  right: -5px;
+  top: -5px;
+}
+
+#componentsRenderContainer .aky-builder-component:has(> .aky-builder-component-sortable) {
+  padding: 1.5rem 2.5rem;
+  background-color: #f1f1f1;
+  border: 1px solid #c7c7c7;
+}
+
+#componentsRenderContainer .aky-builder-component-child-render {
+  padding-top: 1rem;
+  padding-bottom: 1rem;
+  min-height: 20px;
+}
+
+#componentsRenderContainer .aky-builder-component-child-render .aky-builder-component {
+  padding: 1.5rem 2.5rem;
+  background-color: white;
+}
+
+#componentsRenderContainer .aky-builder-component-child-render .aky-builder-component.isParent {
+  padding: 1.5rem 2.5rem;
+  background-color: #f1f1f1;
+  border: 1px solid #c7c7c7;
+}
+
+#componentsRenderContainer .aky-builder-component-child-render .aky-builder-component:first-child {
+  margin-top: 1rem;
+}
+
+.aky-builder-component {
+  border-radius: 15px;
+  position: relative;
+}
+
+.aky-builder-component .loader {
+  z-index: 9999;
+  background-color: rgba(0, 0, 0, 0.5);
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  border-radius: 15px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+}
+
+.aky-builder-component.active .aky-builder-component-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.aky-modal {
+  display: none;
+  z-index: -99999;
+  position: fixed;
+  opacity: 0;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  -webkit-transition: ease .3s;
+  -o-transition: ease .3s;
+  transition: ease .3s;
+  background-color: rgba(0, 0, 0, 0.35);
+  padding: 2rem 0;
+}
+
+.aky-modal-content {
+  background-color: white;
+  max-width: 50%;
+  min-width: 50%;
+  overflow-y: scroll;
+  margin: 2rem 0;
+  max-height: 100%;
+  border-radius: 4px;
+  /* width */
+  /* Track */
+  /* Handle */
+  /* Handle on hover */
+}
+
+.aky-modal-content::-webkit-scrollbar {
+  width: 10px;
+}
+
+.aky-modal-content::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.aky-modal-content::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+.aky-modal-content::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+.aky-modal-content-header,
+.aky-modal-content-body {
+  padding-left: 3rem;
+  padding-right: 3rem;
+}
+
+.aky-modal-content-header {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  padding-top: 1.5rem;
+  padding-bottom: 2rem;
+  margin-bottom: 1rem;
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: white;
+}
+
+.aky-modal-content-header__title {
+  font-size: 2rem;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: 900;
+}
+
+.aky-modal-content-body {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+  padding-bottom: 2rem;
+}
+
+.aky-modal-content-body > form:first-child {
+  width: 100%;
+}
+
+.aky-modal-content-body .loader {
+  display: block;
+  margin: auto;
+}
+
+.aky-modal.active {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  opacity: 1;
+  z-index: 9999;
+}
+
+.toggleComponentTab {
+  cursor: pointer;
+}
+
+#akyTabBuilderHeader {
+  padding: 1rem 0;
+}
