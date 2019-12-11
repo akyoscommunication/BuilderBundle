@@ -2,9 +2,7 @@ import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
 
 class DeleteComponent {
     static deleteComponent() {
-        const deleteBtn = $('#componentsRenderContainer .aky-builder-component .aky-builder-component-header__delete');
-        deleteBtn.off('click');
-        deleteBtn.on('click', function () {
+        $(document).on('click', '#componentsRenderContainer .aky-builder-component .aky-builder-component-header__delete', function () {
             const parent = $(this).parent().closest('.aky-builder-component');
             parent.addClass('onDeleting');
             parent.append('<div class="loader loader--style1" title="0">\n' +

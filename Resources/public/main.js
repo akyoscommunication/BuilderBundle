@@ -60,7 +60,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 10);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -10776,7 +10776,7 @@ return $.ui.version = "1.12.1";
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Toast);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(12)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(10)))
 
 /***/ }),
 /* 3 */
@@ -10784,10 +10784,10 @@ return $.ui.version = "1.12.1";
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* WEBPACK VAR INJECTION */(function($, jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_addComponent__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_editComponent__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_deleteComponent__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_editColComponent__ = __webpack_require__(7);
+/* WEBPACK VAR INJECTION */(function($, jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_addComponent__ = __webpack_require__(9);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_editComponent__ = __webpack_require__(11);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_deleteComponent__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_editColComponent__ = __webpack_require__(4);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_sortable__ = __webpack_require__(13);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_collectionForm__ = __webpack_require__(18);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_modal__ = __webpack_require__(5);
@@ -10855,133 +10855,6 @@ jQuery(document).ready(function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_modal__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
-
-
-
-class EditComponent {
-    static editComponent() {
-        // $('.aky-builder-component .aky-builder-component-header__edit').off('click');
-        $(document).on('click', '.aky-builder-component-header__edit', function () {
-            $('#modalEdit').addClass('active');
-
-            const type = $(this).parents('.aky-builder-component').data('type');
-            const typeid = $(this).parents('.aky-builder-component').data('typeid');
-            const componentid = $(this).parents('.aky-builder-component').data('componentid');
-
-            fetch('/admin/builder/component/' + componentid + '/edit').then(function (res) {
-                return res.text().then(function (response) {
-                    const modal = $('#modalEditComponent');
-                    modal.html(response);
-                }).then(function () {
-                    $('#modalEditComponent > form').submit(function (e) {
-                        e.preventDefault();
-
-                        $.ajax({
-                            method: 'POST',
-                            url: '/admin/builder/component/' + componentid + '/edit',
-                            data: $(this).serialize(),
-                            success: function (res) {
-                                console.log(res, 'success');
-                                if (res === 'valid') {
-                                    $('#modalEdit').removeClass('active');
-                                    __WEBPACK_IMPORTED_MODULE_0__modules_modal__["a" /* default */].checkModal('#modalEdit', '#modalEditComponent');
-                                    new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant édité', 'success', 'Succès', 5000);
-                                } else {
-                                    new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Une erreur s\'est produite...', 'error', 'L\'édition du composant n\'a pas eu lieu', 5000);
-                                }
-                            },
-                            error: function (er) {
-                                console.log(er, 'error');
-                            }
-                        });
-                    });
-                });
-            });
-        });
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (EditComponent);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 5 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {class Modal {
-    static init() {
-        $('.aky-modal .close').click(function () {
-            $(this).parents('.aky-modal').removeClass('active');
-            Modal.checkModal('#modalEdit', '#modalEditComponent');
-        });
-    }
-    static checkModal(target, content) {
-        if (!$(target).hasClass('active')) {
-            $(target).find(content).html('<img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader" width="128" height="128">');
-        }
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Modal);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
-
-
-class DeleteComponent {
-    static deleteComponent() {
-        const deleteBtn = $('#componentsRenderContainer .aky-builder-component .aky-builder-component-header__delete');
-        deleteBtn.off('click');
-        deleteBtn.on('click', function () {
-            const parent = $(this).parent().closest('.aky-builder-component');
-            parent.addClass('onDeleting');
-            parent.append('<div class="loader loader--style1" title="0">\n' + '  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n' + '   width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">\n' + '  <path opacity="1" fill="#fff" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946\n' + '    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634\n' + '    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>\n' + '  <path fill="#093EAB" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0\n' + '    C22.32,8.481,24.301,9.057,26.013,10.047z">\n' + '    <animateTransform attributeType="xml"\n' + '      attributeName="transform"\n' + '      type="rotate"\n' + '      from="0 20 20"\n' + '      to="360 20 20"\n' + '      dur="0.5s"\n' + '      repeatCount="indefinite"/>\n' + '    </path>\n' + '  </svg>\n' + '</div>').show('slow');
-
-            $.ajax({
-                method: 'DELETE',
-                url: '/admin/builder/component/' + parent.data('componentid'),
-                success: function (res) {
-                    console.log(res, 'success');
-                    if (res === 'valid') {
-                        parent.parent().remove();
-                        new __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant supprimé', 'info', 'Succès', 5000);
-                    } else {
-                        parent.find('.loader').fadeOut('slow', function () {
-                            $(this).remove();
-                            parent.removeClass('onDeleting');
-                            new __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000);
-                        });
-                    }
-                },
-                error: function (er) {
-                    parent.find('.loader').fadeOut('slow', function () {
-                        $(this).remove();
-                        parent.removeClass('onDeleting');
-                        new __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000);
-                    });
-                    console.log(er, 'error');
-                }
-            });
-        });
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (DeleteComponent);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
 /* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
 
 
@@ -11023,7 +10896,29 @@ class EditColComponent {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 8 */
+/* 5 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {class Modal {
+    static init() {
+        $('.aky-modal .close').click(function () {
+            $(this).parents('.aky-modal').removeClass('active');
+            Modal.checkModal('#modalEdit', '#modalEditComponent');
+        });
+    }
+    static checkModal(target, content) {
+        if (!$(target).hasClass('active')) {
+            $(target).find(content).html('<img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader" width="128" height="128">');
+        }
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Modal);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;( function( factory ) {
@@ -11047,7 +10942,7 @@ return $.ui.ie = !!/msie [\w.]+/.exec( navigator.userAgent.toLowerCase() );
 
 
 /***/ }),
-/* 9 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -11789,7 +11684,7 @@ return $.widget;
 
 
 /***/ }),
-/* 10 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(3);
@@ -11797,25 +11692,20 @@ module.exports = __webpack_require__(19);
 
 
 /***/ }),
-/* 11 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__editComponent__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__deleteComponent__ = __webpack_require__(6);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__editColComponent__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__main__ = __webpack_require__(3);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
-
-
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__editColComponent__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__main__ = __webpack_require__(3);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
 
 
 
 
 class AddComponent {
     static addComponent() {
-        // $('.aky-builder-components .aky-builder-component').off('click');
-        $(document).on('click', '.aky-builder-component', function () {
+        $('.aky-builder-components').on('click', '.aky-builder-component', function () {
             let clone = $(this).clone();
 
             $.ajax({
@@ -11839,14 +11729,10 @@ class AddComponent {
                         $('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').insertBefore('#componentsRenderContainer > #componentsRenderContainerAdd').fadeOut().fadeIn();
                     }
 
-                    new __WEBPACK_IMPORTED_MODULE_4__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Ajout d\'un composant', 'success', 'Succès', 5000);
+                    new __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Ajout d\'un composant', 'success', 'Succès', 5000);
 
-                    // $('.aky-builder-components').removeClass('active');
-                    //
-                    // deleteComponent.deleteComponent();
-                    // editComponent.editComponent();
-                    __WEBPACK_IMPORTED_MODULE_2__editColComponent__["a" /* default */].changeCol();
-                    __WEBPACK_IMPORTED_MODULE_3__main__["default"].toggleComponentTab();
+                    __WEBPACK_IMPORTED_MODULE_0__editColComponent__["a" /* default */].changeCol();
+                    __WEBPACK_IMPORTED_MODULE_1__main__["default"].toggleComponentTab();
                 },
                 error: function (er) {
                     console.log(er, 'error');
@@ -11860,7 +11746,7 @@ class AddComponent {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 12 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -22465,6 +22351,109 @@ return jQuery;
 
 
 /***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_modal__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
+
+
+
+class EditComponent {
+    static editComponent() {
+        // $('.aky-builder-component .aky-builder-component-header__edit').off('click');
+        $(document).on('click', '.aky-builder-component-header__edit', function () {
+            $('#modalEdit').addClass('active');
+
+            const type = $(this).parents('.aky-builder-component').data('type');
+            const typeid = $(this).parents('.aky-builder-component').data('typeid');
+            const componentid = $(this).parents('.aky-builder-component').data('componentid');
+
+            fetch('/admin/builder/component/' + componentid + '/edit').then(function (res) {
+                return res.text().then(function (response) {
+                    const modal = $('#modalEditComponent');
+                    modal.html(response);
+                }).then(function () {
+                    $('#modalEditComponent > form').submit(function (e) {
+                        e.preventDefault();
+
+                        $.ajax({
+                            method: 'POST',
+                            url: '/admin/builder/component/' + componentid + '/edit',
+                            data: $(this).serialize(),
+                            success: function (res) {
+                                console.log(res, 'success');
+                                if (res === 'valid') {
+                                    $('#modalEdit').removeClass('active');
+                                    __WEBPACK_IMPORTED_MODULE_0__modules_modal__["a" /* default */].checkModal('#modalEdit', '#modalEditComponent');
+                                    new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant édité', 'success', 'Succès', 5000);
+                                } else {
+                                    new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Une erreur s\'est produite...', 'error', 'L\'édition du composant n\'a pas eu lieu', 5000);
+                                }
+                            },
+                            error: function (er) {
+                                console.log(er, 'error');
+                            }
+                        });
+                    });
+                });
+            });
+        });
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (EditComponent);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
+
+
+class DeleteComponent {
+    static deleteComponent() {
+        $(document).on('click', '#componentsRenderContainer .aky-builder-component .aky-builder-component-header__delete', function () {
+            const parent = $(this).parent().closest('.aky-builder-component');
+            parent.addClass('onDeleting');
+            parent.append('<div class="loader loader--style1" title="0">\n' + '  <svg version="1.1" id="loader-1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"\n' + '   width="40px" height="40px" viewBox="0 0 40 40" enable-background="new 0 0 40 40" xml:space="preserve">\n' + '  <path opacity="1" fill="#fff" d="M20.201,5.169c-8.254,0-14.946,6.692-14.946,14.946c0,8.255,6.692,14.946,14.946,14.946\n' + '    s14.946-6.691,14.946-14.946C35.146,11.861,28.455,5.169,20.201,5.169z M20.201,31.749c-6.425,0-11.634-5.208-11.634-11.634\n' + '    c0-6.425,5.209-11.634,11.634-11.634c6.425,0,11.633,5.209,11.633,11.634C31.834,26.541,26.626,31.749,20.201,31.749z"/>\n' + '  <path fill="#093EAB" d="M26.013,10.047l1.654-2.866c-2.198-1.272-4.743-2.012-7.466-2.012h0v3.312h0\n' + '    C22.32,8.481,24.301,9.057,26.013,10.047z">\n' + '    <animateTransform attributeType="xml"\n' + '      attributeName="transform"\n' + '      type="rotate"\n' + '      from="0 20 20"\n' + '      to="360 20 20"\n' + '      dur="0.5s"\n' + '      repeatCount="indefinite"/>\n' + '    </path>\n' + '  </svg>\n' + '</div>').show('slow');
+
+            $.ajax({
+                method: 'DELETE',
+                url: '/admin/builder/component/' + parent.data('componentid'),
+                success: function (res) {
+                    console.log(res, 'success');
+                    if (res === 'valid') {
+                        parent.parent().remove();
+                        new __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant supprimé', 'info', 'Succès', 5000);
+                    } else {
+                        parent.find('.loader').fadeOut('slow', function () {
+                            $(this).remove();
+                            parent.removeClass('onDeleting');
+                            new __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000);
+                        });
+                    }
+                },
+                error: function (er) {
+                    parent.find('.loader').fadeOut('slow', function () {
+                        $(this).remove();
+                        parent.removeClass('onDeleting');
+                        new __WEBPACK_IMPORTED_MODULE_0__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000);
+                    });
+                    console.log(er, 'error');
+                }
+            });
+        });
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (DeleteComponent);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
 /* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -22548,10 +22537,10 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 			__webpack_require__(0),
 			__webpack_require__(15),
 			__webpack_require__(16),
-			__webpack_require__(8),
+			__webpack_require__(6),
 			__webpack_require__(17),
 			__webpack_require__(1),
-			__webpack_require__(9)
+			__webpack_require__(7)
 		], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),
@@ -24107,9 +24096,9 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_
 		// AMD. Register as an anonymous module.
 		!(__WEBPACK_AMD_DEFINE_ARRAY__ = [
 			__webpack_require__(0),
-			__webpack_require__(8),
+			__webpack_require__(6),
 			__webpack_require__(1),
-			__webpack_require__(9)
+			__webpack_require__(7)
 		], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory),
 				__WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ?
 				(__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__),

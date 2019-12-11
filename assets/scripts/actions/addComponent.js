@@ -1,13 +1,10 @@
-import editComponent from './editComponent'
-import deleteComponent from './deleteComponent'
 import editColComponent from './editColComponent'
 import builder from '../main'
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
 
 class AddComponent {
     static addComponent() {
-        // $('.aky-builder-components .aky-builder-component').off('click');
-        $(document).on('click', '.aky-builder-component', function () {
+        $('.aky-builder-components').on('click', '.aky-builder-component', function () {
             let clone = $(this).clone();
 
             $.ajax({
@@ -33,10 +30,6 @@ class AddComponent {
 
                     new Toast('Ajout d\'un composant', 'success', 'Succès', 5000 );
 
-                    // $('.aky-builder-components').removeClass('active');
-                    //
-                    // deleteComponent.deleteComponent();
-                    // editComponent.editComponent();
                     editColComponent.changeCol();
                     builder.toggleComponentTab();
                 },
