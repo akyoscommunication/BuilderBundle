@@ -1,9 +1,25 @@
 {% import _self as macros %}
 
+{% macro render_flashbag() %}
+    {% for type, messages in app.session.flashbag.all() %}
+        {% for message in messages %}
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="alert alert-{{ type }} alert-dismissable animation-slideRight">
+                        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                        <p>{{ message }}</p>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endfor %}
+{% endmacro %}
+
 <div class="tab-pane fade" id="builder" role="tabpanel" aria-labelledby="builder-tab">
      <div id="akyTabBuilderHeader">
         <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
     </div>
+    {{ _self.render_flashbag() }}
     <div id="componentsRenderContainer" class="aky-sortable-component-container row" data-componentid="main">
         {% for component in instance_components if instance_components and component.parentComponent is null %}
             {{ _self.componentLoop(component, type, typeId) }}

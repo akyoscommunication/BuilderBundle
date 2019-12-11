@@ -111,6 +111,17 @@ class BuilderController extends AbstractController
         $componentsTemp = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => true));
         $componentsProd = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => false));
 
+        // Check if there are temp components updated
+        if ($componentsProd) {
+            $dateTimeProd = $componentsProd[0]->getUpdatedAt();
+            foreach ($componentsTemp as $temp) {
+                if ($temp->getUpdatedAt() > $dateTimeProd) {
+                    $this->addFlash("warning", "L'élément n'est pas à jour en production.");
+                    break;
+                }
+            }
+        }
+
         // Check if there are already temp components
         if (!$componentsTemp) {
             foreach ($components as $component) {
