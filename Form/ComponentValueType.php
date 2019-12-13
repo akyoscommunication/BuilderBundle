@@ -102,6 +102,7 @@ class ComponentValueType extends AbstractType
                     case 'image':
                         $form->add('value',FileManagerType::class, [
                             'label' => $field->getName(),
+                            'config' => 'full'
                         ]);
                         break;
 
