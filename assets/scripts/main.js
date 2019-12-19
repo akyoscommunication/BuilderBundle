@@ -14,6 +14,7 @@ class Builder {
     static init() {
         this.toggleComponentTab();
         this.initFieldsCollectionForm();
+        this.initFieldsOptionsCollectionForm();
 
         addComponent.addComponent();
         editComponent.editComponent();
@@ -39,6 +40,26 @@ class Builder {
             e.preventDefault();
             collectionForm.addCloneForm(collectionHolder);
         });
+    }
+    
+    static initFieldsOptionsCollectionForm() {
+        
+        const collectionHolder = $('.options_collection');
+        collectionHolder.each( function() {
+            const currentOption = $(this);
+            $(this).after('<button id="add_'+currentOption.attr('id')+'" class="btn btn-outline-primary">Ajouter une option</button>');
+            const addFieldLink = $('#add_'+currentOption.attr('id'));
+            collectionHolder.data('index', collectionHolder.children('.form-group').length);
+    
+            currentOption.children('.form-group').each(function() {
+                collectionForm.addCloneFormDeleteLink($(this));
+            });
+            
+            addFieldLink.on('click', function(e) {
+                e.preventDefault();
+                collectionForm.addCloneForm(currentOption);
+            });
+        })
     }
 
     static toggleComponentTab() {

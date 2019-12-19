@@ -118,6 +118,25 @@ class ComponentValueType extends AbstractType
                         ;
                         break;
 
+                    case 'select':
+                        $values = [];
+                        foreach($field->getFieldValues() as $fieldValue) {
+                            $exploded = explode(':', $fieldValue);
+                            $values[$exploded[0]] = $exploded[1];
+                        }
+
+                        $form
+                            ->add('value', ChoiceType::class, array(
+                                'attr'              => array(
+                                    'placeholder'       => "Valeur",
+                                ),
+                                'label'                 => $field->getName(),
+                                'required'              => false,
+                                'choices'               => $values
+                            ))
+                        ;
+                        break;
+
                     default:
                         $form
                             ->add('value', TextType::class, array(
