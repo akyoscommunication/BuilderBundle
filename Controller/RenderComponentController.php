@@ -30,6 +30,8 @@ class RenderComponentController extends AbstractController
             $view = $appClassName::getTemplateName();
             $params['component'] = $component;
             $params['values'] = array();
+            $params['customClasses'] = $component->getCustomClasses();
+            $params['customId'] = $component->getCustomId();
             foreach ($component->getComponentValues() as $value) {
                 $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
             }
@@ -43,6 +45,8 @@ class RenderComponentController extends AbstractController
             $view = $builderClassName::getTemplateName();
             $params['component'] = $component;
             $params['values'] = array();
+            $params['customClasses'] = $component->getCustomClasses();
+            $params['customId'] = $component->getCustomId();
             foreach ($component->getComponentValues() as $value) {
                 $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
             }
