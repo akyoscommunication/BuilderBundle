@@ -10819,7 +10819,7 @@ class Builder {
     }
 
     static initFieldsCollectionForm() {
-
+        const that = this;
         const collectionHolder = $('#component_template_componentFields');
         collectionHolder.after('<button id="add_component" class="btn btn-outline-primary">Ajouter un champ</button>');
         const addFieldLink = $('#add_component');
@@ -10827,6 +10827,25 @@ class Builder {
 
         collectionHolder.children('.form-group').each(function () {
             __WEBPACK_IMPORTED_MODULE_5__modules_collectionForm__["a" /* default */].addCloneFormDeleteLink($(this));
+        });
+
+        addFieldLink.on('click', function (e) {
+            e.preventDefault();
+            __WEBPACK_IMPORTED_MODULE_5__modules_collectionForm__["a" /* default */].addCloneForm(collectionHolder);
+            const lastChild = collectionHolder.children('.form-group').last();
+            that.newFieldOptionsCollectionForm(lastChild);
+        });
+    }
+
+    static newFieldOptionsCollectionForm($newField) {
+
+        const collectionHolder = $newField.find('.options_collection');
+        collectionHolder.after('<button id="add_' + collectionHolder.attr('id') + '" class="btn btn-outline-primary">Ajouter une option</button>');
+        const addFieldLink = $('#add_' + collectionHolder.attr('id'));
+        collectionHolder.data('index', collectionHolder.children('.form-group').length);
+
+        collectionHolder.children('.form-group').each(function () {
+            __WEBPACK_IMPORTED_MODULE_5__modules_collectionForm__["a" /* default */].addCloneFormDeleteLink(collectionHolder);
         });
 
         addFieldLink.on('click', function (e) {

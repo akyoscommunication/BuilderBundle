@@ -26,7 +26,7 @@ class Builder {
     }
 
     static initFieldsCollectionForm() {
-
+        const that = this;
         const collectionHolder = $('#component_template_componentFields');
         collectionHolder.after('<button id="add_component" class="btn btn-outline-primary">Ajouter un champ</button>');
         const addFieldLink = $('#add_component');
@@ -36,6 +36,25 @@ class Builder {
             collectionForm.addCloneFormDeleteLink($(this));
         });
 
+        addFieldLink.on('click', function(e) {
+            e.preventDefault();
+            collectionForm.addCloneForm(collectionHolder);
+            const lastChild = collectionHolder.children('.form-group').last();
+            that.newFieldOptionsCollectionForm(lastChild);
+        });
+    }
+    
+    static newFieldOptionsCollectionForm($newField) {
+        
+        const collectionHolder = $newField.find('.options_collection');
+        collectionHolder.after('<button id="add_'+collectionHolder.attr('id')+'" class="btn btn-outline-primary">Ajouter une option</button>');
+        const addFieldLink = $('#add_'+collectionHolder.attr('id'));
+        collectionHolder.data('index', collectionHolder.children('.form-group').length);
+    
+        collectionHolder.children('.form-group').each(function() {
+            collectionForm.addCloneFormDeleteLink(collectionHolder);
+        });
+    
         addFieldLink.on('click', function(e) {
             e.preventDefault();
             collectionForm.addCloneForm(collectionHolder);
