@@ -18,6 +18,8 @@
     }
     &-content {
         overflow-y: scroll;
+        height: 100%;
+        padding-bottom: 4rem;
         display: flex;
         flex-wrap: wrap;
 

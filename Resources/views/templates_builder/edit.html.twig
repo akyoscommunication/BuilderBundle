@@ -6,12 +6,18 @@
     <div class="content">
 
         <div class="card">
-            <div class="card-header">
-                <h3 class="block-title">Éditer un composant</h3>
+            <div class="card-header d-flex justify-content-between">
+                <h3 class="block-title">Éditer le composant</h3>
                 <a href="{{ path('templates_builder_index') }}" class="btn btn-outline-secondary">Retour <i class="fa fa-plus"></i></a>
             </div>
             <div class="card-body">
                 {{ include('@AkyosBuilder/templates_builder/_form.html.twig') }}
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header d-flex justify-content-between">
+                <h3 class="block-title">Supprimer le composant</h3>
                 {{ include('@AkyosBuilder/templates_builder/_delete_form.html.twig') }}
             </div>
         </div>

@@ -36,6 +36,7 @@ class ComponentTemplateType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+                'label' => "Paramètres du composant"
             ])
         ;
     }

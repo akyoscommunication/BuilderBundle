@@ -45,7 +45,7 @@ class ComponentFieldType extends AbstractType
                 'entry_type' => TextType::class,
                 'entry_options' => [
                     'attr' => ['class' => 'option_item'],
-                    'label' => "Données de l'option"
+                    'label' => false
                 ],
                 'attr' => ['class' => 'options_collection'],
                 'allow_add' => true,
