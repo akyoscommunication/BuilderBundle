@@ -38,6 +38,8 @@
 
 .aky-builder-components-content {
   overflow-y: scroll;
+  height: 100%;
+  padding-bottom: 4rem;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;

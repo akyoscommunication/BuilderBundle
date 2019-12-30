@@ -46,6 +46,11 @@ class ComponentField
      */
     private $componentTemplate;
 
+    /**
+     * @ORM\Column(type="simple_array", nullable=true)
+     */
+    private $fieldValues = [];
+
     public function getId(): ?int
     {
         return $this->id;
@@ -107,6 +112,18 @@ class ComponentField
     public function setComponentTemplate(?ComponentTemplate $componentTemplate): self
     {
         $this->componentTemplate = $componentTemplate;
+
+        return $this;
+    }
+
+    public function getFieldValues(): ?array
+    {
+        return $this->fieldValues;
+    }
+
+    public function setFieldValues(?array $fieldValues): self
+    {
+        $this->fieldValues = $fieldValues;
 
         return $this;
     }

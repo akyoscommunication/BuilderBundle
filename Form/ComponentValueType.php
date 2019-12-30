@@ -102,6 +102,7 @@ class ComponentValueType extends AbstractType
                     case 'image':
                         $form->add('value',FileManagerType::class, [
                             'label' => $field->getName(),
+                            'config' => 'full'
                         ]);
                         break;
 
@@ -113,6 +114,25 @@ class ComponentValueType extends AbstractType
                                 ),
                                 'label'                 => $field->getName(),
                                 'required'              => false
+                            ))
+                        ;
+                        break;
+
+                    case 'select':
+                        $values = [];
+                        foreach($field->getFieldValues() as $fieldValue) {
+                            $exploded = explode(':', $fieldValue);
+                            $values[$exploded[0]] = $exploded[1];
+                        }
+
+                        $form
+                            ->add('value', ChoiceType::class, array(
+                                'attr'              => array(
+                                    'placeholder'       => "Valeur",
+                                ),
+                                'label'                 => $field->getName(),
+                                'required'              => false,
+                                'choices'               => $values
                             ))
                         ;
                         break;

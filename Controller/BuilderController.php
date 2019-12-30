@@ -177,6 +177,7 @@ class BuilderController extends AbstractController
             $em->flush();
         }
 
+        return new Response("valid");
     }
 
     /**
@@ -239,6 +240,8 @@ class BuilderController extends AbstractController
             }
         }
         $em->flush();
+
+        return new Response("valid");
     }
 
     public function onDeleteEntity($type, $typeId)
@@ -248,5 +251,7 @@ class BuilderController extends AbstractController
         foreach ($components as $component) {
             $em->remove($component);
         }
+
+        return new Response("valid");
     }
 }

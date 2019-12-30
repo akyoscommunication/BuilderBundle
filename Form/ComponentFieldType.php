@@ -5,6 +5,8 @@ namespace Akyos\BuilderBundle\Form;
 use Akyos\BuilderBundle\Entity\ComponentField;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\CollectionType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -34,9 +36,21 @@ class ComponentFieldType extends AbstractType
                     'Lien interne'          => 'pagelink',
                     'Lien externe'          => 'link',
                     'Nombre'          => 'int',
+                    'Select' => "select"
                 ],
                 'multiple' => false,
                 'expanded' => false
+            ])
+            ->add('fieldValues', CollectionType::class, [
+                'entry_type' => TextType::class,
+                'entry_options' => [
+                    'attr' => ['class' => 'option_item'],
+                    'label' => false
+                ],
+                'attr' => ['class' => 'options_collection'],
+                'allow_add' => true,
+                'allow_delete' => true,
+                'label' => "Options"
             ])
         ;
     }
