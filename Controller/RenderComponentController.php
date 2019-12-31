@@ -4,18 +4,26 @@ namespace Akyos\BuilderBundle\Controller;
 
 use Akyos\BuilderBundle\Entity\Component;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Psr\Container\ContainerInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 
-class RenderComponentController extends AbstractController
+class RenderComponentController
 {
+    use ControllerTrait;
+
     private $appKernel;
     private $em;
+    private $request;
+    protected $container;
 
-    public function __construct(KernelInterface $appKernel, EntityManagerInterface $entityManager)
+    public function __construct(KernelInterface $appKernel, EntityManagerInterface $entityManager, ContainerInterface $container, RequestStack $request)
     {
         $this->appKernel = $appKernel;
+        $this->container = $container;
+        $this->request = $request;
         $this->em = $entityManager;
     }
 
@@ -36,8 +44,7 @@ class RenderComponentController extends AbstractController
                 $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
             }
 
-            $classInstance = new $appClassName($this->em);
-            $params = $classInstance->getParameters($params);
+            $params = $this->container->get('component.'.strtolower($slug))->getParameters($params);
 
             return $this->renderView('@Components/'.$view, $params);
 
@@ -51,8 +58,7 @@ class RenderComponentController extends AbstractController
                 $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
             }
 
-            $classInstance = new $builderClassName($this->em);
-            $params = $classInstance->getParameters($params);
+            $params = $this->container->get('component.'.strtolower($slug))->getParameters($params);
 
             return $this->renderView($view, $params);
 
@@ -69,13 +75,13 @@ class RenderComponentController extends AbstractController
         if(class_exists($appClassName)) {
             $view = $appClassName::getTemplateName();
             $params['values'] = $values;
-            $params = $appClassName::getParameters($params);
+            $params = $this->container->get('component.'.strtolower($componentSlug))->getParameters($params);
             return $this->renderView('@Components/'.$view, $params);
 
         } elseif(class_exists($builderClassName)) {
             $view = $builderClassName::getTemplateName();
             $params['values'] = $values;
-            $params = $builderClassName::getParameters($params);
+            $params = $this->container->get('component.'.strtolower($componentSlug))->getParameters($params);
             return $this->renderView($view, $params);
 
         } else {
