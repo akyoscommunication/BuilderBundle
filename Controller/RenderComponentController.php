@@ -8,6 +8,7 @@ use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\ControllerTrait;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpFoundation\Response;
 
 
 class RenderComponentController
@@ -45,6 +46,9 @@ class RenderComponentController
             }
 
             $params = $this->container->get('component.'.strtolower($slug))->getParameters($params);
+            if($params instanceof Response) {
+                return $params;
+            }
 
             return $this->renderView('@Components/'.$view, $params);
 
