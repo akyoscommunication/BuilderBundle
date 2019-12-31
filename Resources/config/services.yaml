@@ -6,6 +6,7 @@ services:
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.
         autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: true
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
@@ -13,6 +14,10 @@ services:
     Akyos\BuilderBundle\:
         resource: '../../../../lib/BuilderBundle/*'
         tags: ['controller.service_arguments']
+        public: true
+
+    component.text:
+        alias: Akyos\BuilderBundle\Components\Text\TextComponentController
         public: true
 
 
