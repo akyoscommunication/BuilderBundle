@@ -63,6 +63,9 @@ class RenderComponentController
             }
 
             $params = $this->container->get('component.'.strtolower($slug))->getParameters($params);
+            if($params instanceof Response) {
+                return $params;
+            }
 
             return $this->renderView($view, $params);
 
@@ -80,12 +83,18 @@ class RenderComponentController
             $view = $appClassName::getTemplateName();
             $params['values'] = $values;
             $params = $this->container->get('component.'.strtolower($componentSlug))->getParameters($params);
+            if($params instanceof Response) {
+                return $params;
+            }
             return $this->renderView('@Components/'.$view, $params);
 
         } elseif(class_exists($builderClassName)) {
             $view = $builderClassName::getTemplateName();
             $params['values'] = $values;
             $params = $this->container->get('component.'.strtolower($componentSlug))->getParameters($params);
+            if($params instanceof Response) {
+                return $params;
+            }
             return $this->renderView($view, $params);
 
         } else {
