@@ -41,13 +41,21 @@ class ComponentValue
         return $this->id;
     }
 
-    public function getValue(): ?string
+    public function getValue()
     {
+        $unSerialized = unserialize($this->value, ['allowed_classes' => true]);
+        if(is_array($unSerialized)) {
+            return $unSerialized;
+        }
+
         return $this->value;
     }
 
-    public function setValue(?string $value): self
+    public function setValue($value): self
     {
+        if(is_array($value)) {
+            $value = serialize($value);
+        }
         $this->value = $value;
 
         return $this;

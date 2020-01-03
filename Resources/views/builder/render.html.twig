@@ -90,7 +90,16 @@
                     <div class="aky-builder-component-info-content">
                         {% for value in component.componentValues %}
                             <span class="aky-builder-component-info-content__title">{{ value.componentField.name }}</span>
-                            <p class="aky-builder-component-info-content__value">{{ value.value }}</p>
+                            {% if value.value is iterable %}
+                                <p class="aky-builder-component-info-content__value">
+                                    {% for val in value.value %}
+                                        {{ val }}
+                                        {{ loop.last ? '' : ', ' }}
+                                    {% endfor %}
+                                </p>
+                            {% else %}
+                                <p class="aky-builder-component-info-content__value">{{ value.value }}</p>
+                            {% endif %}
                         {% endfor %}
                     </div>
                 </div>
