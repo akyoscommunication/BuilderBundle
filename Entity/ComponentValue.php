@@ -43,9 +43,9 @@ class ComponentValue
 
     public function getValue()
     {
-        $unSerialized = unserialize($this->value, ['allowed_classes' => true]);
-        if(is_array($unSerialized)) {
-            return $unSerialized;
+        $decoded = json_decode($this->value);
+        if(is_array($decoded)) {
+            return $decoded;
         }
 
         return $this->value;
@@ -54,7 +54,7 @@ class ComponentValue
     public function setValue($value): self
     {
         if(is_array($value)) {
-            $value = serialize($value);
+            $value = json_encode($value);
         }
         $this->value = $value;
 
