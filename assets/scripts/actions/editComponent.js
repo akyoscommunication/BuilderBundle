@@ -1,6 +1,7 @@
 import Modal from "../modules/modal";
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
 import FixCKEDitor from "../../../../CoreBundle/assets/scripts/modules/FixCKEditor";
+import FileManager from "../../../../FileManagerBundle/assets/scripts/main";
 
 class EditComponent {
     static editComponent() {
@@ -20,6 +21,7 @@ class EditComponent {
                             modal.html(response);
                         })
                         .then(function () {
+                            FileManager.initFileCollection();
                             FixCKEDitor.init();
                             $('#modalEditComponent > form').submit(function (e) {
                                 e.preventDefault();

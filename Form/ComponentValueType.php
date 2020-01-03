@@ -3,6 +3,7 @@
 namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\ComponentValue;
+use Akyos\FileManagerBundle\Form\Type\FileManagerCollectionType;
 use Akyos\FileManagerBundle\Form\Type\FileManagerType;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
@@ -103,6 +104,15 @@ class ComponentValueType extends AbstractType
                         $form->add('value',FileManagerType::class, [
                             'label' => $field->getName(),
                             'config' => 'full'
+                        ]);
+                        break;
+
+                    case 'gallery':
+                        $form->add('value',FileManagerCollectionType::class, [
+                            'label' => $field->getName(),
+                            'entry_options' => [
+                                'config' => 'full'
+                            ]
                         ]);
                         break;
 

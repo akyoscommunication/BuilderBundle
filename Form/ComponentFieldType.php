@@ -27,16 +27,17 @@ class ComponentFieldType extends AbstractType
             ->add('type', ChoiceType::class, [
                 'label' => "Type de champ",
                 'choices'  => [
-                    'Champ texte'    => "text",
-                    'CKEditor'       => "textarea_html",
-                    'Zone de texte'  => "textarea",
+                    'Champ texte'    => 'text',
+                    'CKEditor'       => 'textarea_html',
+                    'Zone de texte'  => 'textarea',
                     'Image'          => 'image',
+                    'Galerie d\images' => 'gallery',
                     'Téléphone'          => 'tel',
                     'Mail'          => 'mail',
                     'Lien interne'          => 'pagelink',
                     'Lien externe'          => 'link',
                     'Nombre'          => 'int',
-                    'Select' => "select"
+                    'Select' => 'select'
                 ],
                 'multiple' => false,
                 'expanded' => false
