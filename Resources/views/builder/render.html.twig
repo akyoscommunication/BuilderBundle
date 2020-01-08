@@ -21,7 +21,7 @@
     </div>
     {{ _self.render_flashbag() }}
     <div id="componentsRenderContainer" class="aky-sortable-component-container row" data-componentid="main">
-        {% for component in instance_components if instance_components and component.parentComponent is null %}
+        {% for component in instance_components | filter(component => instance_components and component.parentComponent is null) %}
             {{ _self.componentLoop(component, type, typeId) }}
         {% endfor %}
         <div class="col-md-12 ui-state-disabled" id="componentsRenderContainerAdd">
@@ -39,7 +39,7 @@
         <button type="button" class="btn toggleComponentTab"><i class="fas fa-times"></i></button>
     </div>
     <div class="aky-builder-components-content">
-        {% for component in components if components is not empty %}
+        {% for component in components | filter(component => components is not empty) %}
             <div class="aky-builder-component" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
                 <div class="aky-builder-component-header">
                     {% if component.prototype == 'col' %}
@@ -62,7 +62,7 @@
 {% macro componentLoop(component, type, typeId) %}
     {% set proto = '' %}
     {% if component.componentTemplate.prototype == 'col' %}
-        {% for val in component.componentValues if val.componentField.slug == 'col' %}
+        {% for val in component.componentValues | filter(val => val.componentField.slug == 'col') %}
             {% set proto = 'col-md-'~val.value %}
         {% endfor %}
     {% else %}
@@ -72,7 +72,7 @@
         <div class="aky-builder-component active {{ component.parentComponent is null or component.childComponents is not empty ? 'isParent' : '' }}" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
             <div class="aky-builder-component-header">
                 {% if component.componentTemplate.prototype == 'col' %}
-                    {% for val in component.componentValues if val.componentField.slug == 'col' %}
+                    {% for val in component.componentValues | filter(val => val.componentField.slug == 'col') %}
                         <input class="form-control changeColInput" type="number" name="col" value="{{ val.value }}" min="1" max="12"/>
                     {% endfor %}
                 {% endif %}
@@ -106,7 +106,7 @@
             {% endif %}
             {% if component.componentTemplate.isContainer is not null %}
                 <div class="aky-builder-component-child-render aky-sortable-component-container {{ component.componentTemplate.prototype ? 'row' : '' }}">
-                    {% for childComponent in component.childComponents if component.childComponents|length > 0 %}
+                    {% for childComponent in component.childComponents | filter(childComponent => component.childComponents|length > 0) %}
                         {{ _self.componentLoop(childComponent) }}
                     {% endfor %}
                 </div>
