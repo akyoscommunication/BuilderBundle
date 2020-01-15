@@ -56,6 +56,8 @@
             position: sticky;
             top: 0;
             background-color: $white;
+            z-index: 99999;
+
             &__title{
                 font-size: 2rem;
                 font-family: 'Montserrat', sans-serif;
