@@ -19,9 +19,19 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Akyos\CoreBundle\Repository\PageRepository;
 
 class ComponentValueType extends AbstractType
 {
+    private $pages;
+
+    public function __construct(PageRepository $pageRepository) {
+        $pages = $pageRepository->findAll();
+        foreach($pages as $page) {
+            $this->pages[$page->getTitle()] = $page->getId();
+        }
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
 
