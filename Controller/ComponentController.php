@@ -6,6 +6,7 @@ use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Entity\ComponentValue;
 use Akyos\BuilderBundle\Form\Component1Type;
 use Akyos\BuilderBundle\Form\ComponentType;
+use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentValueRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -45,9 +46,10 @@ class ComponentController extends AbstractController
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      */
-    public function edit(Request $request, Component $component): Response
+    public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository): Response
     {
         $form = $this->createForm(ComponentType::class, $component);
+        $groups = $componentFieldRepository->getUniqueFieldsGroups($component->getComponentTemplate()->getId());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -57,6 +59,7 @@ class ComponentController extends AbstractController
         }
 
         return $this->render('@AkyosBuilder/component/edit.html.twig', [
+            'groups' => $groups,
             'component' => $component,
             'form' => $form->createView(),
         ]);

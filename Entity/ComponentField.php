@@ -51,6 +51,11 @@ class ComponentField
      */
     private $fieldValues = [];
 
+    /**
+     * @ORM\Column(type="string", length=255, nullable=true)
+     */
+    private $groups;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -124,6 +129,18 @@ class ComponentField
     public function setFieldValues(?array $fieldValues): self
     {
         $this->fieldValues = $fieldValues;
+
+        return $this;
+    }
+
+    public function getGroups(): ?string
+    {
+        return $this->groups;
+    }
+
+    public function setGroups(?string $groups): self
+    {
+        $this->groups = $groups;
 
         return $this;
     }

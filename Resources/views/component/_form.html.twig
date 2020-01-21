@@ -1,6 +1,36 @@
 {% form_theme form 'bootstrap_4_layout.html.twig' %}
 
 {{ form_start(form) }}
-    {{ form_widget(form) }}
+    <ul class="nav nav-tabs" id="tabs" role="tablist">
+        {% for k, group in groups %}
+            <li class="nav-item">
+                <a class="nav-link {{ k == 0 ? 'active' : '' }}" id="{{ group.groups|slugify }}-builder-tab" data-toggle="tab" href="#{{ group.groups|slugify }}-builder" role="tab" aria-controls="{{ group.groups|slugify }}-builder" aria-selected="true">{{ group.groups }}</a>
+            </li>
+        {% endfor %}
+        <li class="nav-item">
+            <a class="nav-link" id="other-builder-tab" data-toggle="tab" href="#other-builder" role="tab" aria-controls="other-builder" aria-selected="true">Autre</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="tabsContent">
+        {% for k, group in groups %}
+            <div class="tab-pane fade {{ k == 0 ? 'show active' : '' }}" id="{{ group.groups|slugify }}-builder" role="tabpanel" aria-labelledby="{{ group.groups|slugify }}-builder-tab">
+                {% for childForm in form.componentValues %}
+                    {% if group.groups == childForm.vars.value.componentField.groups %}
+                        {{ form_widget(childForm) }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endfor %}
+        {# OPTIONS #}
+        <div class="tab-pane fade" id="other-builder" role="tabpanel" aria-labelledby="other-builder-tab">
+            {{ form_widget(form.customId) }}
+            {{ form_widget(form.customClasses) }}
+            {{ form_widget(form.visibilityXS) }}
+            {{ form_widget(form.visibilityS) }}
+            {{ form_widget(form.visibilityM) }}
+            {{ form_widget(form.visibilityL) }}
+            {{ form_widget(form.visibilityXL) }}
+        </div>
+    </div>
     <button class="btn btn-success btn-update-item">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}

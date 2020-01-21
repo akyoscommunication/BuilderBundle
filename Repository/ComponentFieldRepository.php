@@ -19,6 +19,18 @@ class ComponentFieldRepository extends ServiceEntityRepository
         parent::__construct($registry, ComponentField::class);
     }
 
+    public function getUniqueFieldsGroups($componentTemplate): array
+    {
+        return $this->createQueryBuilder('f')
+            ->select('f.groups')
+            ->andWhere('f.componentTemplate = :template')
+            ->setParameter('template', $componentTemplate)
+            ->distinct()
+            ->getQuery()
+            ->getArrayResult()
+            ;
+    }
+
     // /**
     //  * @return ComponentField[] Returns an array of ComponentField objects
     //  */

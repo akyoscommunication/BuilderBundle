@@ -167,6 +167,8 @@
                 font-family: 'Montserrat', sans-serif;
                 z-index: 9;
                 border-radius: 5px;
+                max-width: 40vw;
+                width: max-content;
 
                 &__title {
                     font-size: 1rem;

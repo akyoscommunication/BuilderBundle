@@ -221,6 +221,10 @@
   font-family: 'Montserrat', sans-serif;
   z-index: 9;
   border-radius: 5px;
+  max-width: 40vw;
+  width: -webkit-max-content;
+  width: -moz-max-content;
+  width: max-content;
 }
 
 #componentsRenderContainer .aky-builder-component-info-content__title {
