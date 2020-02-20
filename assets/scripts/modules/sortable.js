@@ -1,4 +1,4 @@
-import 'jquery-ui/ui/widgets/sortable';
+import 'jquery-ui/ui/widgets/sortable';sortable
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
 
 class Sortable {

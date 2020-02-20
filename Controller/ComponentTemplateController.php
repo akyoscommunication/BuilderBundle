@@ -2,6 +2,8 @@
 
 namespace Akyos\BuilderBundle\Controller;
 
+use Symfony\Bundle\FrameworkBundle\Console\Application;
+use Symfony\Component\Console\Input\ArrayInput;
 use Akyos\BuilderBundle\Entity\ComponentField;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Form\ComponentTemplateType;
@@ -9,8 +11,10 @@ use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Console\Output\NullOutput;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -46,7 +50,7 @@ class ComponentTemplateController extends AbstractController
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
      */
-    public function new(Request $request): Response
+    public function new(Request $request, KernelInterface $kernel): Response
     {
         $componentTemplate = new ComponentTemplate();
         $field = new ComponentField();
@@ -58,6 +62,18 @@ class ComponentTemplateController extends AbstractController
             $em = $this->getDoctrine()->getManager();
             $em->persist($componentTemplate);
             $em->flush();
+
+            $application = new Application($kernel);
+            $application->setAutoExit(false);
+
+            $input = new ArrayInput([
+                'command' => 'app:make:component',
+                // (optional) define the value of command arguments
+                'name' => $componentTemplate->getSlug(),
+            ]);
+
+            $output = new NullOutput();
+            $application->run($input, $output);
 
             return $this->redirectToRoute('templates_builder_index');
         }
