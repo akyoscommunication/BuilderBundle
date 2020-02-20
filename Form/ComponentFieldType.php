@@ -56,7 +56,7 @@ class ComponentFieldType extends AbstractType
             ->add('groups', null, [
                 'label' => "Définir un groupe ( Pour les onglets à l'édit )",
                 'help' => "Si ce champ est vide, celui-ci est rempli par 'général'",
-                'empty_data' => "général",
+                'empty_data' => "Général",
             ])
         ;
     }

@@ -46,7 +46,7 @@ class ComponentValueType extends AbstractType
                                 'required'    => false,
                                 'config'      => array(
                                     'placeholder'    => "Texte",
-                                    'height'         => 50,
+                                    'height'         => 300,
                                     'entities'       => false,
                                     'basicEntities'  => false,
                                     'entities_greek' => false,

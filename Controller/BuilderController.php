@@ -162,13 +162,13 @@ class BuilderController extends AbstractController
                 }
             }
 
-            $em->flush();
+//            $em->flush();
 
             // Get each temp component of page.
-            $deleteComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
+//            $deleteComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
 
             // Delete each temp component of page
-            foreach ($deleteComponents as $deleteComponent) {
+            foreach ($componentsProd as $deleteComponent) {
                 if ($deleteComponent instanceof Component) {
                     $em->remove($deleteComponent);
                 }
