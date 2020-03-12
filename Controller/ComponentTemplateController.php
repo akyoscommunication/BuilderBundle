@@ -2,6 +2,7 @@
 
 namespace Akyos\BuilderBundle\Controller;
 
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Console\Application;
 use Symfony\Component\Console\Input\ArrayInput;
 use Akyos\BuilderBundle\Entity\ComponentField;
@@ -24,6 +25,11 @@ class ComponentTemplateController extends AbstractController
 {
     /**
      * @Route("/", name="index", methods={"GET"})
+     * @param ComponentTemplateRepository $componentTemplateRepository
+     * @param PaginatorInterface $paginator
+     * @param Request $request
+     *
+     * @return Response
      */
     public function index(ComponentTemplateRepository $componentTemplateRepository, PaginatorInterface $paginator, Request $request): Response
     {
@@ -49,6 +55,11 @@ class ComponentTemplateController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
+     * @param Request $request
+     * @param KernelInterface $kernel
+     *
+     * @return Response
+     * @throws Exception
      */
     public function new(Request $request, KernelInterface $kernel): Response
     {
@@ -86,6 +97,10 @@ class ComponentTemplateController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param ComponentTemplate $componentTemplate
+     *
+     * @return Response
      */
     public function edit(Request $request, ComponentTemplate $componentTemplate): Response
     {
@@ -105,7 +120,40 @@ class ComponentTemplateController extends AbstractController
     }
 
     /**
+     * @Route("/{id}/generate-fixture", name="generate_fixture", methods={"GET"})
+     * @param ComponentTemplate $componentTemplate
+     *
+     * @param KernelInterface $kernel
+     *
+     * @return Response
+     * @throws Exception
+     */
+    public function generateFixture(ComponentTemplate $componentTemplate, KernelInterface $kernel): Response
+    {
+        $application = new Application($kernel);
+        $application->setAutoExit(false);
+
+        $input = new ArrayInput([
+            'command' => 'app:make:componentFixture',
+            // (optional) define the value of command arguments
+            'id' => $componentTemplate->getId(),
+        ]);
+
+        $output = new NullOutput();
+        $application->run($input, $output);
+
+        return $this->redirectToRoute('templates_builder_edit', [
+            'id' => $componentTemplate->getId()
+        ]);
+    }
+
+    /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @param Request $request
+     * @param ComponentTemplate $componentTemplate
+     * @param ComponentRepository $componentRepository
+     *
+     * @return Response
      */
     public function delete(Request $request, ComponentTemplate $componentTemplate, ComponentRepository $componentRepository): Response
     {
