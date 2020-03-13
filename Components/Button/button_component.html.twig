@@ -1,0 +1,15 @@
+{% set padding = "" %}
+{% set margin = "" %}
+
+
+{% if values.margin is defined and values.padding is not null %}
+    {% set padding = 'padding: '~values.padding~'; ' %}
+{% endif %}
+
+{% if values.margin is defined and values.margin is not null %}
+    {% set margin = 'margin: '~values.margin~'; ' %}
+{% endif %}
+
+<div style="{{ margin }}" class="component-button {{ customClasses is defined ? customClasses }}">
+    <a style="{{ padding }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null and values.target ? 'target="_blank" rel="noopener noreferrer"' : "" }} class="{{ values.color is defined ? values.color : "" }}">{{ values.button_text }} </a>
+</div>

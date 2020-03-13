@@ -1,0 +1,67 @@
+{% set margin = "" %}
+{% set padding = "" %}
+{% set bg = "" %}
+
+{% if values.background is defined and values.background is not null %}
+    {% set bg = bg~values.background~' ' %}
+{% endif %}
+
+{% if values.background_image is defined and values.background_image is not null %}
+    {% set bg = bg~'url('~getImagePathById(values.background_image)~') ' %}
+{% endif %}
+
+{% if values.background_color is defined and values.background_color is not null %}
+    {% set bg = bg~values.background_color %}
+{% endif %}
+
+{% if bg|length > 1 %}
+    {% set bg = 'background:'~bg~';' %}
+{% endif %}
+
+{% if values.padding is defined and values.padding is not null %}
+    {% set padding = 'padding: '~values.padding~'; ' %}
+{% endif %}
+
+{% if values.margin is defined and values.margin is not null %}
+    {% set margin = 'margin: '~values.margin~'; ' %}
+{% endif %}
+
+{% if values.row_width %}
+<div class="{{ values.row_width is not null and (values.row_width == "full-width" or values.row_width == "full-background") ? "" : "container" }} component-row {{ values.background_image is not null and values.background_size is not null ? "component-row--"~values.background_size : "" }}" style="{{ bg }}">
+    {% endif %}
+
+    {% if margin != "" and (values.row_width is not null and values.row_width != "full-background" or  values.row_width is null) %}
+    <div style="{{ margin }}">
+        {% endif %}
+
+        <div class="{{ customClasses }} {{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? "row" : "" }}" style="{{ values.row_width is null ? bg : '' }} {{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? padding : '' }}">
+            {% if values.row_width is not null and values.row_width == "full-background" %}
+            {% if margin != "" %}
+            <div style="{{ margin }}">
+                {% endif %}
+
+                <div class="container">
+                    <div class="row" style="{{ padding }}">
+                        {% endif %}
+
+                        {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}
+
+                        {% if values.row_width is not null and values.row_width == "full-background" %}
+                    </div>
+                </div>
+
+                {% if margin != "" %}
+            </div>
+            {% endif %}
+
+            {% endif %}
+
+        </div>
+
+        {% if margin != "" and (values.row_width is not null and values.row_width != "full-background" or  values.row_width is null) %}
+    </div>
+    {% endif %}
+
+    {% if values.row_width %}
+</div>
+{% endif %}

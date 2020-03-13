@@ -3,6 +3,7 @@
 namespace Akyos\BuilderBundle;
 
 use Akyos\BuilderBundle\DependencyInjection\BuilderBundleExtension;
+use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AkyosBuilderBundle extends Bundle

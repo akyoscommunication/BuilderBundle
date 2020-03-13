@@ -16,9 +16,18 @@ services:
         tags: ['controller.service_arguments']
         public: true
 
-    component.text:
-        alias: Akyos\BuilderBundle\Components\Text\TextComponentController
+    component.row:
+        alias: Akyos\BuilderBundle\Components\Row\RowComponentController
         public: true
 
+    component.col:
+        alias: Akyos\BuilderBundle\Components\Col\ColComponentController
+        public: true
 
+    component.button:
+        alias: Akyos\BuilderBundle\Components\Button\ButtonComponentController
+        public: true
 
+    component.image:
+        alias: Akyos\BuilderBundle\Components\Image\ImageComponentController
+        public: true
