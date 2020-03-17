@@ -70,7 +70,7 @@ class RenderComponentController
             return $this->renderView($view, $params);
 
         } else {
-            throw $this->createNotFoundException('Le controller pour ce composant n\'existe pas!');
+            throw $this->createNotFoundException('Le controller pour ce composant n\'existe pas! : '.$slug);
         }
     }
 
