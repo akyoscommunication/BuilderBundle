@@ -394,7 +394,7 @@
   position: sticky;
   top: 0;
   background-color: white;
-  z-index: 99999;
+  z-index: 20;
 }
 
 .aky-modal-content-header__title {

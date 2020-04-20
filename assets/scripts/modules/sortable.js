@@ -1,4 +1,4 @@
-import 'jquery-ui/ui/widgets/sortable';sortable
+import 'jquery-ui/ui/widgets/sortable';
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
 
 class Sortable {
@@ -16,8 +16,6 @@ class Sortable {
                     let component = $(ui.item).children('.aky-builder-component').data('componentid');
                     let sibblingBeforeComponent = $(ui.item).prevAll();
 
-                    // console.log(parent , 'parent');
-                    // console.log(component , 'compor');
                     console.log(sibblingBeforeComponent , 'avant');
                     console.log(sibblingBeforeComponent.length , 'avant count');
 
