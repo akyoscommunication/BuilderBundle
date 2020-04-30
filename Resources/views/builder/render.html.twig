@@ -18,6 +18,14 @@
 <div class="tab-pane fade" id="builder" role="tabpanel" aria-labelledby="builder-tab">
      <div id="akyTabBuilderHeader">
         <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
+        {{ form_start(choiceBuilderTemplateForm, { 'attr' : { 'class' : 'not-submit' }}) }}
+            {{ form_widget(choiceBuilderTemplateForm) }}
+            <button class="btn btn-outline-success">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_end(choiceBuilderTemplateForm) }}
+        {{ form_start(makeBuilderTemplateForm, { 'attr' : { 'class' : 'not-submit' }}) }}
+            {{ form_widget(makeBuilderTemplateForm) }}
+            <button class="btn btn-primary"><i class="fas fa-clone"></i></button>
+        {{ form_end(makeBuilderTemplateForm) }}
     </div>
     {{ _self.render_flashbag() }}
     <div id="componentsRenderContainer" class="aky-sortable-component-container row" data-componentid="main">
