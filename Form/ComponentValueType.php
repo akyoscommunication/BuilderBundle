@@ -162,9 +162,8 @@ class ComponentValueType extends AbstractType
                         ;
                         break;
                     case 'bool':
-                        if (!is_array($componentValue->getValue())) {
-                            $componentValue->setValue([$componentValue->getValue()]);
-                        }
+
+                        $componentValue->setValue((bool)$componentValue->getValue());
                         $form
                             ->add('value' , CheckboxType::class, [
                                 'attr' => [
@@ -172,8 +171,6 @@ class ComponentValueType extends AbstractType
                                 ],
                                 'label'                 => $field->getName(),
                                 'required'              => false,
-
-
                             ])
                         ;
                         break;
