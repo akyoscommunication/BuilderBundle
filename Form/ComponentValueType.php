@@ -120,6 +120,9 @@ class ComponentValueType extends AbstractType
                         break;
 
                     case 'gallery':
+                        if (!is_array($componentValue->getValue())) {
+                            $componentValue->setValue([$componentValue->getValue()]);
+                        }
                         $form->add('value',FileManagerCollectionType::class, [
                             'label' => $field->getName(),
                             'entry_options' => [
