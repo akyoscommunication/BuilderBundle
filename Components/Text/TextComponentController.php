@@ -3,8 +3,9 @@
 namespace Akyos\BuilderBundle\Components\Text;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class TextComponentController implements ComponentInterface
+class TextComponentController extends AbstractController implements ComponentInterface
 {
     public function getTemplateName()
     {

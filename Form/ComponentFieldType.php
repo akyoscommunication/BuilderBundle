@@ -32,12 +32,13 @@ class ComponentFieldType extends AbstractType
                     'Zone de texte'  => 'textarea',
                     'Image'          => 'image',
                     'Galerie d\images' => 'gallery',
-                    'Téléphone'          => 'tel',
-                    'Mail'          => 'mail',
-                    'Lien interne'          => 'pagelink',
-                    'Lien externe'          => 'link',
-                    'Nombre'          => 'int',
-                    'Select' => 'select'
+                    'Téléphone'       => 'tel',
+                    'Mail'           => 'mail',
+                    'Lien interne'   => 'pagelink',
+                    'Lien externe'   => 'link',
+                    'Nombre'         => 'int',
+                    'Select'        => 'select',
+                    'Booléen'       => 'bool'
                 ],
                 'multiple' => false,
                 'expanded' => false

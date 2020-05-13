@@ -14,7 +14,7 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
     {
         $component = new ComponentTemplate();
         $component->setName('Bloc de texte');
-        $component->setSlug('Bloc de texte');
+        $component->setSlug('text');
         $component->setShortDescription('Insérez un bloc de texte');
         $component->setIsContainer(false);
         $component->setPrototype('default');
