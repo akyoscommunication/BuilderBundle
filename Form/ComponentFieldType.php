@@ -35,6 +35,7 @@ class ComponentFieldType extends AbstractType
                     'Téléphone'       => 'tel',
                     'Mail'           => 'mail',
                     'Lien interne'   => 'pagelink',
+                    'Lien interne article' => 'postlink',
                     'Lien externe'   => 'link',
                     'Nombre'         => 'int',
                     'Select'        => 'select',

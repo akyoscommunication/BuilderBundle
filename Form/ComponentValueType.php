@@ -3,6 +3,7 @@
 namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\ComponentValue;
+use Akyos\CoreBundle\Repository\PostRepository;
 use Akyos\FileManagerBundle\Form\Type\FileManagerCollectionType;
 use Akyos\FileManagerBundle\Form\Type\FileManagerType;
 use Doctrine\DBAL\Types\BooleanType;
@@ -26,11 +27,16 @@ use Akyos\CoreBundle\Repository\PageRepository;
 class ComponentValueType extends AbstractType
 {
     private $pages;
+    private $posts;
 
-    public function __construct(PageRepository $pageRepository) {
+    public function __construct(PageRepository $pageRepository, PostRepository $postRepository) {
         $pages = $pageRepository->findAll();
         foreach($pages as $page) {
             $this->pages[$page->getTitle()] = $page->getId();
+        }
+        $posts = $postRepository->findAll();
+        foreach($posts as $post) {
+            $this->posts[$post->getTitle()] = $post->getId();
         }
     }
 
@@ -95,8 +101,19 @@ class ComponentValueType extends AbstractType
                         $form
                             ->add('value', ChoiceType::class, array(
                                 'choices' => $this->pages,
+                                'required' => false,
                                 'label'  => $field->getName()
                             ))
+                        ;
+                        break;
+
+                    case 'postlink' :
+                        $form
+                            ->add('value', ChoiceType::class, [
+                                'choices' => $this->posts,
+                                'required' => false,
+                                'label' => $field->getName()
+                            ])
                         ;
                         break;
 

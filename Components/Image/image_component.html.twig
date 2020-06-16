@@ -1,3 +1,9 @@
-<div class="component-image">
+<div class="component-image" style="width:{{ values.width }}; {{ values.margin is defined and values.margin is not empty ? 'margin : ' ~ values.margin : '' }}">
+    {% if values.redirection is defined and values.redirection is not empty %}
+        <a href="{{ getPermalinkById('Page', values.redirection) }}">
+    {% endif %}
     {{ renderFileManager(values.image)|raw }}
+    {% if values.redirection is defined and values.redirection is not empty %}
+        </a>
+    {% endif %}
 </div>
