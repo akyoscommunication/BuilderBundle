@@ -16,7 +16,10 @@ class ExtendSidebar
 
     public function getTemplate($route)
     {
-        $template = '<li class="'.(strpos($route,"templates_builder") !== false ? "active" : "").'"><a href="'.$this->router->generate('templates_builder_index').'">Builder</a></li>';
+        $template = '
+        <li class="'.(strpos($route,"templates_builder") !== false ? "active" : "").'"><a href="'.$this->router->generate('templates_builder_index').'">Builder</a></li>
+        <li class="'.(strpos($route,"builder_template") !== false ? "active" : "").'"><a href="'.$this->router->generate('builder_template_index').'">Template du builder</a></li>
+        ';
         return new Response($template);
     }
 

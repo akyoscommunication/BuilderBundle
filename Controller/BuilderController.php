@@ -2,14 +2,18 @@
 
 namespace Akyos\BuilderBundle\Controller;
 
+use Akyos\BuilderBundle\Entity\BuilderTemplate;
 use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Entity\ComponentValue;
+use Akyos\BuilderBundle\Form\ChoiceBuilderTemplateType;
+use Akyos\BuilderBundle\Form\MakeTemplateType;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -18,6 +22,13 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BuilderController extends AbstractController
 {
+    private $request;
+
+    public function __construct(RequestStack $request)
+    {
+        $this->request = $request->getCurrentRequest();
+    }
+
     public function getTab()
     {
         $tab = '<li class="nav-item">';
@@ -26,13 +37,35 @@ class BuilderController extends AbstractController
         return new Response($tab);
     }
 
-    public function getTabContent($objectType, $objectId)
+    public function getTabContent($objectType, $objectId): Response
     {
         $em = $this->getDoctrine()->getManager();
-        $instance_components = $em->getRepository("Akyos\\BuilderBundle\\Entity\\Component")->findBy(['type' => $objectType, 'typeId' => $objectId, 'isTemp' => true, 'parentComponent' => null], ['position' => 'ASC']);
-        $components = $em->getRepository("Akyos\\BuilderBundle\\Entity\\ComponentTemplate")->findAll();
+        $instance_components = $em->getRepository(Component::class)->findBy(['type' => $objectType, 'typeId' => $objectId, 'isTemp' => true, 'parentComponent' => null], ['position' => 'ASC']);
+        $components = $em->getRepository(ComponentTemplate::class)->findAll();
+
+        $choiceBuilderTemplateForm = $this->createForm(ChoiceBuilderTemplateType::class);
+        $choiceBuilderTemplateForm->handleRequest($this->request);
+        if ($choiceBuilderTemplateForm->isSubmitted() && $choiceBuilderTemplateForm->isValid()) {
+            /** @var BuilderTemplate $template */
+            $template = $choiceBuilderTemplateForm->get('choice_template')->getData();
+            $this->cloneTemplateBuilder($objectType, $objectId, $template->getId());
+
+            return $this->redirect($this->request->getUri());
+        }
+
+        $makeBuilderTemplateForm = $this->createForm(MakeTemplateType::class);
+        $makeBuilderTemplateForm->handleRequest($this->request);
+        if ($makeBuilderTemplateForm->isSubmitted() && $makeBuilderTemplateForm->isValid()) {
+            /** @var BuilderTemplate $template */
+            $templateTitle = $makeBuilderTemplateForm->get('title')->getData();
+            $this->makeTemplate($objectType, $objectId, $templateTitle);
+
+            return $this->redirect($this->request->getUri());
+        }
 
         return $this->render('@AkyosBuilder/builder/render.html.twig', [
+            'makeBuilderTemplateForm' => $makeBuilderTemplateForm->createView(),
+            'choiceBuilderTemplateForm' => $choiceBuilderTemplateForm->createView(),
             'instance_components' => $instance_components,
             'type' => $objectType,
             'typeId' => $objectId,
@@ -42,6 +75,9 @@ class BuilderController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @param Request $request
+     * @param ComponentTemplate $componentTemplate
+     * @return Response
      */
     public function delete(Request $request, ComponentTemplate $componentTemplate): Response
     {
@@ -189,7 +225,7 @@ class BuilderController extends AbstractController
      */
     public function resetTemp($type, $typeId):Response
     {
-        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => true));
+        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
         $em = $this->getDoctrine()->getManager();
 
         foreach ($tempComponents as $tempComponent) {
@@ -200,13 +236,22 @@ class BuilderController extends AbstractController
         return $this->redirectToRoute(strtolower($type).'_edit', ['id' => $typeId]);
     }
 
-    public function cloneComponent(Component $component, $parent = null)
+    public function cloneComponent(Component $component, $parent = null, $changeType = null, $changeTypeId = null, int $nextPos = null, $makeTemplate = false)
     {
         $em = $this->getDoctrine()->getManager();
 
         $clone = clone $component;
         // Clone each component of page and set isTemp to true
-        $clone->setIsTemp(true);
+        if ($makeTemplate) {
+            $clone->setIsTemp(false);
+        } else {
+            $clone->setIsTemp(true);
+        }
+        if ($changeType && $changeTypeId) {
+            $clone->setType($changeType);
+            $clone->setTypeId($changeTypeId);
+            $clone->setPosition(intval($nextPos));
+        }
         if ($parent && $parent instanceof Component) {
             $clone->setParentComponent($parent);
             $parent->addChildComponent($clone);
@@ -221,8 +266,10 @@ class BuilderController extends AbstractController
                 $cloneValue->setComponent($clone);
 
                 // EXPLAIN => BUG !! Quand on clone la value, il faut dire au clone de changer de parent et au parent de perdre l'enfant clone
-                $componentValue->setComponent($component);
-                $clone->removeComponentValue($componentValue);
+                if (!$makeTemplate) {
+                    $componentValue->setComponent($component);
+                    $clone->removeComponentValue($componentValue);
+                }
 
                 $clone->addComponentValue($cloneValue);
                 $em->persist($cloneValue);
@@ -236,7 +283,7 @@ class BuilderController extends AbstractController
                 }
             }
             foreach ($component->getChildComponents() as $childComponent) {
-                $this->cloneComponent($childComponent, $clone);
+                $this->cloneComponent($childComponent, $clone, $changeType, $changeTypeId, $nextPos, $makeTemplate);
             }
         }
         $em->flush();
@@ -247,11 +294,40 @@ class BuilderController extends AbstractController
     public function onDeleteEntity($type, $typeId)
     {
         $em = $this->getDoctrine()->getManager();
-        $components = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId));
+        $components = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId]);
         foreach ($components as $component) {
             $em->remove($component);
         }
 
         return new Response("valid");
+    }
+
+    protected function cloneTemplateBuilder($type, $typeId, $templateId)
+    {
+        $componentsOfTemplate = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => 'BuilderTemplate', 'typeId' => $templateId, 'parentComponent' => null, 'isTemp' => false]);
+
+        // Pour mettre à la suite du type;
+        $nextPos = count($this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'parentComponent' => null, 'isTemp' => false]));
+        foreach ($componentsOfTemplate as $c) {
+            /** @var Component $c */
+            $this->cloneComponent($c, null, $type, $typeId, $nextPos);
+            $nextPos++;
+        }
+    }
+
+    public function makeTemplate($type, $typeId, $templateTitle)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $builderTemplate = new BuilderTemplate();
+        $builderTemplate->setTitle($templateTitle);
+        $em->persist($builderTemplate);
+        $em->flush();
+
+        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true, 'parentComponent' => null]);
+
+        foreach ($tempComponents as $c) {
+            /** @var Component $c */
+            $this->cloneComponent($c, null, 'BuilderTemplate', $builderTemplate->getId(), null, true);
+        }
     }
 }
