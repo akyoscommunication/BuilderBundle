@@ -43,16 +43,6 @@ class BuilderController extends AbstractController
         $instance_components = $em->getRepository(Component::class)->findBy(['type' => $objectType, 'typeId' => $objectId, 'isTemp' => true, 'parentComponent' => null], ['position' => 'ASC']);
         $components = $em->getRepository(ComponentTemplate::class)->findAll();
 
-        $makeBuilderTemplateForm = $this->createForm(MakeTemplateType::class);
-        $makeBuilderTemplateForm->handleRequest($this->request);
-        if ($makeBuilderTemplateForm->isSubmitted() && $makeBuilderTemplateForm->isValid()) {
-            /** @var BuilderTemplate $template */
-            $templateTitle = $makeBuilderTemplateForm->get('title')->getData();
-            $this->makeTemplate($objectType, $objectId, $templateTitle);
-
-            return $this->redirectToRoute($this->request->get('_route'), $this->request->get('_route_params'));
-        }
-
         $choiceBuilderTemplateForm = $this->createForm(ChoiceBuilderTemplateType::class);
         $choiceBuilderTemplateForm->handleRequest($this->request);
         if ($choiceBuilderTemplateForm->isSubmitted() && $choiceBuilderTemplateForm->isValid()) {
@@ -60,7 +50,17 @@ class BuilderController extends AbstractController
             $template = $choiceBuilderTemplateForm->get('choice_template')->getData();
             $this->cloneTemplateBuilder($objectType, $objectId, $template->getId());
 
-            return $this->redirectToRoute($this->request->get('_route'), $this->request->get('_route_params'));
+            return $this->redirect($this->request->getUri());
+        }
+
+        $makeBuilderTemplateForm = $this->createForm(MakeTemplateType::class);
+        $makeBuilderTemplateForm->handleRequest($this->request);
+        if ($makeBuilderTemplateForm->isSubmitted() && $makeBuilderTemplateForm->isValid()) {
+            /** @var BuilderTemplate $template */
+            $templateTitle = $makeBuilderTemplateForm->get('title')->getData();
+            $this->makeTemplate($objectType, $objectId, $templateTitle);
+
+            return $this->redirect($this->request->getUri());
         }
 
         return $this->render('@AkyosBuilder/builder/render.html.twig', [
@@ -225,7 +225,7 @@ class BuilderController extends AbstractController
      */
     public function resetTemp($type, $typeId):Response
     {
-        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => true));
+        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
         $em = $this->getDoctrine()->getManager();
 
         foreach ($tempComponents as $tempComponent) {
@@ -266,8 +266,10 @@ class BuilderController extends AbstractController
                 $cloneValue->setComponent($clone);
 
                 // EXPLAIN => BUG !! Quand on clone la value, il faut dire au clone de changer de parent et au parent de perdre l'enfant clone
-                $componentValue->setComponent($component);
-                $clone->removeComponentValue($componentValue);
+                if (!$makeTemplate) {
+                    $componentValue->setComponent($component);
+                    $clone->removeComponentValue($componentValue);
+                }
 
                 $clone->addComponentValue($cloneValue);
                 $em->persist($cloneValue);
@@ -292,7 +294,7 @@ class BuilderController extends AbstractController
     public function onDeleteEntity($type, $typeId)
     {
         $em = $this->getDoctrine()->getManager();
-        $components = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId));
+        $components = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId]);
         foreach ($components as $component) {
             $em->remove($component);
         }
@@ -302,10 +304,10 @@ class BuilderController extends AbstractController
 
     protected function cloneTemplateBuilder($type, $typeId, $templateId)
     {
-        $componentsOfTemplate = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => 'BuilderTemplate', 'typeId' => $templateId, 'parentComponent' => null, 'isTemp' => false));
+        $componentsOfTemplate = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => 'BuilderTemplate', 'typeId' => $templateId, 'parentComponent' => null, 'isTemp' => false]);
 
         // Pour mettre à la suite du type;
-        $nextPos = count($this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'parentComponent' => null, 'isTemp' => false)));
+        $nextPos = count($this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'parentComponent' => null, 'isTemp' => false]));
         foreach ($componentsOfTemplate as $c) {
             /** @var Component $c */
             $this->cloneComponent($c, null, $type, $typeId, $nextPos);
@@ -321,7 +323,7 @@ class BuilderController extends AbstractController
         $em->persist($builderTemplate);
         $em->flush();
 
-        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => true, 'parentComponent' => null));
+        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true, 'parentComponent' => null]);
 
         foreach ($tempComponents as $c) {
             /** @var Component $c */

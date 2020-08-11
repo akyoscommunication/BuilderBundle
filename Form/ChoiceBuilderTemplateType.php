@@ -17,8 +17,9 @@ class ChoiceBuilderTemplateType extends AbstractType
             ->add('choice_template', EntityType::class, [
                 'label' => 'Ajouter un template prédéfini sur votre page',
                 'class' => BuilderTemplate::class,
-                'choice_label' =>'title',
-                'placeholder' =>'Choisir un template à ajouter',
+                'choice_label' => 'title',
+                'placeholder' => 'Choisir un template à ajouter',
+                'help' => 'Le template se mettra dans la page.',
             ])
         ;
     }

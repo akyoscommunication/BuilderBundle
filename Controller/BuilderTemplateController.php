@@ -94,9 +94,9 @@ class BuilderTemplateController extends AbstractController
 
             $em->flush();
 
-            return new JsonResponse('valid');
+            return $this->redirect($request->getUri());
         } elseif($form->isSubmitted() && !($form->isValid())) {
-            return new JsonResponse('not valid');
+            throw $this->createNotFoundException("Formulaire invalide.");
         }
 
         return $this->render('@AkyosCore/crud/edit.html.twig', [
