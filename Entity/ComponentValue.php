@@ -3,12 +3,14 @@
 namespace Akyos\BuilderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Gedmo\Translatable\Translatable;
 
 /**
  * @ORM\Entity(repositoryClass="Akyos\BuilderBundle\Repository\ComponentValueRepository")
  */
-class ComponentValue
+class ComponentValue implements Translatable
 {
     use TimestampableEntity;
 
@@ -21,6 +23,7 @@ class ComponentValue
 
     /**
      * @ORM\Column(type="text", nullable=true)
+     * @Gedmo\Translatable
      */
     private $value;
 
