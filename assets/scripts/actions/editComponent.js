@@ -7,13 +7,12 @@ class EditComponent {
     static editComponent() {
         // $('.aky-builder-component .aky-builder-component-header__edit').off('click');
         $(document).on('click', '.aky-builder-component-header__edit', function () {
+            const componentid = $(this).parents('.aky-builder-component').data('componentid');
+            const path = '/admin/builder/component/'+componentid+'/edit';
+
             $('#modalEdit').addClass('active');
 
-            const type = $(this).parents('.aky-builder-component').data('type');
-            const typeid = $(this).parents('.aky-builder-component').data('typeid');
-            const componentid = $(this).parents('.aky-builder-component').data('componentid');
-
-            fetch('/admin/builder/component/'+componentid+'/edit')
+            fetch(path)
                 .then(function (res) {
                     return res.text()
                         .then(function (response) {
@@ -28,7 +27,7 @@ class EditComponent {
 
                                 $.ajax({
                                     method: 'POST',
-                                    url: '/admin/builder/component/'+componentid+'/edit',
+                                    url: path,
                                     data: $(this).serialize(),
                                     success: function (res) {
                                         console.log(res, 'success');

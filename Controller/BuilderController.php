@@ -6,10 +6,12 @@ use Akyos\BuilderBundle\Entity\BuilderTemplate;
 use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Entity\ComponentValue;
+use Akyos\BuilderBundle\Entity\ComponentValueTranslation;
 use Akyos\BuilderBundle\Form\ChoiceBuilderTemplateType;
 use Akyos\BuilderBundle\Form\MakeTemplateType;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
+use Gedmo\Translatable\Entity\Translation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -27,50 +29,6 @@ class BuilderController extends AbstractController
     public function __construct(RequestStack $request)
     {
         $this->request = $request->getCurrentRequest();
-    }
-
-    public function getTab()
-    {
-        $tab = '<li class="nav-item">';
-            $tab .= '<a class="nav-link" id="builder-tab" data-toggle="tab" href="#builder" role="tab" aria-controls="builder" aria-selected="false">Builder</a>';
-        $tab .= '</li>';
-        return new Response($tab);
-    }
-
-    public function getTabContent($objectType, $objectId): Response
-    {
-        $em = $this->getDoctrine()->getManager();
-        $instance_components = $em->getRepository(Component::class)->findBy(['type' => $objectType, 'typeId' => $objectId, 'isTemp' => true, 'parentComponent' => null], ['position' => 'ASC']);
-        $components = $em->getRepository(ComponentTemplate::class)->findAll();
-
-        $choiceBuilderTemplateForm = $this->createForm(ChoiceBuilderTemplateType::class);
-        $choiceBuilderTemplateForm->handleRequest($this->request);
-        if ($choiceBuilderTemplateForm->isSubmitted() && $choiceBuilderTemplateForm->isValid()) {
-            /** @var BuilderTemplate $template */
-            $template = $choiceBuilderTemplateForm->get('choice_template')->getData();
-            $this->cloneTemplateBuilder($objectType, $objectId, $template->getId());
-
-            return $this->redirect($this->request->getUri());
-        }
-
-        $makeBuilderTemplateForm = $this->createForm(MakeTemplateType::class);
-        $makeBuilderTemplateForm->handleRequest($this->request);
-        if ($makeBuilderTemplateForm->isSubmitted() && $makeBuilderTemplateForm->isValid()) {
-            /** @var BuilderTemplate $template */
-            $templateTitle = $makeBuilderTemplateForm->get('title')->getData();
-            $this->makeTemplate($objectType, $objectId, $templateTitle);
-
-            return $this->redirect($this->request->getUri());
-        }
-
-        return $this->render('@AkyosBuilder/builder/render.html.twig', [
-            'makeBuilderTemplateForm' => $makeBuilderTemplateForm->createView(),
-            'choiceBuilderTemplateForm' => $choiceBuilderTemplateForm->createView(),
-            'instance_components' => $instance_components,
-            'type' => $objectType,
-            'typeId' => $objectId,
-            'components' => $components,
-        ]);
     }
 
     /**
@@ -122,11 +80,13 @@ class BuilderController extends AbstractController
         $component->setVisibilityL(true);
         $component->setVisibilityXL(true);
         $component->setIsTemp(true);
+        $component->setTranslatableLocale($request->getLocale());
 
         foreach ($componentTemplate->getComponentFields() as $componentField) {
             $componentValue = new ComponentValue();
             $componentValue->setComponentField($componentField);
             $componentValue->setComponent($component);
+            $componentValue->setTranslatableLocale($request->getLocale());
             if (($componentTemplate->getPrototype() === 'col') && ($componentField->getSlug() === 'col')) {
                 $componentValue->setValue(12);
             }
@@ -198,11 +158,6 @@ class BuilderController extends AbstractController
                 }
             }
 
-//            $em->flush();
-
-            // Get each temp component of page.
-//            $deleteComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
-
             // Delete each temp component of page
             foreach ($componentsProd as $deleteComponent) {
                 if ($deleteComponent instanceof Component) {
@@ -273,6 +228,16 @@ class BuilderController extends AbstractController
 
                 $clone->addComponentValue($cloneValue);
                 $em->persist($cloneValue);
+
+                foreach ($componentValue->getTranslations()->getValues() as $trans) {
+                    $newTrans = new ComponentValueTranslation();
+                    $newTrans->setField('value');
+                    $newTrans->setObject($cloneValue);
+                    $newTrans->setContent($trans->getContent());
+                    $newTrans->setLocale($trans->getLocale());
+
+                    $em->persist($newTrans);
+                }
             }
         }
         if ($component->getChildComponents()) {
@@ -302,7 +267,7 @@ class BuilderController extends AbstractController
         return new Response("valid");
     }
 
-    protected function cloneTemplateBuilder($type, $typeId, $templateId)
+    public function cloneTemplateBuilder($type, $typeId, $templateId)
     {
         $componentsOfTemplate = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => 'BuilderTemplate', 'typeId' => $templateId, 'parentComponent' => null, 'isTemp' => false]);
 
