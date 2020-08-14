@@ -1,0 +1,30 @@
+{% extends '/bundles/AkyosCoreBundle/front/layouts/front_layout.html.twig' %}
+
+{% block title %}
+    {% if seo.metaTitle is not null %}
+        {{ seo.metaTitle }}
+    {% else %}
+        {{ core_options.homepage == page ? '' : page.title~' - ' }}
+        {{ parent() }}
+    {% endif %}
+{% endblock %}
+
+{% block meta %}
+    {% if seo.metaDescription is not null %}
+        <meta name="description" content="{{ seo.metaDescription is not null ? seo.metaDescription : element.content }}">
+    {% endif %}
+{% endblock %}
+
+{% block titlebar %}
+    {% if core_options.homepage != page %}
+        <div class="aky-page-header" style="background-image: url('{{ renderFileManagerUrl(page.thumbnail) }}')">
+            <div class="aky-page-header-content">
+                <h1 class="aky-page-header-content__title">{{ page.title }}</h1>
+            </div>
+        </div>
+    {% endif %}
+{% endblock %}
+
+{% block content %}
+    {% include '@AkyosBuilder/front/render_components.html.twig' %}
+{% endblock %}

@@ -3,7 +3,7 @@
   "description": "AkyosCMS for Symfony - Builder",
   "type": "symfony-bundle",
   "require": {
-    "php": "^7.2",
+    "php": "^7.2"
   },
   "require-dev": {
   },
@@ -24,10 +24,11 @@
   ],
   "scripts": {
     "after-install-dependencies": [
-      "mv lib/BuilderBundle/InstallFiles/Config/twig.yaml config/packages",
       "echo 'builder:' >> routes.yaml",
       "echo '  resource: '../lib/BuilderBundle/Controller/'' >> routes.yaml",
       "echo '  type:     annotation' >> routes.yaml,",
+      "mv lib/BuilderBundle/InstallFiles/Config/twig.yaml config/packages",
+      "mv lib/BuilderBundle/InstallFiles/Templates/content.html.twig templates/bundles/AkyosCoreBundle/front",
       "rm -rf lib/BuilderBundle/InstallFiles",
       "php bin/console ckeditor:install",
       "php bin/console asset:install --symlink",
