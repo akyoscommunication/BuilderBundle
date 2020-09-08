@@ -16,9 +16,9 @@ services:
         tags: ['controller.service_arguments']
         public: true
 
-#    render.builder.tab:
-#        alias: Akyos\BuilderBundle\Controller\BuilderController
-#        public: false
+    render.builder:
+        alias: Akyos\BuilderBundle\Service\Builder
+        public: true
 
     component.row:
         alias: Akyos\BuilderBundle\Components\Row\RowComponentController

@@ -4,7 +4,6 @@ namespace Akyos\BuilderBundle\Controller;
 
 use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Entity\ComponentValue;
-use Akyos\BuilderBundle\Form\Component1Type;
 use Akyos\BuilderBundle\Form\ComponentType;
 use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
@@ -22,6 +21,9 @@ class ComponentController extends AbstractController
 {
     /**
      * @Route("/new", name="component_new", methods={"GET","POST"})
+     * @param Request $request
+     *
+     * @return Response
      */
     public function new(Request $request): Response
     {
@@ -45,6 +47,11 @@ class ComponentController extends AbstractController
 
     /**
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+     * @param Request $request
+     * @param Component $component
+     * @param ComponentFieldRepository $componentFieldRepository
+     *
+     * @return Response
      */
     public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository): Response
     {
@@ -88,6 +95,8 @@ class ComponentController extends AbstractController
     /**
      * @Route("/change-component-position", methods={"POST"}, options={"expose"=true})
      * @param Request $request
+     *
+     * @param ComponentRepository $componentRepository
      *
      * @return JsonResponse
      */
@@ -195,6 +204,9 @@ class ComponentController extends AbstractController
     /**
      * @Route("/edit/col", methods={"POST"}, options={"expose"=true})
      * @param Request $request
+     *
+     * @param ComponentRepository $componentRepository
+     * @param ComponentValueRepository $componentValueRepository
      *
      * @return JsonResponse
      */

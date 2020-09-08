@@ -2,11 +2,15 @@
 
 namespace Akyos\BuilderBundle\Controller;
 
+use Akyos\BuilderBundle\AkyosBuilderBundle;
+use Akyos\BuilderBundle\Entity\BuilderOptions;
 use Akyos\BuilderBundle\Entity\BuilderTemplate;
 use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Form\BuilderTemplateType;
 use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
+use Akyos\CoreBundle\Services\CoreService;
 use Knp\Component\Pager\PaginatorInterface;
+use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -112,17 +116,21 @@ class BuilderTemplateController extends AbstractController
      * @Route("/{id}", name="delete", methods={"DELETE"})
      * @param Request $request
      * @param BuilderTemplate $builderTemplate
-     * @param BuilderController $builderController
+     * @param CoreService $coreService
+     * @param ContainerInterface $container
+     *
      * @return Response
      */
-    public function delete(Request $request, BuilderTemplate $builderTemplate, BuilderController $builderController): Response
+    public function delete(Request $request, BuilderTemplate $builderTemplate, CoreService $coreService, ContainerInterface $container): Response
     {
+        $entity = 'BuilderTemplate';
         if ($this->isCsrfTokenValid('delete'.$builderTemplate->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            if ($this->forward('Akyos\CoreBundle\Controller\CoreBundleController::checkIfBundleEnable', ['bundle' => 'builder', 'entity' => 'BuilderTemplate'])->getContent() === "true") {
-                $builderController->onDeleteEntity('BuilderTemplate', $builderTemplate->getId());
+            if ($coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entity)) {
+                $container->get('render.builder')->onDeleteEntity($entity, $builderTemplate->getId());
             }
+
             $entityManager->remove($builderTemplate);
             $entityManager->flush();
         }

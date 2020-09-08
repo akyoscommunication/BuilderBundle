@@ -8,10 +8,20 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
 use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ComponentType extends AbstractType
 {
+    /** @var Request|null */
+    private $request;
+
+    public function __construct(RequestStack $requestStack)
+    {
+        $this->request = $requestStack->getCurrentRequest();
+    }
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $component = $builder->getData();
@@ -27,6 +37,7 @@ class ComponentType extends AbstractType
                 if(!$hasShortcodeValue) {
                     $newComponentValue = new ComponentValue();
                     $newComponentValue->setComponentField($field);
+                    $newComponentValue->setTranslatableLocale($this->request->getLocale());
                     $component->addComponentValue($newComponentValue);
                 }
             }
