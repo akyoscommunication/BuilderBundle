@@ -36,7 +36,8 @@ class ComponentTemplateType extends AbstractType
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
-                'label' => "Paramètres du composant"
+                'label' => "Paramètres du composant",
+
             ])
         ;
     }
@@ -44,7 +45,7 @@ class ComponentTemplateType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults([
-            'data_class' => ComponentTemplate::class,
+            'data_class' => ComponentTemplate::class
         ]);
     }
 }

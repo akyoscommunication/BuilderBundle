@@ -42,7 +42,11 @@ class RenderComponentController
             $params['customClasses'] = $component->getCustomClasses();
             $params['customId'] = $component->getCustomId();
             foreach ($component->getComponentValues() as $value) {
-                $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
+                if($value->getComponentField()->getType()=== 'entity'){
+                    $params['values'][$value->getComponentField()->getSlug()] = $this->em->getRepository($value->getComponentField()->getEntity())->find((int)$value->getValue());
+                }else{
+                    $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
+                }
             }
 
             $params = $this->container->get('component.'.strtolower($slug))->getParameters($params);
@@ -59,7 +63,11 @@ class RenderComponentController
             $params['customClasses'] = $component->getCustomClasses();
             $params['customId'] = $component->getCustomId();
             foreach ($component->getComponentValues() as $value) {
-                $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
+                if($value->getComponentField()->getType()=== 'entity'){
+                    $params['values'][$value->getComponentField()->getSlug()] = $this->em->getRepository($value->getComponentField()->getEntity())->find((int)$value->getValue());
+                }else{
+                    $params['values'][$value->getComponentField()->getSlug()] = $value->getValue();
+                }
             }
 
             $params = $this->container->get('component.'.strtolower($slug))->getParameters($params);
