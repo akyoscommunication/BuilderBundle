@@ -90,7 +90,7 @@ class Builder
         if ($choiceBuilderTemplateForm->isSubmitted() && $choiceBuilderTemplateForm->isValid()) {
             /** @var BuilderTemplate $template */
             $template = $choiceBuilderTemplateForm->get('choice_template')->getData();
-            $this->builderController->cloneTemplateBuilder($objectType, $objectId, $template->getId());
+            $this->cloneTemplateBuilder($objectType, $objectId, $template->getId());
 
             return new RedirectResponse($this->request->getUri(), 302);
         }
@@ -100,7 +100,7 @@ class Builder
         if ($makeBuilderTemplateForm->isSubmitted() && $makeBuilderTemplateForm->isValid()) {
             /** @var BuilderTemplate $template */
             $templateTitle = $makeBuilderTemplateForm->get('title')->getData();
-            $this->builderController->makeTemplate($objectType, $objectId, $templateTitle);
+            $this->makeTemplate($objectType, $objectId, $templateTitle);
             return new RedirectResponse($this->request->getUri(), 302);
         }
 
