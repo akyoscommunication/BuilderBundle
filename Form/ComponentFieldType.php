@@ -25,11 +25,9 @@ class ComponentFieldType extends AbstractType
         $meta = $this->entityManager->getMetadataFactory()->getAllMetadata();
         foreach ($meta as $m) {
             if(!preg_match('/Component|Option|Menu|ContactForm|User|Gedmo|BuilderTemplate|NewPasswordRequest|seo|Redirect301|File/i', $m->getName())) {
-                dump($m->getReflectionClass());
                 $this->entities[] = $m->getName();
             }
         }
-//        dd($this->entities);
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
