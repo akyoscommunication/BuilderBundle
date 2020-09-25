@@ -58,7 +58,7 @@ class Builder
     {
 //        ->getRepository(Component::class)->findBy(['type' => $objectType, 'typeId' => $objectId, 'isTemp' => true, 'parentComponent' => null], ['position' => 'ASC']);
         /** @var QueryBuilder $qbc */
-        $qbc = $this->em->getRepository(Component::class)->createQueryBuilder('c')->join('c.componentValues', 'ccv');
+        $qbc = $this->em->getRepository(Component::class)->createQueryBuilder('c');
         $qbc
             ->andWhere($qbc->expr()->eq('c.type', ':type'))
             ->andWhere($qbc->expr()->eq('c.typeId', ':typeId'))
