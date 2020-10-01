@@ -4,7 +4,7 @@ namespace Akyos\BuilderBundle\Repository;
 
 use Akyos\BuilderBundle\Entity\BuilderOptions;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Common\Persistence\ManagerRegistry;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method BuilderOptions|null find($id, $lockMode = null, $lockVersion = null)
