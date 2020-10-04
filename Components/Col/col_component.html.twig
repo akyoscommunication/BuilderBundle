@@ -17,7 +17,7 @@
     {% set padding = 'padding: '~values.padding~'; ' %}
 {% endif %}
 
-{% if values.color is not null %}
+{% if values.color is defined and values.color is not null %}
     {% set color = 'background-color: '~values.color~'; ' %}
 {% endif %}
 
