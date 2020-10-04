@@ -1,7 +1,9 @@
-    {% set bg = "" %}
+{% set bg = "" %}
 {% set padding = "" %}
 {% set margin = "" %}
 {% set position = "" %}
+{% set size = "" %}
+{% set color = "" %}
 
 {% if values.background_image is not null %}
     {% set bg = 'background-image: url('~getImagePathById(values.background_image)~'); ' %}
@@ -15,12 +17,20 @@
     {% set padding = 'padding: '~values.padding~'; ' %}
 {% endif %}
 
+{% if values.color is not null %}
+    {% set color = 'background-color: '~values.color~'; ' %}
+{% endif %}
+
+{% if values.background_size is not null %}
+    {% set size = 'background-size: '~values.background_size~'; ' %}
+{% endif %}
+
 {% if values.margin is not null %}
     {% set margin = 'margin: '~values.margin~'; ' %}
 {% endif %}
 <div class="col-{{ values.break is defined and values.break != "" ? values.break : 'md' }}-{{ values.col }} component-col {{ customClasses }}
 {{ values.background_image is not null and values.background_size is not null ? "component-col--"~values.background_size : "" }}"
-     style="{{ bg }} {{ margin }} {{ position }}">
+     style="{{ bg }} {{ margin }} {{ position }} {{ size }} {{ color }}">
 
     <div class="h-100 component-col--padding
 {{ values.display is not null ? "component-col--"~values.display : "block" }}

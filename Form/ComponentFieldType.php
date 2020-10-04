@@ -3,6 +3,9 @@
 namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\ComponentField;
+use Akyos\CoreBundle\Repository\PageRepository;
+use Akyos\CoreBundle\Repository\PostRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
@@ -12,8 +15,24 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ComponentFieldType extends AbstractType
 {
+
+    private $entityManager;
+    private $entities;
+
+    public function __construct( EntityManagerInterface $entityManager) {
+        $this->entityManager = $entityManager;
+        $this->entities = array();
+        $meta = $this->entityManager->getMetadataFactory()->getAllMetadata();
+        foreach ($meta as $m) {
+            if(!preg_match('/Component|Option|Menu|ContactForm|User|Gedmo|BuilderTemplate|NewPasswordRequest|seo|Redirect301|File/i', $m->getName())) {
+                $this->entities[] = $m->getName();
+            }
+        }
+    }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+
+
         $builder
             ->add('name', null, [
                 'label' => "Nom du paramètre"
@@ -39,10 +58,18 @@ class ComponentFieldType extends AbstractType
                     'Lien externe'   => 'link',
                     'Nombre'         => 'int',
                     'Select'        => 'select',
-                    'Booléen'       => 'bool'
+                    'Booléen'       => 'bool',
+                    'Entité'        =>'entity'
                 ],
                 'multiple' => false,
                 'expanded' => false
+            ])
+            ->add('entity', ChoiceType::class, [
+                'label' => "choisir un élément",
+                'choices'=>$this->entities,
+                'choice_label' => function ($choice, $key, $value) {
+                    return $value;
+                }
             ])
             ->add('fieldValues', CollectionType::class, [
                 'entry_type' => TextType::class,
@@ -67,6 +94,7 @@ class ComponentFieldType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ComponentField::class,
+
         ]);
     }
 }

@@ -10,4 +10,5 @@
     {% set margin = 'margin: '~values.margin~'; ' %}
 {% endif %}
 
-    <a style="{{ padding }}{{ margin }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }} class="component-button component-button-{{ values.color is defined ? values.color : "" }} btn btn-outline-">{{ values.button_text }} </a>
+<a style="{{ padding }}{{ margin }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }} class="component-button component-button-{{ values.color is defined ? values.color : "" }} btn btn-outline-">{{ values.button_text }} </a>
+

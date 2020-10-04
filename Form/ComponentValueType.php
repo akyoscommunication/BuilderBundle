@@ -7,7 +7,9 @@ use Akyos\CoreBundle\Repository\PostRepository;
 use Akyos\FileManagerBundle\Form\Type\FileManagerCollectionType;
 use Akyos\FileManagerBundle\Form\Type\FileManagerType;
 use Doctrine\DBAL\Types\BooleanType;
+use Doctrine\ORM\EntityManagerInterface;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
@@ -113,6 +115,18 @@ class ComponentValueType extends AbstractType
                                 'choices' => $this->posts,
                                 'required' => false,
                                 'label' => $field->getName()
+                            ])
+                        ;
+                        break;
+                    case 'entity' :
+                        $form
+                            ->add('value', EntityType::class, [
+                                'class'=> $field->getEntity(),
+                                'required' => false,
+                                'placeholder'=> "choix de l'entité",
+                                'choice_label' => function($choice, $key, $value){
+                                    return $choice;
+                                },
                             ])
                         ;
                         break;

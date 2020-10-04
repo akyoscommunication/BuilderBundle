@@ -79,6 +79,9 @@ class ComponentValue implements Translatable
         if(is_array($value)) {
             $value = json_encode($value);
         }
+        if(is_object($value)){
+            $value = $value->getId();
+        }
         $this->value = $value;
 
         return $this;
