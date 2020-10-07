@@ -49,7 +49,6 @@ class ComponentValueType extends AbstractType
             if ($componentValue != null) {
                 $field = $componentValue->getComponentField();
                 switch ($field->getType()) {
-
                     case 'textarea_html':
                         $form
                             ->add('value', CKEditorType::class, array(
@@ -123,6 +122,7 @@ class ComponentValueType extends AbstractType
                             ->add('value', EntityType::class, [
                                 'class'=> $field->getEntity(),
                                 'required' => false,
+                                'label'=>$field->getName(),
                                 'placeholder'=> "choix de l'entité",
                                 'choice_label' => function($choice, $key, $value){
                                     return $choice;
