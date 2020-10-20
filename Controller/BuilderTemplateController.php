@@ -33,11 +33,14 @@ class BuilderTemplateController extends AbstractController
      */
     public function index(BuilderTemplateRepository $builderTemplateRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $els = $paginator->paginate(
-            $builderTemplateRepository->findAll(),
-            $request->query->getInt('page', 1),
-            12
-        );
+        $query = $builderTemplateRepository->createQueryBuilder('a');
+        if($request->query->get('search')) {
+            $query
+                ->andWhere('a.title LIKE :keyword')
+                ->setParameter('keyword', '%'.$request->query->get('search').'%')
+            ;
+        }
+        $els = $paginator->paginate($query->getQuery(), $request->query->getInt('page',1),12);
 
         return $this->render('@AkyosCore/crud/index.html.twig', [
             'els' => $els,

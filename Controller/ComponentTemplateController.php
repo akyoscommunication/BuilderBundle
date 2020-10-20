@@ -33,11 +33,14 @@ class ComponentTemplateController extends AbstractController
      */
     public function index(ComponentTemplateRepository $componentTemplateRepository, PaginatorInterface $paginator, Request $request): Response
     {
-        $els = $paginator->paginate(
-            $componentTemplateRepository->findAll(),
-            $request->query->getInt('page', 1),
-            12
-        );
+        $query = $componentTemplateRepository->createQueryBuilder('a');
+        if($request->query->get('search')) {
+            $query
+                ->andWhere('a.name LIKE :keyword OR a.slug LIKE :keyword OR a.shortDescription LIKE :keyword')
+                ->setParameter('keyword', '%'.$request->query->get('search').'%')
+            ;
+        }
+        $els = $paginator->paginate($query->getQuery(), $request->query->getInt('page',1),12);
 
         return $this->render('@AkyosCore/crud/index.html.twig', [
             'els' => $els,
