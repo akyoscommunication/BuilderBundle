@@ -30,8 +30,10 @@ class ComponentValueType extends AbstractType
 {
     private $pages;
     private $posts;
+    /** @var EntityManagerInterface */
+    private EntityManagerInterface $em;
 
-    public function __construct(PageRepository $pageRepository, PostRepository $postRepository) {
+    public function __construct(PageRepository $pageRepository, PostRepository $postRepository, EntityManagerInterface $em) {
         $pages = $pageRepository->findAll();
         foreach($pages as $page) {
             $this->pages[$page->getTitle()] = $page->getId();
@@ -40,6 +42,7 @@ class ComponentValueType extends AbstractType
         foreach($posts as $post) {
             $this->posts[$post->getTitle()] = $post->getId();
         }
+        $this->em = $em;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)
@@ -108,7 +111,7 @@ class ComponentValueType extends AbstractType
                         ;
                         break;
 
-                    case 'postlink' :
+                    case 'postlink':
                         $form
                             ->add('value', ChoiceType::class, [
                                 'choices' => $this->posts,
@@ -117,7 +120,7 @@ class ComponentValueType extends AbstractType
                             ])
                         ;
                         break;
-                    case 'entity' :
+                    case 'entity':
                         $form
                             ->add('value', EntityType::class, [
                                 'class'=> $field->getEntity(),
@@ -127,6 +130,7 @@ class ComponentValueType extends AbstractType
                                 'choice_label' => function($choice, $key, $value){
                                     return $choice;
                                 },
+                                'data' => $this->em->getRepository($field->getEntity())->find((int)$componentValue->getValue())
                             ])
                         ;
                         break;
