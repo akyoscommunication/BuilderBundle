@@ -30,8 +30,7 @@ class ComponentValueType extends AbstractType
 {
     private $pages;
     private $posts;
-    /** @var EntityManagerInterface */
-    private EntityManagerInterface $em;
+    private $em;
 
     public function __construct(PageRepository $pageRepository, PostRepository $postRepository, EntityManagerInterface $em) {
         $pages = $pageRepository->findAll();
