@@ -43,9 +43,9 @@ class generateFixtureComponent extends Command
         $nameUCFirst = ucfirst(join('', array_map( function($word) { return ucfirst($word); } , explode('_', $name))));
         $componentComponentDir = __DIR__ . '/../../../src/Components/'.$nameUCFirst."/";
 
-        $fixtureContent = `<?php
+        $fixtureContent = "<?php
 
-namespace App\Components\\$nameUCFirst;
+namespace App\Components\\${nameUCFirst};
 
 use Akyos\BuilderBundle\Entity\ComponentField;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
@@ -53,34 +53,35 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 
-class $nameUCFirst`.`Fixtures extends Fixture implements FixtureGroupInterface
+class ${nameUCFirst}"."Fixtures extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager \$manager)
     {
         \$component = new ComponentTemplate();
-        \$component->setName('`.$component->getName().`');
-        \$component->setSlug('`.$component->getSlug().`');
-        \$component->setShortDescription('`.$component->getShortDescription().`');
-        \$component->setIsContainer(`.($component->getIsContainer() ? `true` : `false`).`);
-        \$component->setPrototype('`.$component->getPrototype().`');
+        \$component->setName('".$component->getName()."');
+        \$component->setSlug('".$component->getSlug()."');
+        \$component->setShortDescription('".$component->getShortDescription()."');
+        \$component->setIsContainer(".($component->getIsContainer() ? 'true' : 'false').");
+        \$component->setPrototype('".$component->getPrototype()."');
 
         \$componentFieldArray = [
-            `;
+            ";
 
         foreach ($component->getComponentFields() as $field) {
-            $fixtureContent .= `[
-                "name" => "`.$field->getName().`",
-                "slug" => "`.$field->getSlug().`",
-                "desc" => "`.$field->getShortDescription().`",
-                "type" => "`.$field->getType().`",
-                "option" => [`.implode(',', array_map(function ($e) {
-                    return `".$e."`;
-                }, $field->getFieldValues())).`],
-                "group" => "`.$field->getGroups().`",
-            ],`;
+            $fixtureContent .= '[
+                "name" => "'.$field->getName().'",
+                "slug" => "'.$field->getSlug().'",
+                "desc" => "'.$field->getShortDescription().'",
+                "type" => "'.$field->getType().'",
+                "entity" => "'.$field->getEntity().'",
+                "option" => ['.implode(',', array_map(function ($e) {
+                    return '"'.$e.'"';
+                }, $field->getFieldValues())).'],
+                "group" => "'.$field->getGroups().'",
+            ],';
         }
 
-        $fixtureContent .= `
+        $fixtureContent .= "
         ];
 
         foreach (\$componentFieldArray as \$componentField)
@@ -93,6 +94,7 @@ class $nameUCFirst`.`Fixtures extends Fixture implements FixtureGroupInterface
             \$newComponentField->setSlug(\$componentField['slug']);
             \$newComponentField->setShortDescription(\$componentField['desc']);
             \$newComponentField->setType(\$componentField['type']);
+            \$newComponentField->setEntity(\$componentField['entity']);
             \$newComponentField->setFieldValues(\$componentField['option']);
             \$newComponentField->setGroups(\$componentField['group']);
 
@@ -111,7 +113,7 @@ class $nameUCFirst`.`Fixtures extends Fixture implements FixtureGroupInterface
     {
         return ['component'];
     }
-}`;
+}";
 
         /*Fixture*/
         if(!file_exists($componentComponentDir.$nameUCFirst.'Fixtures.php')) {

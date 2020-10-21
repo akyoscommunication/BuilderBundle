@@ -1,5 +1,11 @@
 .component-image{
+	a {
+		display: block;
+		height: 100%;
+		width: 100%;
+	}
 	img{
+		object-position: center;
 		object-fit:contain;
 		width: 100%;
 		height: 100%;
@@ -7,6 +13,34 @@
 	&--cover{
 		img {
 			object-fit: cover;
+		}
+	}
+
+	&--position {
+		&-left {
+			img {
+				object-position: left;
+			}
+		}
+		&-right {
+			img {
+				object-position: right;
+			}
+		}
+		&-top {
+			img {
+				object-position: top;
+			}
+		}
+		&-bottom {
+			img {
+				object-position: bottom;
+			}
+		}
+		&-center {
+			img {
+				object-position: center;
+			}
 		}
 	}
 }
