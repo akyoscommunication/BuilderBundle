@@ -1,0 +1,68 @@
+.component-image {
+
+	img {
+		width: 100%;
+		height: 100%;
+	}
+
+	&--cover {
+		img {
+			object-fit: cover;
+		}
+	}
+
+	&--contain {
+		img {
+			object-fit: contain;
+		}
+	}
+
+	&--position {
+
+		&-top-left {
+			img {
+				object-position: top left;
+			}
+		}
+		&-top-center {
+			img {
+				object-position: top center;
+			}
+		}
+		&-top-right {
+			img {
+				object-position: top right;
+			}
+		}
+		&-center-left {
+			img {
+				object-position: center left;
+			}
+		}
+		&-center-center {
+			img {
+				object-position: center center;
+			}
+		}
+		&-center-right {
+			img {
+				object-position: center right;
+			}
+		}
+		&-bottom-left {
+			img {
+				object-position: bottom left;
+			}
+		}
+		&-bottom-center {
+			img {
+				object-position: bottom center;
+			}
+		}
+		&-bottom-right {
+			img {
+				object-position: bottom right;
+			}
+		}
+	}
+}

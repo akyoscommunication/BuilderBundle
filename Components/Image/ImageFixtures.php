@@ -74,7 +74,7 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "desc" => "Position de l'image",
                 "type" => "select",
                 "entity" => "App\Entity\Program",
-                "option" => ["Gauche:left","Droite:right","Centre:center","Top:top","Bottom:bottom"],
+                "option" => ["En haut à gauche:top-left","En haut au centre:top-center","En haut à droite:top-right","Centré à gauche:center-left","Centré au centre:center-center","Centré à droite:center-right","En bas à gauche:bottom-left","En bas au centre:bottom-center","En bas à droite:bottom-right"],
                 "group" => "Général",
             ],
         ];

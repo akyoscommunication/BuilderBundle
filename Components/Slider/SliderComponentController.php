@@ -1,19 +1,20 @@
 <?php
-
-namespace Akyos\BuilderBundle\Components\Row;
+        
+namespace Akyos\BuilderBundle\Components\Slider;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
-class RowComponentController extends AbstractController implements ComponentInterface
+class SliderComponentController extends AbstractController implements ComponentInterface
 {
     public function getTemplateName(): string
     {
-        return '@BuilderComponents/Row/row_component.html.twig';
+        return '@BuilderComponents/Slider/slider_component.html.twig';
     }
 
     public function getParameters($params = null)
     {
+        
         return $params;
     }
 }

@@ -1,0 +1,12 @@
+@import '~swiper/swiper.scss';
+@import '~swiper/components/navigation/navigation.scss';
+@import '~swiper/components/pagination/pagination.scss';
+@import '~swiper/components/scrollbar/scrollbar.scss';
+
+.component-slider {
+
+	.swiper-container {
+		width: 100%;
+		height: 100%;
+	}
+}

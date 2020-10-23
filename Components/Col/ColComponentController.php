@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ColComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return '@BuilderComponents/Col/col_component.html.twig';
     }

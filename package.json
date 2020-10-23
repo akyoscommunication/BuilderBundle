@@ -40,7 +40,7 @@
     "jquery": "^3.3.1",
     "jquery-ui": "^1.12.1",
     "popper.js": "~1.14.4",
-    "swiper": "^4.3.5"
+    "swiper": "^6.3.4"
   },
   "browserslist": [
     "last 2 versions",

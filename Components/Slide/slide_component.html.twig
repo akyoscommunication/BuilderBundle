@@ -1,0 +1,5 @@
+{% for childComponent in component.childComponents %}
+    <div class="swiper-slide">
+        {{ renderComponent(childComponent)|raw }}
+    </div>
+{% endfor %}

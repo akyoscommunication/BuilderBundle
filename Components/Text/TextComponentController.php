@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class TextComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return '@BuilderComponents/Text/text_component.html.twig';
     }
