@@ -10,7 +10,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ButtonFixtures extends Fixture implements FixtureGroupInterface
 {
-    public function load(ObjectManager $manager)
+    public function load(ObjectManager $manager): void
     {
         $component = new ComponentTemplate();
         $component->setName('Button');
