@@ -1,0 +1,11 @@
+.component-icon-title-box {
+	&__icon {
+		@include flex(row, nowrap, center, center);
+	}
+	&__title {
+
+	}
+	&__description {
+
+	}
+}

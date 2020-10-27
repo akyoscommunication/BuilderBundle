@@ -29,6 +29,14 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'group' => 'Général',
             ],
             [
+                'name' => 'Offset',
+                'slug' => 'offset',
+                'desc' => 'Nombre de colonne offset (md)',
+                'type' => 'int',
+                'option' => [],
+                'group' => 'Général',
+            ],
+            [
                 'name' => 'Image de fond',
                 'slug' => 'background_image',
                 'desc' => 'Image de fond de la colonne',

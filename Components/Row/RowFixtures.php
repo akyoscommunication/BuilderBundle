@@ -37,6 +37,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                     'Par défaut:default',
                     'Étirer le background:full-background',
                     'Étirer la rangée et son contenu:full-width',
+                    'Étirer la rangée et son contenu avec padding:full-width-with-padding',
                 ],
                 'group' => 'Général',
             ],

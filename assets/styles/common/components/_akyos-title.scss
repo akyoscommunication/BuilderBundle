@@ -2,19 +2,19 @@
 
     // COLOR
     &--white {
-        color: $white;
+        color: var(--light);
     }
 
     &--black {
-        color: $black;
+        color: var(--dark);
     }
 
     &--primary {
-        color: $primary;
+        color: var(--primary);
     }
 
     &--secondary {
-        color: $secondary;
+        color: var(--secondary);
     }
 
     // UNDERLINE
@@ -32,25 +32,25 @@
 
         &.component-title--white {
             &:after {
-                background-color: $white;
+                background-color: var(--light);
             }
         }
 
         &.component-title--black {
             &:after {
-                background-color: $black;
+                background-color: var(--dark);
             }
         }
 
         &.component-title--primary {
             &:after {
-                background-color: $primary;
+                background-color: var(--primary);
             }
         }
 
         &.component-title--secondary {
             &:after {
-                background-color: $secondary;
+                background-color: var(--secondary);
             }
         }
     }

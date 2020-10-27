@@ -1,104 +1,114 @@
 .component-button {
-	transition: 0.4s;
+	@include flex(row, wrap, center, center);
+	width: 100%;
 
-	&-primary {
-		background-color: $primary;
-		border: 1px solid $primary;
-	}
+	&__link {
+		width: fit-content;
+		transition: .3s;
 
-	&-secondary {
-		background-color: $secondary;
-		border: 1px solid $secondary;
-	}
-
-	&-white {
-		background-color: $white;
-		border: 1px solid $white;
-	}
-
-	&-black {
-		background-color: $black;
-		border: 1px solid $black;
-	}
-
-	&-transparent {
-		background-color: transparent;
-
-		&.component-button-text {
-
-			&-primary {
-				border: 1px solid $primary;
-			}
-
-			&-secondary {
-				border: 1px solid $secondary;
-			}
-
-			&-white {
-				border: 1px solid $white;
-			}
-
-			&-black {
-				border: 1px solid $black;
-			}
-		}
-	}
-
-	&-text {
-
-		&-primary {
-			color: $primary;
-		}
-
-		&-secondary {
-			color: $secondary;
-		}
-
-		&-white {
-			color: $white;
-		}
-
-		&-black {
-			color: $black;
-		}
-	}
-
-	&:hover {
 		&.component-button {
-
 			&-primary {
-				color: $primary;
+				background-color: var(--primary);
+				border: 1px solid var(--primary);
 			}
 
 			&-secondary {
-				color: $secondary;
+				background-color: var(--secondary);
+				border: 1px solid var(--secondary);
 			}
 
 			&-white {
-				color: $white;
+				background-color: var(--light);
+				border: 1px solid var(--light);
 			}
 
 			&-black {
-				color: $black;
+				background-color: var(--dark);
+				border: 1px solid var(--dark);
+			}
+
+			&-transparent {
+				background-color: transparent;
+
+				&.component-button-text {
+
+					&-primary {
+						border: 1px solid var(--primary);
+					}
+
+					&-secondary {
+						border: 1px solid var(--secondary);
+					}
+
+					&-white {
+						border: 1px solid var(--light);
+					}
+
+					&-black {
+						border: 1px solid var(--dark);
+					}
+				}
 			}
 
 			&-text {
 
 				&-primary {
-					background-color: $primary;
+					color: var(--primary);
 				}
 
 				&-secondary {
-					background-color: $secondary;
+					color: var(--secondary);
 				}
 
 				&-white {
-					background-color: $white;
+					color: var(--light);
 				}
 
 				&-black {
-					background-color: $black;
+					color: var(--dark);
 				}
+			}
+		}
+
+		&:hover {
+			background-color: transparent;
+			text-decoration: none;
+
+			&.component-button {
+				&-primary {
+					color: var(--primary);
+				}
+
+				&-secondary {
+					color: var(--secondary);
+				}
+
+				&-white {
+					color: var(--light);
+				}
+
+				&-black {
+					color: var(--dark);
+				}
+
+				//&-text {
+				//
+				//	&-primary {
+				//		background-color: var(--primary);
+				//	}
+				//
+				//	&-secondary {
+				//		background-color: var(--secondary);
+				//	}
+				//
+				//	&-white {
+				//		background-color: var(--light);
+				//	}
+				//
+				//	&-black {
+				//		background-color: var(--dark);
+				//	}
+				//}
 			}
 		}
 	}

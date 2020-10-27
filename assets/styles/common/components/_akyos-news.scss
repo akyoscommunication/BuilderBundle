@@ -1,0 +1,21 @@
+.component-news{
+	&--link {
+
+	}
+	&__thumb {
+		> * {
+			@include objectFit(cover, center, 100%, 100%);
+		}
+	}
+	&__title {
+		font-size: 20px;
+		font-weight: 700;
+		color: var(--dark);
+	}
+	&__excerpt {
+		font-size: 16px;
+	}
+	&__more {
+		color: var(--primary);
+	}
+}

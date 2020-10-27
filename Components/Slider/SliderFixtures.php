@@ -53,6 +53,14 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "option" => ["Horizontal:horizontal","Vertical:vertical"],
                 "group" => "Général",
             ],[
+                 "name" => "Hauteur du slider",
+                 "slug" => "height",
+                 "desc" => "Hauteur du slider",
+                 "type" => "text",
+                 "entity" => "App\Entity\Platform\AG\AG",
+                 "option" => [],
+                 "group" => "Général",
+             ],[
                 "name" => "Vitesse de défilement",
                 "slug" => "speed",
                 "desc" => "Vitesse de défilement des slides en millisecondes (5000 par défaut)",

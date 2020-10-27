@@ -1,20 +1,22 @@
-{% set padding = "" %}
-{% set margin = "" %}
+{% apply spaceless %}
+    {% set padding = "" %}
+    {% set margin = "" %}
 
+    {% if values.padding is defined and values.padding is not null %}
+        {% set padding = 'padding: '~values.padding~'; ' %}
+    {% endif %}
 
-{% if values.padding is defined and values.padding is not null %}
-    {% set padding = 'padding: '~values.padding~'; ' %}
-{% endif %}
+    {% if values.margin is defined and values.margin is not null %}
+        {% set margin = 'margin: '~values.margin~'; ' %}
+    {% endif %}
 
-{% if values.margin is defined and values.margin is not null %}
-    {% set margin = 'margin: '~values.margin~'; ' %}
-{% endif %}
+    {% if values.border_radius is defined and values.border_radius is not null %}
+        {% set border_radius = 'border-radius: '~values.border_radius~'; ' %}
+    {% else %}
+        {% set border_radius = 'border-radius: 0; ' %}
+    {% endif %}
 
-{% if values.border_radius is defined and values.border_radius is not null %}
-    {% set border_radius = 'border-radius: '~values.border_radius~'; ' %}
-{% else %}
-    {% set border_radius = 'border-radius: 0; ' %}
-{% endif %}
-
-<a style="{{ padding }}{{ margin }}{{ border_radius }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }} class="component-button component-button-{{ values.color is defined ? values.color : "" }} component-button-text-{{ values.text_color is defined ? values.text_color : "" }} btn btn-outline-">{{ values.button_text }} </a>
-
+    <div class="component-button{{ values.position is defined and values.position != "" ? " justify-content-"~values.position : "" }}">
+        <a class="component-button__link component-button-{{ values.color is defined ? values.color : "" }} component-button-text-{{ values.text_color is defined ? values.text_color : "" }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }} style="{{ padding }}{{ margin }}{{ border_radius }}">{{ values.button_text }}</a>
+    </div>
+{% endapply %}

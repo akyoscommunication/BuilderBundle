@@ -1,7 +1,7 @@
 <div class="component-icon-title-box">
     {% if values.icon is defined and values.icon is not null %}
         <div class="component-icon-title-box__icon">
-            {{ renderFileManager(values.icon, false) }}
+            {{ renderFileManager(values.icon, false)|raw }}
         </div>
     {% endif %}
     <div class="component-icon-title-box__title">

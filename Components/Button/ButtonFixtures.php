@@ -76,6 +76,17 @@ class ButtonFixtures extends Fixture implements FixtureGroupInterface
                 'type' => 'text',
                 'option' => [],
                 'group' => 'Style',
+            ],[
+                'name' => 'Position',
+                'slug' => 'position',
+                'desc' => 'Position',
+                'type' => 'select',
+                'option' => [
+                    "Droite:end",
+                    "Gauche:start",
+                    "Centré:center",
+                ],
+                'group' => 'Style',
             ],
         ];
 
