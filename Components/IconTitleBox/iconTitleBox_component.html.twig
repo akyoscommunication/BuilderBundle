@@ -1,0 +1,22 @@
+<div class="component-icon-title-box">
+    {% if values.icon is defined and values.icon is not null %}
+        <div class="component-icon-title-box__icon">
+            {{ renderFileManager(values.icon, false) }}
+        </div>
+    {% endif %}
+    <div class="component-icon-title-box__title">
+        {{ renderComponentBySlug('title', {
+            'text_content' : values.title,
+            'tag' : 'h3',
+            'color' : 'white',
+            'has_decoration' : false,
+            'position' : 'center',
+            'font_weight' : 'bold',
+            'font' : null,
+            'font_size' : ''
+        })|raw }}
+    </div>
+    <div class="component-icon-title-box__description">
+        {{ values.description|raw }}
+    </div>
+</div>

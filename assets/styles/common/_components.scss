@@ -3,7 +3,14 @@
 @import "components/akyos-button";
 @import "components/akyos-slider";
 @import "components/akyos-image";
+@import "components/akyos-title";
+@import "components/akyos-column";
+@import "components/akyos-row";
 
 #akyTabBuilderHeader {
     padding: 1rem 0;
+}
+
+.toggleComponentTab {
+    cursor: pointer;
 }

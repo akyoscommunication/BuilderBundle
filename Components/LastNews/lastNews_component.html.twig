@@ -1,0 +1,10 @@
+<div class="component-last-news">
+    {% for new in news %}
+        <a class="component-last-news__item" href="{{ path('single', {'entitySlug':'articles', 'slug':new.slug}) }}">
+            <div class="component-last-news__item__image">{{ renderFileManager(new.thumbnailArchive)|raw }}</div>
+            <div class="component-last-news__item__title">{{ new.title }}</div>
+            <div class="component-last-news__item__excerpt">{{ new.content|striptags|trim|truncate(155, '...') }}</div>
+            <div class="component-last-news__item__more">Lire la suite</div>
+        </a>
+    {% endfor %}
+</div>

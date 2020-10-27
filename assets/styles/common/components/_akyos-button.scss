@@ -1,3 +1,105 @@
-.toggleComponentTab {
-    cursor: pointer;
+.component-button {
+	transition: 0.4s;
+
+	&-primary {
+		background-color: $primary;
+		border: 1px solid $primary;
+	}
+
+	&-secondary {
+		background-color: $secondary;
+		border: 1px solid $secondary;
+	}
+
+	&-white {
+		background-color: $white;
+		border: 1px solid $white;
+	}
+
+	&-black {
+		background-color: $black;
+		border: 1px solid $black;
+	}
+
+	&-transparent {
+		background-color: transparent;
+
+		&.component-button-text {
+
+			&-primary {
+				border: 1px solid $primary;
+			}
+
+			&-secondary {
+				border: 1px solid $secondary;
+			}
+
+			&-white {
+				border: 1px solid $white;
+			}
+
+			&-black {
+				border: 1px solid $black;
+			}
+		}
+	}
+
+	&-text {
+
+		&-primary {
+			color: $primary;
+		}
+
+		&-secondary {
+			color: $secondary;
+		}
+
+		&-white {
+			color: $white;
+		}
+
+		&-black {
+			color: $black;
+		}
+	}
+
+	&:hover {
+		&.component-button {
+
+			&-primary {
+				color: $primary;
+			}
+
+			&-secondary {
+				color: $secondary;
+			}
+
+			&-white {
+				color: $white;
+			}
+
+			&-black {
+				color: $black;
+			}
+
+			&-text {
+
+				&-primary {
+					background-color: $primary;
+				}
+
+				&-secondary {
+					background-color: $secondary;
+				}
+
+				&-white {
+					background-color: $white;
+				}
+
+				&-black {
+					background-color: $black;
+				}
+			}
+		}
+	}
 }

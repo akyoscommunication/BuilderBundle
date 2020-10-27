@@ -76,7 +76,15 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "App\Entity\Program",
                 "option" => ["En haut à gauche:top-left","En haut au centre:top-center","En haut à droite:top-right","Centré à gauche:center-left","Centré au centre:center-center","Centré à droite:center-right","En bas à gauche:bottom-left","En bas au centre:bottom-center","En bas à droite:bottom-right"],
                 "group" => "Général",
-            ],
+            ],[
+                "name" => "Désactiver le lazy-loading ?",
+                "slug" => "no_lazy",
+                "desc" => "L'image doit-elle charger directement ou au scroll ?",
+                "type" => "bool",
+                "entity" => "App\Entity\Program",
+                "option" => [],
+                "group" => "Général",
+            ]
         ];
 
         foreach ($componentFieldArray as $componentField)

@@ -1,6 +1,6 @@
 <?php
 
-namespace Akyos\BuilderBundle\Components\Text;
+namespace Akyos\BuilderBundle\Components\Slide;
 
 use Akyos\BuilderBundle\Entity\ComponentField;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
@@ -8,26 +8,19 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class TextFixtures extends Fixture implements FixtureGroupInterface
+class SlideFixtures extends Fixture implements FixtureGroupInterface
 {
     public function load(ObjectManager $manager): void
     {
         $component = new ComponentTemplate();
-        $component->setName('Bloc de texte');
-        $component->setSlug('text');
-        $component->setShortDescription('Insérez un bloc de texte');
-        $component->setIsContainer(false);
+        $component->setName('Slide');
+        $component->setSlug('slide');
+        $component->setShortDescription('Slide du slider');
+        $component->setIsContainer(true);
         $component->setPrototype('default');
 
         $componentFieldArray = [
-            [
-                'name' => 'Contenu',
-                'slug' => 'content',
-                'desc' => 'Insérez un contenu',
-                'type' => 'textarea_html',
-                'option' => [],
-                'group' => 'Général',
-            ],
+            
         ];
 
         foreach ($componentFieldArray as $componentField)
@@ -40,6 +33,7 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
             $newComponentField->setSlug($componentField['slug']);
             $newComponentField->setShortDescription($componentField['desc']);
             $newComponentField->setType($componentField['type']);
+            $newComponentField->setEntity($componentField['entity']);
             $newComponentField->setFieldValues($componentField['option']);
             $newComponentField->setGroups($componentField['group']);
 

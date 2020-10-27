@@ -12,6 +12,7 @@
 
     &-header {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
         align-items: center;
         margin-bottom: 2rem;
@@ -75,6 +76,7 @@
             &.active {
                 .aky-builder-component-header {
                     display: flex;
+                    flex-wrap: wrap;
                     justify-content: flex-end;
                 }
             }
@@ -91,7 +93,7 @@
 #componentsRenderContainer{
     > .aky-builder-component-sortable {
         .aky-builder-component {
-            padding: 1.5rem 2.5rem;
+            padding: 1rem;
             background-color: #f1f1f1;
         }
     }
@@ -145,13 +147,13 @@
 
         &__title {
             font-weight: bold;
-            font-size: 1.15rem;
+            font-size: 1rem;
             line-height: 1;
         }
 
         &__desc {
             font-weight: lighter;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
 
         &-info{
@@ -191,7 +193,7 @@
         }
 
         &.isParent{
-            padding: 1.5rem 2.5rem;
+            padding: 1rem 1rem 0;
             background-color: #f1f1f1;
         }
         &.onDeleting{
@@ -207,26 +209,36 @@
             transition: ease .3s;
             position: absolute;
             right: -5px;
-            top: -5px;
+            bottom: calc(100% - 20px);
+
+            .btn-sm, .btn-group-sm > .btn {
+                font-size: 0.75rem;
+            }
+
+            .form-control {
+                height: calc(1.5em + 0.3rem + 2px);
+                padding: 0.375rem;
+                max-width: 40px;
+            }
         }
 
         &:has( > .aky-builder-component-sortable) {
-            padding: 1.5rem 2.5rem;
+            padding: 1rem;
             background-color: #f1f1f1;
             border: 1px solid #c7c7c7;
         }
 
         &-child-render {
-            padding-top: 1rem;
-            padding-bottom: 1rem;
+            padding-top: 0;
+            padding-bottom: 0;
             min-height: 20px;
 
             .aky-builder-component{
-                padding: 1.5rem 2.5rem;
+                padding: 1rem;
                 background-color: $white;
 
                 &.isParent {
-                    padding: 1.5rem 2.5rem;
+                    padding: 1rem 1rem 0;
                     background-color: #f1f1f1;
                     border: 1px solid #c7c7c7;
                 }
@@ -257,6 +269,7 @@
     &.active {
         .aky-builder-component-header {
             display: flex;
+            flex-wrap: wrap;
             justify-content: flex-end;
         }
     }

@@ -10,5 +10,11 @@
     {% set margin = 'margin: '~values.margin~'; ' %}
 {% endif %}
 
-<a style="{{ padding }}{{ margin }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }} class="component-button component-button-{{ values.color is defined ? values.color : "" }} btn btn-outline-">{{ values.button_text }} </a>
+{% if values.border_radius is defined and values.border_radius is not null %}
+    {% set border_radius = 'border-radius: '~values.border_radius~'; ' %}
+{% else %}
+    {% set border_radius = 'border-radius: 0; ' %}
+{% endif %}
+
+<a style="{{ padding }}{{ margin }}{{ border_radius }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }} class="component-button component-button-{{ values.color is defined ? values.color : "" }} component-button-text-{{ values.text_color is defined ? values.text_color : "" }} btn btn-outline-">{{ values.button_text }} </a>
 

@@ -1,111 +1,83 @@
-// Shortcode akyos-title
-.akyos-title{
-    position: relative;
-    .title {
+.component-title {
+
+    // COLOR
+    &--white {
+        color: $white;
+    }
+
+    &--black {
+        color: $black;
+    }
+
+    &--primary {
+        color: $primary;
+    }
+
+    &--secondary {
+        color: $secondary;
+    }
+
+    // UNDERLINE
+    &--underline {
         position: relative;
-        font-size: 1.5rem;
-        font-weight: bold;
-        line-height: 1;
-        margin-bottom: 40px;
-        padding-bottom: 20px;
-        &.primary {
-            color: $primary;
-        }
-        &.second {
-            color: $second;
-        }
-        &.white {
-            color: $white;
-        }
-        &.black {
-            color: $black;
-        }
+
         &:after {
-            display: block;
             position: absolute;
-            width: 45px;
-            height: 7px;
+            content: "";
+            top: calc(100% + 20px);
+            left: 0;
+            width: 50px;
+            height: 3px;
         }
-        &.separator-primary {
-            &:after {
-                background-color: $primary;
-            }
-        }
-        &.separator-second {
-            &:after {
-                background-color: $second;
-            }
-        }
-        &.separator-black {
-            &:after {
-                background-color: $black;
-            }
-        }
-        &.separator-white {
+
+        &.component-title--white {
             &:after {
                 background-color: $white;
             }
         }
-        &.bottom {
-            padding-bottom: 30px;
+
+        &.component-title--black {
             &:after {
-                content: "";
-                bottom: 0;
+                background-color: $black;
             }
         }
-        &.top {
-            padding-top: 30px;
+
+        &.component-title--primary {
             &:after {
-                content: "";
-                top: 0;
+                background-color: $primary;
             }
         }
-        &.center {
-            text-align: center;
+
+        &.component-title--secondary {
             &:after {
-                left: 50%;
-                transform: translateX(-50%);
+                background-color: $secondary;
             }
-        }
-        &.left {
-            text-align: left;
-            &:after {
-                left: 0;
-            }
-        }
-        &.right {
-            text-align: right;
-            &:after {
-                right: 0;
-            }
-        }
-        &.uppercase {
-            text-transform: uppercase;
         }
     }
-    .sub-title {
-        font-size: 1rem;
-        margin-bottom: 30px;
-        &.center {
-            text-align: center;
-        }
-        &.left {
-            text-align: left;
-        }
-        &.right {
-            text-align: right;
-        }
-        &.primary {
-            color: $primary;
-        }
-        &.second {
-            color: $second;
-        }
-        &.white {
-            color: $white;
-        }
-        &.black {
-            color: $black;
-        }
+
+    // POSITION
+    &--left {
+        text-align: left;
+    }
+
+    &--right {
+        text-align: right;
+    }
+
+    &--center {
+        text-align: center;
+    }
+
+    // FONT-WEIGHT
+    &--weight-light {
+        font-weight: 300;
+    }
+
+    &--weight-default {
+        font-weight: 400;
+    }
+
+    &--weight-bold {
+        font-weight: 700;
     }
 }

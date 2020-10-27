@@ -26,7 +26,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Nombre de colonne (sur 12)',
                 'type' => 'text',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Image de fond',
@@ -34,7 +34,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Image de fond de la colonne',
                 'type' => 'image',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Background-size',
@@ -46,7 +46,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                     'Contain (rentre entièrement dans le conteneur):contain',
                     'Auto:auto',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Padding',
@@ -54,7 +54,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Marge interne (ex: 15px 20px 15px 20)',
                 'type' => 'text',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Margin',
@@ -62,7 +62,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Marge externe (ex: 15px 20px 15px 20)',
                 'type' => 'text',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Display',
@@ -73,7 +73,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                     'Block:block',
                     'Flex:flex',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Flex direction',
@@ -84,7 +84,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                     'Horizontal:row',
                     'Vertical:column',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Flex-wrap',
@@ -95,7 +95,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                     'Oui:wrap',
                     'Non:nowrap',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Justify-content',
@@ -109,7 +109,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                     'Autant d\'espace entre chaque élément:space-b',
                     'Autant d\'espace autour et entre chaque élément:space-a',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Align-items',
@@ -122,7 +122,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                     'À la fin:end',
                     'Hauteur égale:stretch',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Background position',
@@ -134,7 +134,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                     'Center:center',
                     'Left:left',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Break Point',
@@ -142,7 +142,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Point de rupture',
                 'type' => 'text',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
         ];
 

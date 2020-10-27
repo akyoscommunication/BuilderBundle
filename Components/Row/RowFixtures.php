@@ -26,7 +26,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Image de fond de rangée',
                 'type' => 'image',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Container',
@@ -38,7 +38,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                     'Étirer le background:full-background',
                     'Étirer la rangée et son contenu:full-width',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Padding',
@@ -46,7 +46,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Marge interne (ex: 15px 20px 15px 20)',
                 'type' => 'text',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Margin',
@@ -54,7 +54,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Marge externe (ex: 15px 20px 15px 20)',
                 'type' => 'text',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Background-size',
@@ -66,7 +66,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                     'Contain (rentre entièrement dans le conteneur):contain',
                     'Auto:auto',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Couleur de fond',
@@ -78,7 +78,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                     'Gris clair:#f5f5f5',
                     'Rouge:#e3001b',
                 ],
-                'group' => 'général',
+                'group' => 'Général',
             ],
             [
                 'name' => 'Background',
@@ -86,7 +86,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                 'desc' => 'Code CSS pour background',
                 'type' => 'text',
                 'option' => [],
-                'group' => 'général',
+                'group' => 'Général',
             ],
         ];
 

@@ -4,7 +4,13 @@
     {% if values.redirection is defined and values.redirection is not empty %}
         <a href="{{ getPermalinkById('Page', values.redirection) }}">
     {% endif %}
-        {{ renderFileManager(values.image)|raw }}
+
+        {% if values.no_lazy is defined and values.no_lazy %}
+            {{ renderFileManager(values.image, false)|raw }}
+        {% else %}
+            {{ renderFileManager(values.image)|raw }}
+        {% endif %}
+
     {% if values.redirection is defined and values.redirection is not empty %}
         </a>
     {% endif %}
