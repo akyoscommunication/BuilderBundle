@@ -44,6 +44,14 @@ class IconTitleBoxFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
+            ],[
+                "name" => "Icone en class",
+                "slug" => "icon_class",
+                "desc" => "Icone en class",
+                "type" => "text",
+                "entity" => "App\Entity\Platform\AG\AG",
+                "option" => [],
+                "group" => "Général",
             ],
         ];
 

@@ -1,32 +1,34 @@
-{% set pagination = values.pagination is defined and values.pagination == "1" ? true : false %}
-{% set navigation = values.navigation is defined and values.navigation == "1" ? true : false %}
-{% set scrollbar = values.scrollbar is defined and values.scrollbar == "1" ? true : false %}
-{% set direction = values.direction is defined and values.direction is not null ? values.direction : 'horizontal' %}
-{% set speed = values.speed is defined and values.speed is not null ? values.speed : 5000 %}
-{% set autoplay = values.autoplay is defined and values.autoplay != "" ? values.autoplay : true %}
-{% set loop = values.loop is defined and values.loop != "" ? values.loop : true %}
-{% set slides_per_view = values.slides_per_view is defined and values.slides_per_view is not null ? values.slides_per_view : 1 %}
-{% set slides_per_view_991 = values.slides_per_view_991 is defined and values.slides_per_view_991 is not null ? values.slides_per_view_991 : 1 %}
-{% set slides_per_view_767 = values.slides_per_view_767 is defined and values.slides_per_view_767 is not null ? values.slides_per_view_767 : 1 %}
+{% apply spaceless %}
+    {% set pagination = values.pagination is defined and values.pagination == "1" ? true : false %}
+    {% set navigation = values.navigation is defined and values.navigation == "1" ? true : false %}
+    {% set scrollbar = values.scrollbar is defined and values.scrollbar == "1" ? true : false %}
+    {% set direction = values.direction is defined and values.direction is not null ? values.direction : 'horizontal' %}
+    {% set speed = values.speed is defined and values.speed is not null ? values.speed : 5000 %}
+    {% set autoplay = values.autoplay is defined and values.autoplay != "" ? values.autoplay : true %}
+    {% set loop = values.loop is defined and values.loop != "" ? values.loop : true %}
+    {% set slides_per_view = values.slides_per_view is defined and values.slides_per_view is not null ? values.slides_per_view : 1 %}
+    {% set slides_per_view_991 = values.slides_per_view_991 is defined and values.slides_per_view_991 is not null ? values.slides_per_view_991 : 1 %}
+    {% set slides_per_view_767 = values.slides_per_view_767 is defined and values.slides_per_view_767 is not null ? values.slides_per_view_767 : 1 %}
 
-<div class="component-slider" style="{{ values.height is defined and values.height != "" ? 'height:'~values.height~';' : '' }}">
-    <div id="slider{{ component.id }}" class="swiper-container" data-direction="{{ direction }}" data-speed="{{ speed }}" data-autoplay="{{ autoplay }}" data-loop="{{ loop }}" data-slides_per_view="{{ slides_per_view }}" data-slides_per_view_991="{{ slides_per_view_991 }}" data-slides_per_view_767="{{ slides_per_view_767 }}" data-pagination="{{ pagination }}" data-navigation="{{ navigation }}" data-scrollbar="{{ scrollbar }}">
-        <div class="swiper-wrapper">
-            {% for childComponent in component.childComponents %}
-                <div class="swiper-slide">
-                    {{ renderComponent(childComponent)|raw }}
-                </div>
-            {% endfor %}
+    <div class="component-slider{{ customClasses ? ' '~customClasses : '' }}" style="{{ values.height is defined and values.height != "" ? 'height:'~values.height~';' : '' }}">
+        <div id="slider{{ component.id }}" class="swiper-container" data-direction="{{ direction }}" data-speed="{{ speed }}" data-autoplay="{{ autoplay }}" data-loop="{{ loop }}" data-slides_per_view="{{ slides_per_view }}" data-slides_per_view_991="{{ slides_per_view_991 }}" data-slides_per_view_767="{{ slides_per_view_767 }}" data-pagination="{{ pagination }}" data-navigation="{{ navigation }}" data-scrollbar="{{ scrollbar }}">
+            <div class="swiper-wrapper">
+                {% for childComponent in component.childComponents %}
+                    <div class="swiper-slide">
+                        {{ renderComponent(childComponent)|raw }}
+                    </div>
+                {% endfor %}
+            </div>
+            {% if values.navigation is defined and values.navigation %}
+                <div class="swiper-button-next component-slider-next"></div>
+                <div class="swiper-button-prev component-slider-prev"></div>
+            {% endif %}
+            {% if values.pagination is defined and values.pagination %}
+                <div class="swiper-pagination component-slider-pagination"></div>
+            {% endif %}
+            {% if values.scrollbar is defined and values.scrollbar %}
+                <div class="swiper-scrollbar component-slider-scrollbar"></div>
+            {% endif %}
         </div>
-        {% if values.navigation is defined and values.navigation %}
-            <div class="swiper-button-next component-slider-next"></div>
-            <div class="swiper-button-prev component-slider-prev"></div>
-        {% endif %}
-        {% if values.pagination is defined and values.pagination %}
-            <div class="swiper-pagination component-slider-pagination"></div>
-        {% endif %}
-        {% if values.scrollbar is defined and values.scrollbar %}
-            <div class="swiper-scrollbar component-slider-scrollbar"></div>
-        {% endif %}
     </div>
-</div>
+{% endapply %}

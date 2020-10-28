@@ -1,17 +1,19 @@
-<div class="component-image {{ values.size is defined and values.size ? ' component-image--'~values.size : '' }} {{ values.position is defined and values.position ? ' component-image--position-'~values.position : '' }}"
-        style="{{ values.height is defined and values.height is not empty ? 'height : ' ~ values.height ~ ';' : '' }}{{ values.margin is defined and values.margin is not empty ? 'margin : ' ~ values.margin ~ ';' : '' }}{{ values.width is defined and values.width is not empty ? 'width : ' ~ values.width ~ ';' : '' }}"
->
-    {% if values.redirection is defined and values.redirection is not empty %}
-        <a href="{{ getPermalinkById('Page', values.redirection) }}">
-    {% endif %}
+{% apply spaceless %}
+        <div class="component-image{{ values.size is defined and values.size ? ' component-image--'~values.size : '' }}{{ values.position is defined and values.position ? ' component-image--position-'~values.position : '' }}{{ customClasses ? ' '~customClasses : '' }}"
+                style="{{ values.height is defined and values.height is not empty ? 'height : ' ~ values.height ~ ';' : '' }}{{ values.margin is defined and values.margin is not empty ? 'margin : ' ~ values.margin ~ ';' : '' }}{{ values.width is defined and values.width is not empty ? 'width : ' ~ values.width ~ ';' : '' }}"
+        >
+            {% if values.redirection is defined and values.redirection is not empty %}
+                <a href="{{ getPermalinkById('Page', values.redirection) }}">
+            {% endif %}
 
-        {% if values.no_lazy is defined and values.no_lazy %}
-            {{ renderFileManager(values.image, false)|raw }}
-        {% else %}
-            {{ renderFileManager(values.image)|raw }}
-        {% endif %}
+                {% if values.no_lazy is defined and values.no_lazy %}
+                    {{ renderFileManager(values.image, false)|raw }}
+                {% else %}
+                    {{ renderFileManager(values.image)|raw }}
+                {% endif %}
 
-    {% if values.redirection is defined and values.redirection is not empty %}
-        </a>
-    {% endif %}
-</div>
+            {% if values.redirection is defined and values.redirection is not empty %}
+                </a>
+            {% endif %}
+        </div>
+{% endapply %}

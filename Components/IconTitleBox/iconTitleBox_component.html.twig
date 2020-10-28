@@ -3,6 +3,10 @@
         <div class="component-icon-title-box__icon">
             {{ renderFileManager(values.icon, false)|raw }}
         </div>
+    {% elseif values.icon_class is defined and values.icon_class is not null %}
+        <div class="component-icon-title-box__icon">
+            <i class="{{ values.icon_class }}"></i>
+        </div>
     {% endif %}
     <div class="component-icon-title-box__title">
         {{ renderComponentBySlug('title', {
