@@ -8,6 +8,7 @@ use Akyos\BuilderBundle\Form\ComponentType;
 use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentValueRepository;
+use Akyos\BuilderBundle\Twig\BuilderExtension;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -53,16 +54,23 @@ class ComponentController extends AbstractController
      *
      * @return Response
      */
-    public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository): Response
+    public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository, BuilderExtension $builderExtension): Response
     {
         $form = $this->createForm(ComponentType::class, $component);
+        $slug = $component->getComponentTemplate()->getSlug();
         $groups = $componentFieldRepository->getUniqueFieldsGroups($component->getComponentTemplate()->getId());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $this->getDoctrine()->getManager()->flush();
 
-            return new JsonResponse('valid');
+            $params = [];
+            /** @var ComponentValue $value */
+            foreach ($component->getComponentValues()->getValues() as $value) {
+                $params[$value->getComponentField()->getSlug()] = $value->getValue();
+            }
+
+            return new Response($builderExtension->renderComponentBySlug($slug, $params));
         }
 
         return $this->render('@AkyosBuilder/component/edit.html.twig', [

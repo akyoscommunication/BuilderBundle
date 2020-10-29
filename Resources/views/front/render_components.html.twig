@@ -1,6 +1,41 @@
 {# RENDER COMPONENTS -- NEEDS 'COMPONENTS' VAR #}
+{% import _self as macros %}
 
-{% for component in components %}
-    {{ renderComponent(component)|raw }}
-{% endfor %}
+{% if edit is defined and edit %}
+    {% for component in components %}
+        {{ _self.componentLoop(component, type, typeId) }}
+        {{ renderComponent(component, edit, type, typeId)|raw }}
+    {% endfor %}
+{% else %}
+    {% for component in components %}
+        {{ renderComponent(component)|raw }}
+    {% endfor %}
+{% endif %}
 
+{% macro componentLoop(component, type, typeId) %}
+    {% set valProto = '' %}
+    {% if component.componentTemplate.prototype == 'col' %}
+        {% set valProto = component.componentValues|filter(val => val.componentField.slug == 'col')|last %}
+    {% endif %}
+    <div class="aky-builder-component-view aky-builder-component-sortable" style="position: absolute;">
+        <div class="aky-builder-component active {{ component.parentComponent is null or component.childComponents is not empty ? 'isParent' : '' }}" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
+            <div class="aky-builder-component-header">
+                {% if component.componentTemplate.prototype == 'col' %}
+                    <input class="form-control changeColInput" type="number" name="col" value="{{ valProto ? valProto.value : '12' }}" min="1" max="12"/>
+                {% endif %}
+                {% if component.componentTemplate.isContainer %}
+                    <button type="button" class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab"><i class="fas fa-plus"></i></button>
+                {% endif %}
+                <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit" data-url="{{ path('component_edit', {'id':component.id}) }}"><i class="fas fa-edit"></i></button>
+                <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i class="fas fa-times"></i></button>
+            </div>
+            {% if component.componentTemplate.isContainer is not null %}
+                <div class="aky-builder-component-child-render aky-builder-component-view-child aky-builder-component-view aky-sortable-component-container {{ component.componentTemplate.prototype ? 'row' : '' }}">
+                    {% for childComponent in component.childComponents | filter(childComponent => component.childComponents|length > 0) %}
+                        {{ _self.componentLoop(childComponent) }}
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+    </div>
+{% endmacro componentLoop %}

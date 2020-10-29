@@ -4,6 +4,7 @@ namespace Akyos\BuilderBundle\Twig;
 
 use Akyos\BuilderBundle\Controller\RenderComponentController;
 use Akyos\BuilderBundle\Entity\Component;
+use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 use Twig\TwigFunction;
@@ -11,10 +12,13 @@ use Twig\TwigFunction;
 class BuilderExtension extends AbstractExtension
 {
     private $renderComponentController;
+    /** @var Environment */
+    private $environment;
 
-    public function __construct(RenderComponentController $renderComponentController)
+    public function __construct(RenderComponentController $renderComponentController, Environment $environment)
     {
         $this->renderComponentController = $renderComponentController;
+        $this->environment = $environment;
     }
 
     public function getFilters(): array
@@ -30,14 +34,23 @@ class BuilderExtension extends AbstractExtension
     public function getFunctions(): array
     {
         return [
+            new TwigFunction('setGlobals', [$this, 'setGlobals']),
             new TwigFunction('renderComponent', [$this, 'renderComponent']),
             new TwigFunction('renderComponentBySlug', [$this, 'renderComponentBySlug']),
         ];
     }
 
-    public function renderComponent(Component $component)
+    public function setGlobals(array $array)
     {
-        return $this->renderComponentController->renderComponent($component);
+        foreach ($array as $k => $g) {
+            $this->environment->addGlobal($k, $g);
+        }
+        return true;
+    }
+
+    public function renderComponent(Component $component, $edit = false, $type = null, $typeId = null)
+    {
+        return $this->renderComponentController->renderComponent($component, $edit, $type, $typeId);
     }
 
     public function renderComponentBySlug($componentSlug, $values)

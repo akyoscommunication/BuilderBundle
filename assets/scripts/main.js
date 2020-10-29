@@ -23,6 +23,16 @@ class Builder {
 
         sortableComponent.init();
         modal.init();
+        
+        $('.aky-builder-component-view').each(function (i) {
+            const next = $(this).next()
+            $(this).removeClass('aky-builder-component-sortable')
+            next.addClass('aky-builder-component-sortable position-relative')
+            
+            if($(next)[0]){
+                $(next)[0].appendChild(this)
+            }
+        })
     }
 
     static initFieldsCollectionForm() {

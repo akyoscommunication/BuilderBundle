@@ -27,7 +27,7 @@
         {% set margin = 'margin: '~values.margin~'; ' %}
     {% endif %}
 
-    <div class="component-row--container{{ customClasses ? ' '~customClasses : '' }}">
+    <div class="component-row--container{{ customClasses is defined and customClasses ? ' '~customClasses : '' }}">
         {% if values.row_width %}
         <div class="{{ values.row_width is not null and (values.row_width == "full-width" or values.row_width == "full-background") ? "" : (values.row_width == "full-width-with-padding" ? "container-fluid" : "container") }} component-row {{ values.background_image is not null and values.background_size is not null ? "component-row--"~values.background_size : "" }}" style="{{ bg }}">
             {% endif %}

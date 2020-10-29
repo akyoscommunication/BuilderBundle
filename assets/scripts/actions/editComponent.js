@@ -8,8 +8,10 @@ class EditComponent {
         // $('.aky-builder-component .aky-builder-component-header__edit').off('click');
         $(document).on('click', '.aky-builder-component-header__edit', function () {
             const componentid = $(this).parents('.aky-builder-component').data('componentid');
-            const path = '/admin/builder/component/'+componentid+'/edit';
-
+            const path = '/admin/builder/component/'+componentid+'/edit'
+            const parent = $(this).parents('.aky-builder-component-view')
+            const comp = parent.parent()
+            
             $('#modalEdit').addClass('active');
 
             fetch(path)
@@ -30,17 +32,19 @@ class EditComponent {
                                     url: path,
                                     data: $(this).serialize(),
                                     success: function (res) {
-                                        console.log(res, 'success');
-                                        if ( res === 'valid'){
-                                            $('#modalEdit').removeClass('active');
-                                            Modal.checkModal('#modalEdit', '#modalEditComponent');
-                                            new Toast('Composant édité', 'success', 'Succès', 5000 );
-                                        } else {
-                                            new Toast('Une erreur s\'est produite...', 'error', 'L\'édition du composant n\'a pas eu lieu', 5000 );
-                                        }
+                                        const cloneParent = parent.clone()
+                                        parent.remove(comp)
+                                        const newComp = $(res)
+                                        comp.replaceWith(newComp)
+                                        $(newComp)[0].appendChild(cloneParent[0])
+                                        $(newComp).addClass('aky-builder-component-sortable position-relative')
+                                        $('#modalEdit').removeClass('active');
+                                        Modal.checkModal('#modalEdit', '#modalEditComponent');
+                                        new Toast('Composant édité', 'success', 'Succès', 5000 );
                                     },
                                     error: function(er) {
                                         console.log(er, 'error');
+                                        new Toast('Une erreur s\'est produite...', 'error', 'L\'édition du composant n\'a pas eu lieu', 5000 );
                                     }
                                 });
                             });
