@@ -1,5 +1,5 @@
 .aky-builder-components{
-    background-color: $white;
+    background-color: white;
     position: fixed;
     top: 175px;
     bottom: 0;
@@ -50,8 +50,8 @@
             margin: 10px;
             max-width: calc(100%/3);
             height: 15vh;
-            background-color: $second;
-            color: $white;
+            background-color: var(--secondary);
+            color: white;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
             display: flex;
@@ -100,7 +100,7 @@
 
     &Add {
         > .toggleComponentTab {
-            border: 1px dotted $black;
+            border: 1px dotted black;
             border-radius: 15px;
             padding: 2rem;
             display: flex;
@@ -110,7 +110,7 @@
             transition: ease .3s;
 
             &:hover {
-                background-color: $grey;
+                background-color: grey;
             }
         }
     }
@@ -127,14 +127,17 @@
         width: 100%;
 
         &-sortable{
+            border: 1px solid blue;
+            padding: 20px;
+
             &.ui-sortable-helper {
                 background-color: transparent !important;
-                border: none;
+                border: 1px solid black !important;
                 > .aky-builder-component {
-                    background-color: $second !important;
-                    color: $white;
+                    background-color: var(--secondary) !important;
+                    color: white;
                     .aky-builder-component-child-render {
-                        color: $black;
+                        color: black;
                     }
                 }
             }
@@ -162,8 +165,8 @@
             display: inline-flex;
             &-content{
                 display: none;
-                color: $white;
-                background-color: $black;
+                color: white;
+                background-color: black;
                 padding: 1rem 2rem;
                 position: absolute;
                 font-family: 'Montserrat', sans-serif;
@@ -235,7 +238,7 @@
 
             .aky-builder-component{
                 padding: 1rem;
-                background-color: $white;
+                background-color: white;
 
                 &.isParent {
                     padding: 1rem 1rem 0;

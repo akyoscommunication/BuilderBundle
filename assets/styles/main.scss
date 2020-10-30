@@ -5,3 +5,28 @@
 @import "common/fonts";
 @import "common/components";
 @import "common/global";
+
+.aky-builder-component-sortable {
+	width: 100%;
+
+	.aky-builder-component {
+		top: 0;
+		left: 0;
+		right: 0;
+		display: none;
+	}
+
+	&:hover {
+		border: 1px black solid;
+		border-radius: 4px;
+
+		> .aky-builder-component {
+			display: block;
+		}
+	}
+}
+
+.draggable--over {
+	background-color: grey;
+	border: 1px solid black;
+}

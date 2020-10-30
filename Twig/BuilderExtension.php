@@ -53,9 +53,9 @@ class BuilderExtension extends AbstractExtension
         return $this->renderComponentController->renderComponent($component, $edit, $type, $typeId);
     }
 
-    public function renderComponentBySlug($componentSlug, $values)
+    public function renderComponentBySlug($componentSlug, $values, Component $component = null, $edit = false, $type = null, $typeId = null)
     {
-        return $this->renderComponentController->renderComponentBySlug($componentSlug, $values);
+        return $this->renderComponentController->renderComponentBySlug($componentSlug, $values, $component, $edit, $type, $typeId);
     }
 
     public function slugify($slug)

@@ -56,6 +56,8 @@ class ComponentController extends AbstractController
      */
     public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository, BuilderExtension $builderExtension): Response
     {
+        $type = $request->get('type');
+        $typeId = $request->get('typeId');
         $form = $this->createForm(ComponentType::class, $component);
         $slug = $component->getComponentTemplate()->getSlug();
         $groups = $componentFieldRepository->getUniqueFieldsGroups($component->getComponentTemplate()->getId());
@@ -70,7 +72,7 @@ class ComponentController extends AbstractController
                 $params[$value->getComponentField()->getSlug()] = $value->getValue();
             }
 
-            return new Response($builderExtension->renderComponentBySlug($slug, $params));
+            return new Response($builderExtension->renderComponentBySlug($slug, $params, $component, true, $type, $typeId));
         }
 
         return $this->render('@AkyosBuilder/component/edit.html.twig', [

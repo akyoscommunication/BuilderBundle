@@ -3,7 +3,7 @@ import editComponent from './actions/editComponent'
 import deleteComponent from './actions/deleteComponent'
 import editColComponent from './actions/editColComponent'
 
-import sortableComponent from './modules/sortable'
+import SortableJs from './modules/sortable'
 
 import collectionForm from './modules/collectionForm'
 import modal from './modules/modal'
@@ -20,19 +20,21 @@ class Builder {
         editComponent.editComponent();
         deleteComponent.deleteComponent();
         editColComponent.changeCol();
-
-        sortableComponent.init();
+        
         modal.init();
         
-        $('.aky-builder-component-view').each(function (i) {
+        $('.aky-builder-component[data-componentid]').each(function (i) {
             const next = $(this).next()
-            $(this).removeClass('aky-builder-component-sortable')
             next.addClass('aky-builder-component-sortable position-relative')
             
             if($(next)[0]){
                 $(next)[0].appendChild(this)
             }
         })
+        
+        setTimeout(() => {
+            SortableJs.init();
+        }, 800)
     }
 
     static initFieldsCollectionForm() {

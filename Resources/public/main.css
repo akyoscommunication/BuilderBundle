@@ -78,7 +78,7 @@
   margin: 10px;
   max-width: calc(100%/3);
   height: 15vh;
-  background-color: #041D53;
+  background-color: var(--secondary);
   color: white;
   cursor: pointer;
   font-family: 'Montserrat', sans-serif;
@@ -138,7 +138,7 @@
 }
 
 #componentsRenderContainerAdd > .toggleComponentTab {
-  border: 1px dotted #0a0a0a;
+  border: 1px dotted black;
   border-radius: 15px;
   padding: 2rem;
   display: -webkit-box;
@@ -160,7 +160,7 @@
 }
 
 #componentsRenderContainerAdd > .toggleComponentTab:hover {
-  background-color: #F3F3F3;
+  background-color: grey;
 }
 
 #componentsRenderContainer .aky-builder-component {
@@ -178,18 +178,23 @@
   width: 100%;
 }
 
+#componentsRenderContainer .aky-builder-component-sortable {
+  border: 1px solid blue;
+  padding: 20px;
+}
+
 #componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper {
   background-color: transparent !important;
-  border: none;
+  border: 1px solid black !important;
 }
 
 #componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper > .aky-builder-component {
-  background-color: #041D53 !important;
+  background-color: var(--secondary) !important;
   color: white;
 }
 
 #componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper > .aky-builder-component .aky-builder-component-child-render {
-  color: #0a0a0a;
+  color: black;
 }
 
 #componentsRenderContainer .aky-builder-component:active {
@@ -219,7 +224,7 @@
 #componentsRenderContainer .aky-builder-component-info-content {
   display: none;
   color: white;
-  background-color: #0a0a0a;
+  background-color: black;
   padding: 1rem 2rem;
   position: absolute;
   font-family: 'Montserrat', sans-serif;
@@ -1413,4 +1418,29 @@ button.swiper-pagination-bullet {
 
 .toggleComponentTab {
   cursor: pointer;
+}
+
+.aky-builder-component-sortable {
+  width: 100%;
+}
+
+.aky-builder-component-sortable .aky-builder-component {
+  top: 0;
+  left: 0;
+  right: 0;
+  display: none;
+}
+
+.aky-builder-component-sortable:hover {
+  border: 1px black solid;
+  border-radius: 4px;
+}
+
+.aky-builder-component-sortable:hover > .aky-builder-component {
+  display: block;
+}
+
+.draggable--over {
+  background-color: grey;
+  border: 1px solid black;
 }

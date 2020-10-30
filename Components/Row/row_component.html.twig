@@ -36,14 +36,14 @@
             <div style="{{ margin }}">
                 {% endif %}
 
-                <div class="{{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? "row" : "" }}" style="{{ values.row_width is null ? bg : '' }} {{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? padding : '' }}">
+                <div class="{{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? "row builder-component--container" : "" }}" style="{{ values.row_width is null ? bg : '' }} {{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? padding : '' }}">
                     {% if values.row_width is not null and values.row_width == "full-background" %}
                     {% if margin != "" %}
                     <div style="{{ margin }}">
                         {% endif %}
 
                         <div class="container">
-                            <div class="row" style="{{ padding }}">
+                            <div class="row builder-component--container" style="{{ padding }}">
                                 {% endif %}
 
                                 {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}

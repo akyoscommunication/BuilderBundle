@@ -58,28 +58,16 @@
         </div>
     </div>
 
-    <div id="componentsRenderContainer" class="aky-sortable-component-container row" data-componentid="main">
-        {% include '@AkyosBuilder/front/render_components.html.twig' with {'edit' : true} %}
+    <div id="componentsRenderContainer">
+        <div class="builder-component--container row" data-componentid="main">
+            {% include '@AkyosBuilder/front/render_components.html.twig' with {'edit' : true} %}
+        </div>
     </div>
 {% endblock %}
 
 {% block stylesheets %}
     {{ parent() }}
     <link rel="stylesheet" href="{{ asset('bundles/akyosbuilder/main.css') }}">
-    <style>
-        .aky-builder-component-sortable {
-            width: 100%;
-        }
-        .aky-builder-component-sortable:hover > .aky-builder-component-view {
-            display: block;
-        }
-        .aky-builder-component-view {
-            top: 0;
-            left: 0;
-            right: 0;
-            display: none;
-        }
-    </style>
 {% endblock %}
 
 {% block javascripts %}

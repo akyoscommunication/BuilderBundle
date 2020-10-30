@@ -82,12 +82,16 @@ class RenderComponentController
         }
     }
 
-    public function renderComponentBySlug($componentSlug, $values)
+    public function renderComponentBySlug($componentSlug, $values, $component, $edit, $type, $typeId)
     {
         $builderClassName = '\Akyos\BuilderBundle\Components\\'.$this->camelCase($componentSlug).'\\'.$this->camelCase($componentSlug).'ComponentController';
         $appClassName = '\App\Components\\'.$this->camelCase($componentSlug).'\\'.$this->camelCase($componentSlug).'ComponentController';
 
         $params['values'] = $values;
+        $params['component'] = $component;
+        $params['edit'] = $edit;
+        $params['type'] = $type;
+        $params['typeId'] = $typeId;
 
         if(class_exists($appClassName)) {
             $view = $appClassName::getTemplateName();
