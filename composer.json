@@ -24,9 +24,10 @@
   ],
   "scripts": {
     "after-install-dependencies": [
+      "echo $'\n' >> config/routes.yaml",
       "echo 'builder:' >> config/routes.yaml",
-      "echo '  resource: '../lib/BuilderBundle/Controller/'' >> config/routes.yaml",
-      "echo '  type:     annotation' >> config/routes.yaml,",
+      "echo '    resource: \"../lib/BuilderBundle/Controller/\"' >> config/routes.yaml",
+      "echo '    type: annotation' >> config/routes.yaml",
       "mv lib/BuilderBundle/InstallFiles/Config/twig.yaml config/packages",
       "mv lib/BuilderBundle/InstallFiles/Templates/content.html.twig templates/bundles/AkyosCoreBundle/front",
       "rm -rf lib/BuilderBundle/InstallFiles",
