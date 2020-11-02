@@ -3,6 +3,8 @@
     {% set padding = "" %}
     {% set bg = "" %}
 
+    {% if not values.row_width %}{% set values = values|merge({'row_width': 'default'}) %}{% endif %}
+
     {% if values.background is defined and values.background is not null %}
         {% set bg = bg~values.background~' ' %}
     {% endif %}

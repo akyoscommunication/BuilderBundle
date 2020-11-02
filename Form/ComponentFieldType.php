@@ -59,7 +59,8 @@ class ComponentFieldType extends AbstractType
                     'Nombre'         => 'int',
                     'Select'        => 'select',
                     'Booléen'       => 'bool',
-                    'Entité'        =>'entity',
+                    'Entité'        => 'entity',
+                    'Couleur'        => 'color',
                 ],
                 'multiple' => false,
                 'expanded' => false

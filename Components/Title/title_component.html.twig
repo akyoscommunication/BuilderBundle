@@ -1,11 +1,11 @@
 {% apply spaceless %}
     {% set style = {} %}
 
-    {% set style = (values.font is not null ? style|merge({'font-family' : values.font}) : style|merge({'font-family' : "inherit"})) %}
+    {% set style = (values.font is defined and values.font is not null ? style|merge({'font-family' : values.font}) : style|merge({'font-family' : "inherit"})) %}
 
     {% if values.font_size is defined and values.font_size is not null and values.font_size|number_format > 0 %}{% set style = style|merge({'font-size' : values.font_size|number_format ~ 'px'}) %}{% endif %}
     {% if values.padding is defined and values.padding != "" %}{% set style = style|merge({'padding' : values.padding}) %}{% endif %}
     {% if values.margin is defined and values.margin != "" %}{% set style = style|merge({'margin' : values.margin}) %}{% endif %}
 
-    <{{ values.tag is not null ? values.tag : "h2" }} class="component-title {{ values.has_decoration is not null and values.has_decoration ? "component-title--underline" : "" }} component-title--{{ values.position is not null ? values.position : "left" }} component-title--weight-{{ values.font_weight is not null ? values.font_weight : "default" }} component-title--{{ values.color is not null ? values.color : "primary" }}" style="{% for k, s in style %}{{ k~':'~s~';' }}{% endfor %}">{{ values.text_content is not null ? values.text_content|raw : "" }}</{{ values.tag is not null ? values.tag : "h2" }}>
+    <{{ values.tag is defined and values.tag is not null ? values.tag : "h2" }} class="component-title {{ values.has_decoration is defined and values.has_decoration is not null and values.has_decoration ? "component-title--underline" : "" }} component-title--{{ values.position is defined and values.position is not null ? values.position : "left" }} component-title--weight-{{ values.font_weight is defined and values.font_weight is not null ? values.font_weight : "default" }} component-title--{{ values.color is defined and values.color is not null ? values.color : "primary" }}" style="{% for k, s in style %}{{ k~':'~s~';' }}{% endfor %}">{{ values.text_content is defined and values.text_content is not null ? values.text_content|raw : "" }}</{{ values.tag is defined and values.tag is not null ? values.tag : "h2" }}>
 {% endapply %}

@@ -20,37 +20,51 @@
     // UNDERLINE
     &--underline {
         position: relative;
+        padding-bottom: 10px;
 
         &:after {
             position: absolute;
             content: "";
-            top: calc(100% + 20px);
+            top: 100%;
             left: 0;
             width: 50px;
             height: 3px;
         }
 
-        &.component-title--white {
-            &:after {
-                background-color: var(--light);
+        &.component-title{
+            &--right {
+                &:after {
+                    left: initial;
+                    right: 0;
+                }
             }
-        }
 
-        &.component-title--black {
-            &:after {
-                background-color: var(--dark);
+            &--center {
+                &:after {
+                    left: 50%;
+                    transform: translateX(-50%);
+                }
             }
-        }
 
-        &.component-title--primary {
-            &:after {
-                background-color: var(--primary);
+            &--white {
+                &:after {
+                    background-color: var(--light);
+                }
             }
-        }
-
-        &.component-title--secondary {
-            &:after {
-                background-color: var(--secondary);
+            &--black {
+                &:after {
+                    background-color: var(--dark);
+                }
+            }
+            &--primary {
+                &:after {
+                    background-color: var(--primary);
+                }
+            }
+            &--secondary {
+                &:after {
+                    background-color: var(--secondary);
+                }
             }
         }
     }

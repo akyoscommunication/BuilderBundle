@@ -1,38 +1,20 @@
 {% apply spaceless %}
-    {% set bg = "" %}
-    {% set padding = "" %}
-    {% set margin = "" %}
-    {% set position = "" %}
-    {% set size = "" %}
-    {% set color = "" %}
+    {% set style = {} %}
+    {% if values.margin is defined and values.margin != "" %}{% set style = style|merge({'margin' : values.margin}) %}{% endif %}
+    {% if values.background_image is defined and values.background_image is not null %}{% set style = style|merge({'background-image' : "url('"~getImagePathById(values.background_image)~"')"}) %}{% endif %}
+    {% if values.background_color is defined and values.background_color is not null %}{% set style = style|merge({'background-color' : values.background_color}) %}{% endif %}
+    {% if values.background_size is defined and values.background_size is not null %}{% set style = style|merge({'background-size' : values.background_size}) %}{% endif %}
+    {% if values.backgroundPosition is defined and values.backgroundPosition is not null %}{% set style = style|merge({'background-position' : values.backgroundPosition}) %}{% endif %}
 
-    {% if values.background_image is not null %}
-        {% set bg = 'background-image: url('~getImagePathById(values.background_image)~'); ' %}
-    {% endif %}
+    {% set style_el = {} %}
+    {% if values.height is defined and values.height is not null %}{% set style_el = style_el|merge({'height' : values.height}) %}{% endif %}
+    {% if values.padding is defined and values.padding is not null %}{% set style_el = style_el|merge({'padding' : values.padding}) %}{% endif %}
+    {% if values.background_color_el is defined and values.background_color_el is not null %}{% set style_el = style_el|merge({'background-color' : values.background_color_el}) %}{% endif %}
 
-    {% if values.backgroundPosition is defined and values.backgroundPosition is not null %}
-        {% set position = 'background-position: '~values.backgroundPosition~'; ' %}
-    {% endif %}
-
-    {% if values.padding is not null %}
-        {% set padding = 'padding: '~values.padding~'; ' %}
-    {% endif %}
-
-    {% if values.color is defined and values.color is not null %}
-        {% set color = 'background-color: '~values.color~'; ' %}
-    {% endif %}
-
-    {% if values.background_size is not null %}
-        {% set size = 'background-size: '~values.background_size~'; ' %}
-    {% endif %}
-
-    {% if values.margin is not null %}
-        {% set margin = 'margin: '~values.margin~'; ' %}
-    {% endif %}
-    <div class="col-{{ values.break is defined and values.break != "" ? values.break : 'md' }}-{{ values.col }}{{ values.offset is defined and values.offset != "" ? ' offset-'~(values.break is defined and values.break != "" ? values.break~'-' : 'md-')~values.offset : '' }} component-col{{ customClasses ? ' '~customClasses : '' }}{{ values.background_image is not null and values.background_size is not null ? " component-col--"~values.background_size : "" }}{{ values.text_color is defined and values.text_color != "" ? ' text-'~values.text_color : '' }}"
-         style="{{ bg }} {{ margin }} {{ position }} {{ size }} {{ color }}">
-        <div class="h-100 component-col--padding{{ values.display is not null ? " component-col--"~values.display : " block" }}{{ values.display is not null and values.display == "flex" and values.flex_direction is not null ? " component-col--flex-"~values.flex_direction : "" }}{{ values.display is not null and values.display == "flex" and values.flex_wrap is not null ? " component-col--flex-"~values.flex_wrap : "" }}{{ values.display is not null and values.display == "flex" and values.justify_content is not null ? " component-col--flex-jc-"~values.justify_content : "" }}{{ values.display is not null and values.display == "flex" and values.align_items is not null ? " component-col--flex-ai-"~values.align_items : "" }}"
-             style="{{ padding }} {{ position }}">
+    <div class="col-{{ values.break is defined and values.break != "" ? values.break : 'md' }}-{{ values.col }}{{ values.offset is defined and values.offset != "" ? ' offset-'~(values.break is defined and values.break != "" ? values.break~'-' : 'md-')~values.offset : '' }} component-col{{ customClasses is defined and customClasses ? ' '~customClasses : '' }}{{ values.background_image is not null and values.background_size is not null ? " component-col--"~values.background_size : "" }}{{ values.text_color is defined and values.text_color != "" ? ' text-'~values.text_color : '' }}"
+         style="{% for k, s in style %}{{ k~':'~s~';' }}{% endfor %}">
+        <div class="component-col--padding{{ values.height is not defined or values.height is null ? ' h-100' : false }}{{ values.display is not null ? " component-col--"~values.display : " block" }}{{ values.display is not null and values.display == "flex" and values.flex_direction is not null ? " component-col--flex-"~values.flex_direction : "" }}{{ values.display is not null and values.display == "flex" and values.flex_wrap is not null ? " component-col--flex-"~values.flex_wrap : "" }}{{ values.display is not null and values.display == "flex" and values.justify_content is not null ? " component-col--flex-jc-"~values.justify_content : "" }}{{ values.display is not null and values.display == "flex" and values.align_items is not null ? " component-col--flex-ai-"~values.align_items : "" }}"
+             style="{% for k, s in style_el %}{{ k~':'~s~';' }}{% endfor %}">
             {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}
         </div>
     </div>

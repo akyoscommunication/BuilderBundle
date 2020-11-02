@@ -151,6 +151,39 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'type' => 'text',
                 'option' => [],
                 'group' => 'Général',
+            ],[
+                'name' => 'Couleur de texte',
+                'slug' => 'text_color',
+                'desc' => 'Couleur de texte',
+                'type' => 'select',
+                'option' => [
+                    'Primaire:primary',
+                    'Secondaire:secondary',
+                    'Noir:dark',
+                    'Blanc:light',
+                ],
+                'group' => 'Général',
+            ],[
+                'name' => 'Couleur de fond',
+                'slug' => 'background_color',
+                'desc' => 'Couleur de fond',
+                'type' => 'text',
+                'option' => [],
+                'group' => 'Général',
+            ],[
+                'name' => "Couleur de fond de l'élément à l'intérieur",
+                'slug' => 'background_color_el',
+                'desc' => 'Couleur de fond',
+                'type' => 'color',
+                'option' => [],
+                'group' => 'Général',
+            ],[
+                'name' => "Hauteur de la colonne",
+                'slug' => 'height',
+                'desc' => 'Hauteur de la colonne',
+                'type' => 'text',
+                'option' => [],
+                'group' => 'Général',
             ],
         ];
 

@@ -11,6 +11,7 @@ use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\ColorType;
 use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\TelType;
@@ -52,60 +53,60 @@ class ComponentValueType extends AbstractType
                 switch ($field->getType()) {
                     case 'textarea_html':
                         $form
-                            ->add('value', CKEditorType::class, array(
+                            ->add('value', CKEditorType::class, [
                                 'required'    => false,
-                                'config'      => array(
+                                'config'      => [
                                     'placeholder'    => "Texte",
                                     'height'         => 300,
                                     'entities'       => false,
                                     'basicEntities'  => false,
                                     'entities_greek' => false,
                                     'entities_latin' => false,
-                                ),
+                                ],
                                 'label'    => $field->getName()
-                            ))
+                            ])
                         ;
                         break;
 
                     case 'textarea':
                         $form
-                            ->add('value', TextareaType::class, array(
+                            ->add('value', TextareaType::class, [
                                 'label'    => $field->getName()
-                            ))
+                            ])
                         ;
                         break;
 
                     case 'tel':
                         $form
-                            ->add('value', TelType::class, array(
-                                'attr'              => array(
+                            ->add('value', TelType::class, [
+                                'attr'              => [
                                     'placeholder'       => "Numéro",
-                                ),
+                                ],
                                 'label'                 => $field->getName(),
                                 'required'              => false
-                            ))
+                            ])
                         ;
                         break;
 
                     case 'mail':
                         $form
-                            ->add('value', EmailType::class, array(
-                                'attr'              => array(
+                            ->add('value', EmailType::class, [
+                                'attr'              => [
                                     'placeholder'       => "Email",
-                                ),
+                                ],
                                 'label'                 => $field->getName(),
                                 'required'              => false
-                            ))
+                            ])
                         ;
                         break;
 
                     case 'pagelink':
                         $form
-                            ->add('value', ChoiceType::class, array(
+                            ->add('value', ChoiceType::class, [
                                 'choices' => $this->pages,
                                 'required' => false,
                                 'label'  => $field->getName()
-                            ))
+                            ])
                         ;
                         break;
 
@@ -125,7 +126,7 @@ class ComponentValueType extends AbstractType
                                 'required' => false,
                                 'label'=>$field->getName(),
                                 'placeholder'=> "choix de l'entité",
-                                'choice_label' => function($choice, $key, $value){
+                                'choice_label' => function($choice, $key, $value) {
                                     return $choice;
                                 },
                                 'data' => $this->em->getRepository($field->getEntity())->find((int)$componentValue->getValue())
@@ -135,13 +136,13 @@ class ComponentValueType extends AbstractType
 
                     case 'link':
                         $form
-                            ->add('value', UrlType::class, array(
-                                'attr'              => array(
+                            ->add('value', UrlType::class, [
+                                'attr'              => [
                                     'placeholder'       => "Lien",
-                                ),
+                                ],
                                 'label'                 => $field->getName(),
                                 'required'              => false
-                            ))
+                            ])
                         ;
                         break;
 
@@ -166,13 +167,13 @@ class ComponentValueType extends AbstractType
 
                     case 'int':
                         $form
-                            ->add('value', IntegerType::class, array(
-                                'attr'              => array(
+                            ->add('value', IntegerType::class, [
+                                'attr'              => [
                                     'placeholder'       => "Valeur",
-                                ),
+                                ],
                                 'label'                 => $field->getName(),
                                 'required'              => false
-                            ))
+                            ])
                         ;
                         break;
 
@@ -184,14 +185,14 @@ class ComponentValueType extends AbstractType
                         }
 
                         $form
-                            ->add('value', ChoiceType::class, array(
-                                'attr'              => array(
+                            ->add('value', ChoiceType::class, [
+                                'attr'              => [
                                     'placeholder'       => "Valeur",
-                                ),
+                                ],
                                 'label'                 => $field->getName(),
                                 'required'              => false,
                                 'choices'               => $values
-                            ))
+                            ])
                         ;
                         break;
                     case 'bool':
@@ -208,15 +209,24 @@ class ComponentValueType extends AbstractType
                         ;
                         break;
 
-                    default:
+                    case 'color':
                         $form
-                            ->add('value', TextType::class, array(
-                                'attr'              => array(
-                                    'placeholder'       => "Valeur",
-                                ),
+                            ->add('value', ColorType::class, [
                                 'label'                 => $field->getName(),
                                 'required'              => false
-                            ))
+                            ])
+                        ;
+                        break;
+
+                    default:
+                        $form
+                            ->add('value', TextType::class, [
+                                'attr'              => [
+                                    'placeholder'       => "Valeur",
+                                ],
+                                'label'                 => $field->getName(),
+                                'required'              => false
+                            ])
                         ;
                         break;
                 }
