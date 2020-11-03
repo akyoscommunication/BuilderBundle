@@ -7,6 +7,7 @@ use Akyos\BuilderBundle\Entity\BuilderOptions;
 use Akyos\BuilderBundle\Entity\BuilderTemplate;
 use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Form\BuilderTemplateType;
+use Akyos\BuilderBundle\Form\Handler\BuilderHandler;
 use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
 use Akyos\CoreBundle\Services\CoreService;
 use Knp\Component\Pager\PaginatorInterface;
@@ -80,30 +81,11 @@ class BuilderTemplateController extends AbstractController
      * @param BuilderController $builderController
      * @return Response
      */
-    public function edit(Request $request, BuilderTemplate $builderTemplate, BuilderController $builderController): Response
+    public function edit(Request $request, BuilderTemplate $builderTemplate, BuilderHandler $builderHandler, ContainerInterface $container): Response
     {
-        $em = $this->getDoctrine()->getManager();
-
         $form = $this->createForm(BuilderTemplateType::class, $builderTemplate);
-        $form->handleRequest($request);
-
-        if (($this->forward('Akyos\CoreBundle\Controller\CoreBundleController::checkIfBundleEnable', ['bundle' => 'builder', 'entity' => 'BuilderTemplate'])->getContent() === "true")) {
-            if (!$form->isSubmitted()) {
-                $builderController->initCloneComponents('BuilderTemplate', $builderTemplate->getId());
-            }
-        }
-
-        if ($form->isSubmitted() && $form->isValid()) {
-
-            if ($this->forward('Akyos\CoreBundle\Controller\CoreBundleController::checkIfBundleEnable', ['bundle' => 'builder', 'entity' => 'BuilderTemplate'])->getContent() === "true") {
-                $builderController->tempToProd('BuilderTemplate', $builderTemplate->getId());
-            }
-
-            $em->flush();
-
+        if ($builderHandler->edit($form, $request, 'BuilderTemplate', $container)) {
             return $this->redirect($request->getUri());
-        } elseif($form->isSubmitted() && !($form->isValid())) {
-            throw $this->createNotFoundException("Formulaire invalide.");
         }
 
         return $this->render('@AkyosCore/crud/edit.html.twig', [

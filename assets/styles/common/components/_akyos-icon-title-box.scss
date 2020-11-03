@@ -1,6 +1,6 @@
 .component-icon-title-box {
 	@include flex(column, nowrap, space-around, center);
-	height: 100%;
+	flex: 1;
 
 	&__icon {
 		@include flex(row, nowrap, center, center);
