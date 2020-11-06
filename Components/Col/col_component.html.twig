@@ -7,7 +7,9 @@
     {% if values.backgroundPosition is defined and values.backgroundPosition is not null %}{% set style = style|merge({'background-position' : values.backgroundPosition}) %}{% endif %}
 
     {% set style_el = {} %}
+    {% if values.width_el is defined and values.width_el is not null %}{% set style_el = style_el|merge({'max-width' : values.width_el}) %}{% endif %}
     {% if values.height is defined and values.height is not null %}{% set style_el = style_el|merge({'height' : values.height}) %}{% endif %}
+    {% if values.margin_el is defined and values.margin_el is not null %}{% set style_el = style_el|merge({'margin' : values.margin_el}) %}{% endif %}
     {% if values.padding is defined and values.padding is not null %}{% set style_el = style_el|merge({'padding' : values.padding}) %}{% endif %}
     {% if values.background_color_el is defined and values.background_color_el is not null %}{% set style_el = style_el|merge({'background-color' : values.background_color_el}) %}{% endif %}
 

@@ -88,7 +88,19 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
                 'type' => 'text',
                 'option' => [],
                 'group' => 'Général',
-            ],
+            ],[
+                'name' => 'Position du background',
+                'slug' => 'background_position',
+                'desc' => 'Position du background de la rangée',
+                'type' => 'select',
+                'option' => [
+                    'Haut:top',
+                    'Droite:right',
+                    'Bas:bottom',
+                    'Gauche:left',
+                ],
+                'group' => 'Général',
+            ]
         ];
 
         foreach ($componentFieldArray as $componentField)

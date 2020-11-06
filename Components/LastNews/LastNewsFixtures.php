@@ -15,12 +15,28 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
         $component = new ComponentTemplate();
         $component->setName('Dernières actualités');
         $component->setSlug('last_news');
-        $component->setShortDescription('Affiche les 3 dernières actualités');
+        $component->setShortDescription('Affiche les dernières actualités');
         $component->setIsContainer(false);
         $component->setPrototype('default');
 
         $componentFieldArray = [
-            
+            [
+                "name" => "Nombre d'actualité",
+                "slug" => "nb",
+                "desc" => "Nombre d'actualité à afficher",
+                "type" => "int",
+                "entity" => "App\Entity\Back\Team",
+                "option" => [],
+                "group" => "Général",
+            ],[
+                "name" => "Catégorie à afficher",
+                "slug" => "cat",
+                "desc" => "Catégorie à afficher",
+                "type" => "entity",
+                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "option" => [],
+                "group" => "Général",
+            ],
         ];
 
         foreach ($componentFieldArray as $componentField)
@@ -40,7 +56,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
             $manager->persist($newComponentField);
         }
 
-         $manager->persist($component);
+        $manager->persist($component);
 
         $manager->flush();
     }

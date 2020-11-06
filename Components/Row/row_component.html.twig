@@ -29,20 +29,13 @@
         {% set margin = 'margin: '~values.margin~'; ' %}
     {% endif %}
 
-    <div class="component-row--container{{ customClasses ? ' '~customClasses : '' }}">
+    <div class="component-row--container{{ customClasses ? ' '~customClasses : '' }}" style="{{ margin }}">
         {% if values.row_width %}
-        <div class="{{ values.row_width is not null and (values.row_width == "full-width" or values.row_width == "full-background") ? "" : (values.row_width == "full-width-with-padding" ? "container-fluid" : "container") }} component-row {{ values.background_image is not null and values.background_size is not null ? "component-row--"~values.background_size : "" }}" style="{{ bg }}">
+        <div class="{{ values.row_width is not null and (values.row_width == "full-width" or values.row_width == "full-background") ? "" : (values.row_width == "full-width-with-padding" ? "container-fluid" : "container") }} component-row{{ values.background_image is not null and values.background_size is not null ? " component-row--"~values.background_size : false }}{{ values.background_position is defined and values.background_position ? " component-row--bg-position-"~values.background_position : false }}" style="{{ bg }}">
             {% endif %}
-
-            {% if margin != "" and (values.row_width is not null and values.row_width != "full-background" or  values.row_width is null) %}
-            <div style="{{ margin }}">
-                {% endif %}
 
                 <div class="{{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? "row" : "" }}" style="{{ values.row_width is null ? bg : '' }} {{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? padding : '' }}">
                     {% if values.row_width is not null and values.row_width == "full-background" %}
-                    {% if margin != "" %}
-                    <div style="{{ margin }}">
-                        {% endif %}
 
                         <div class="container">
                             <div class="row" style="{{ padding }}">
@@ -54,17 +47,9 @@
                             </div>
                         </div>
 
-                        {% if margin != "" %}
-                    </div>
-                    {% endif %}
-
                     {% endif %}
 
                 </div>
-
-                {% if margin != "" and (values.row_width is not null and values.row_width != "full-background" or  values.row_width is null) %}
-            </div>
-            {% endif %}
 
             {% if values.row_width %}
         </div>

@@ -1,6 +1,5 @@
 .component-button {
 	@include flex(row, wrap, center, center);
-	flex: auto;
 
 	&__link {
 		width: fit-content;
