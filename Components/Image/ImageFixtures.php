@@ -58,7 +58,7 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "desc" => "Taille de l'image",
                 "type" => "select",
                 "entity" => "App\Entity\Agency",
-                "option" => ["Contain:contain","Cover:cover"],
+                "option" => ["Contain:contain","Cover:cover","Iframe 16/9:iframe-16-9"],
                 "group" => "Général",
             ],[
                 "name" => "Hauteur",
