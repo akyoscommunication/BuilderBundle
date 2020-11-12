@@ -1,4 +1,4 @@
-<div class="component-last-news">
+<div class="component-last-news {{ customClasses ? ' '~customClasses : '' }}">
     {% for new in news %}
         {{ renderComponentBySlug('news', {
             'post' : new

@@ -1,5 +1,5 @@
 {% for childComponent in component.childComponents %}
-    <div class="swiper-slide">
+    <div class="swiper-slide {{ customClasses ? ' '~customClasses : '' }}">
         {{ renderComponent(childComponent)|raw }}
     </div>
 {% endfor %}
