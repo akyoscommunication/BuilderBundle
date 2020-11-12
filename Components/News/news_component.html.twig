@@ -1,4 +1,4 @@
-<a class="component-news--link {{ customClasses ? ' '~customClasses : '' }}" href="{{ path('single', {'entitySlug':'articles', 'slug':values.post.slug}) }}">
+<a class="component-news--link {{ customClasses is defined ? ' '~customClasses : '' }}" href="{{ path('single', {'entitySlug':'articles', 'slug':values.post.slug}) }}">
     <article class="component-news">
         <div class="component-news__thumb">{{ renderFileManager(values.post.thumbnailArchive)|raw }}</div>
         <div class="component-news__title">{{ values.post.title }}</div>

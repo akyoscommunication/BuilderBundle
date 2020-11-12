@@ -1,4 +1,4 @@
-<div class="component-icon-title-box {{ customClasses ? ' '~customClasses : '' }}">
+<div class="component-icon-title-box {{ customClasses is defined ? ' '~customClasses : '' }}">
     {% if values.icon is defined and values.icon is not null %}
         <div class="component-icon-title-box__icon">
             {{ renderFileManager(values.icon, false)|raw }}
