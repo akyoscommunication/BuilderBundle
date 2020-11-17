@@ -20,8 +20,8 @@ class ComponentSlider {
 				let navigation = container.data('navigation');
 				if(navigation) {
 					navigation = {
-						prevEl: ('#'+id+' .component-slider-prev'),
-						nextEl: ('#'+id+' .component-slider-next'),
+						prevEl: ('#'+id+' .component-slider-prev,'+'#'+id+' ~ .component-slider-prev'),
+						nextEl: ('#'+id+' .component-slider-next,'+'#'+id+' ~ .component-slider-next'),
 					}
 				} else {
 					navigation = false;
