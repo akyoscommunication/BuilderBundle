@@ -3,8 +3,23 @@
 
 	}
 	&__thumb {
+		position: relative;
+		overflow: hidden;
+
 		> * {
 			@include objectFit(cover, center, 100%, 100%);
+		}
+
+		&__date {
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: fit-content;
+			height: fit-content;
+			padding: 5px 10px;
+			color: var(--light);
+			background-color: var(--secondary);
+			box-shadow: 0 0 5px 3px rgba(0, 0, 0, 0.4);
 		}
 	}
 	&__title {
