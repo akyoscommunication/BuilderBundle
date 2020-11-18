@@ -18,51 +18,9 @@
 {% endblock %}
 
 {% block content %}
-    <div class="aky-builder-components" id="componentTab">
-        <div class="aky-builder-components-header">
-            <h2>Liste des composants disponibles</h2>
-            <button type="button" class="btn toggleComponentTab"><i class="fas fa-times"></i></button>
-        </div>
-        <div class="aky-builder-components-content">
-            {% for component in componentTemplates | filter(component => componentTemplates is not empty) %}
-                <div class="aky-builder-component" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
-                    <div class="aky-builder-component-header">
-                        {% if component.prototype == 'col' %}
-                            <input class="form-control changeColInput" type="number" name="col" value="12" min="1" max="12"/>
-                        {% endif %}
-                        {% if component.isContainer %}
-                            <button type="button" class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab"><i class="fas fa-plus"></i></button>
-                        {% endif %}
-                        <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit" data-url="{{ path('component_edit', {'id':component.id}) }}"><i class="fas fa-edit"></i></button>
-                        <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i class="fas fa-times"></i></button>
-                    </div>
-                    <h3 class="aky-builder-component__title">{{ component.name }}</h3>
-                    <i class="aky-builder-component__desc">{{ component.shortDescription }}</i>
-                    <div class="aky-builder-component-child-render aky-sortable-component-container {{ component.prototype ? 'row' : '' }}"></div>
-                </div>
-            {% endfor %}
-        </div>
-    </div>
 
-    <div class="aky-modal" id="modalEdit">
-        <div class="aky-modal-content">
-            <div class="aky-modal-content-header">
-                <h5 class="aky-modal-content-header__title">Modifier</h5>
-                <button type="button" class="close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="aky-modal-content-body" id="modalEditComponent">
-                <img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader" width="128" height="128">
-            </div>
-        </div>
-    </div>
 
-    <div id="componentsRenderContainer">
-        <div class="builder-component--container row" data-componentid="main">
-            {% include '@AkyosBuilder/front/render_components.html.twig' with {'edit' : true} %}
-        </div>
-    </div>
+    {% include '@AkyosBuilder/front/render_components.html.twig' %}
 {% endblock %}
 
 {% block stylesheets %}

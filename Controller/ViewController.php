@@ -42,6 +42,8 @@ class ViewController extends AbstractController
             'page' => $el,
             'type' => $type,
             'typeId' => $typeId,
+            'edit' => true,
+            'first' => true,
         ]);
     }
 }

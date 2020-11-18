@@ -101,6 +101,7 @@
 .aky-builder-components-content .aky-builder-component__title {
   font-size: 1rem;
   font-weight: bold;
+  color: black;
 }
 
 .aky-builder-components-content .aky-builder-component__desc {
@@ -176,11 +177,13 @@
   position: relative;
   text-align: left;
   width: 100%;
+  background-color: rgba(241, 241, 241, 0.5);
 }
 
 #componentsRenderContainer .aky-builder-component-sortable {
   border: 1px solid blue;
   padding: 20px;
+  z-index: 1;
 }
 
 #componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper {
@@ -206,6 +209,7 @@
   font-weight: bold;
   font-size: 1rem;
   line-height: 1;
+  color: black;
 }
 
 #componentsRenderContainer .aky-builder-component__desc {
