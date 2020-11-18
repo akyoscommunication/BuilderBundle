@@ -35,11 +35,18 @@ class ButtonFixtures extends Fixture implements FixtureGroupInterface
                 'option' => [],
                 'group' => 'Général',
             ],[
-                'name' => 'Target',
+                'name' => 'Nouvel onglet ?',
                 'slug' => 'target',
                 'desc' => 'Ouvrir dans un nouvel onglet ?',
                 'type' => 'select',
                 'option' => ["Oui:1","Non:0"],
+                'group' => 'Général',
+            ],[
+                'name' => 'Ancre ?',
+                'slug' => 'anchor',
+                'desc' => 'Lien vers une ancre sur la page ?',
+                'type' => 'bool',
+                'option' => [],
                 'group' => 'Général',
             ],[
                 'name' => 'Couleur de fond',
