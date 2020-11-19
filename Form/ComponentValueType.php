@@ -131,7 +131,7 @@ class ComponentValueType extends AbstractType
                                 'class'=> $field->getEntity(),
                                 'required' => false,
                                 'label'=> $field->getName(),
-                                'placeholder'=> "choix de l'entité",
+                                'placeholder'=> "Sélectionnez un élément",
                                 'choice_label' => function($choice, $key, $value) {
                                     return $choice;
                                 },
