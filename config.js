@@ -8,10 +8,11 @@ const config = {
         assets: path.join(rootPath, 'assets'),
         dist: path.join(rootPath, 'Resources/public')
     },
-    entry: [
-        "./assets/scripts/main.js",
-        "./assets/styles/main.scss"
-    ],
+    entry: {
+        'builderjs': "./assets/scripts/builderjs.js",
+        'buildercss': "./assets/styles/buildercss.scss",
+        'visualEditorcss': "./assets/styles/layouts/_visual-editor.scss",
+    },
     manifest: {},
     minify: (process.env.NODE_ENV === 'production')
 };

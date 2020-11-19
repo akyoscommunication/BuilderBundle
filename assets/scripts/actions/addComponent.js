@@ -1,5 +1,5 @@
 import editColComponent from './editColComponent'
-import builder from '../main'
+import builder from '../builderjs'
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
 
 class AddComponent {

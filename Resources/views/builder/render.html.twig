@@ -20,7 +20,9 @@
 <div class="tab-pane fade" id="builder" role="tabpanel" aria-labelledby="builder-tab">
     <div id="akyTabBuilderHeader" class="d-flex justify-content-between align-items-start">
         <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
-        <a href="{{ path('back_builder_view_edit', { 'type' : 'Akyos\\CoreBundle\\Entity\\Page'|url_encode, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Editeur visuel</a>
+        {% if namespace is defined and namespace is not null %}
+            <a href="{{ path('back_builder_view_edit', { 'type' : namespace|url_encode, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Editeur visuel</a>
+        {% endif %}
 
         {{ form_start(choiceBuilderTemplateForm, { 'attr' : { 'class' : 'not-submit d-flex align-items-center' }}) }}
             {{ form_widget(choiceBuilderTemplateForm) }}
@@ -143,5 +145,5 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="{{ asset('bundles/akyosbuilder/main.css') }}">
-<script src="{{ asset("bundles/akyosbuilder/main.js") }}" type="application/javascript"></script>
+<link rel="stylesheet" href="{{ asset('bundles/akyosbuilder/buildercss.css') }}">
+<script src="{{ asset("bundles/akyosbuilder/builderjs.js") }}" type="application/javascript"></script>

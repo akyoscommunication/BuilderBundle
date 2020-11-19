@@ -181,7 +181,6 @@
 }
 
 #componentsRenderContainer .aky-builder-component-sortable {
-  border: 1px solid blue;
   padding: 20px;
   z-index: 1;
 }
@@ -260,7 +259,7 @@
 
 #componentsRenderContainer .aky-builder-component.isParent {
   padding: 1rem 1rem 0;
-  background-color: #f1f1f1;
+  background-color: rgba(241, 241, 241, 0.5);
 }
 
 #componentsRenderContainer .aky-builder-component.onDeleting .aky-builder-component-header {
@@ -1433,6 +1432,10 @@ button.swiper-pagination-bullet {
   left: 0;
   right: 0;
   display: none;
+}
+
+.aky-builder-component-sortable .aky-builder-component-sortable {
+  border: 1px solid blue;
 }
 
 .aky-builder-component-sortable:hover {
