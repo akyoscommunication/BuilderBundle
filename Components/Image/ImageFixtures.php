@@ -21,9 +21,9 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
 
         $componentFieldArray = [
             [
-                "name" => "image",
+                "name" => "Image",
                 "slug" => "image",
-                "desc" => "mon image",
+                "desc" => "Sélectionnez une image",
                 "type" => "image",
                 "entity" => "App\Entity\Program",
                 "option" => [],
@@ -45,9 +45,9 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "option" => [],
                 "group" => "Général",
             ],[
-                "name" => "Redirection au click",
+                "name" => "Lien interne",
                 "slug" => "redirection",
-                "desc" => "Redirection au click",
+                "desc" => "Redirection sur une page interne au clic",
                 "type" => "entity",
                 "entity" => "Akyos\CoreBundle\Entity\Page",
                 "option" => [],
@@ -84,6 +84,14 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "App\Entity\Program",
                 "option" => [],
                 "group" => "Général",
+            ],[
+              "name" => "Lien externe",
+              "slug" => "external_link",
+              "desc" => "Redirection sur une page externe au clic",
+              "type" => "link",
+              "entity" => "Akyos\CoreBundle\Entity\Page",
+              "option" => [],
+              "group" => "Général",
             ]
         ];
 

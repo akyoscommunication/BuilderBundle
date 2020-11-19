@@ -8,10 +8,11 @@ class Button {
 		const that = this;
 		if ($(".component-button-anchor").length) {
 			$('.component-button-anchor').each(function() {
-				const href = $(this).attr('href');
-				const anchor = $(href);
-				anchor.prepend('<div class="'+href+'" style="position: absolute;top:-40px;"></div>');
-				anchor.css('position', 'relative');
+				const href = $(this).find('a').attr('href');
+				const target = $(href);
+				target.prepend('<div class="anchor'+href.replace('#','')+'" style="position: absolute;top:-100px;"></div>');
+				target.css('position', 'relative');
+				const anchor = $('.anchor'+href.replace('#',''));
 				$(this).click(function(e) {
 					e.preventDefault();
 					$("html, body").stop().animate( { scrollTop: anchor.offset().top }, 1500);
