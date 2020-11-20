@@ -3,23 +3,23 @@
         <div class="component-last-news__search">
             <form method="get">
                 {% if values.category_filters is defined and values.category_filters %}
-                    <select class="js-select2" name="categorie" id="category_search">
+                    <select class="js-select2" name="categorie[]" id="category_search" multiple data-placeholder="Catégories">
                         <option value="">Catégories</option>
                         {% for category in categories %}
-                            <option value="{{ category.slug }}" {{ app.request.get('categorie') == category.slug ? "selected" : "" }}>{{ category.title }}</option>
+                            <option value="{{ category.slug }}" {{ category.slug in app.request.get('categorie') ? "selected" : "" }}>{{ category.title }}</option>
                         {% endfor %}
                     </select>
                 {% endif %}
                 {% if values.tag_filters is defined and values.tag_filters %}
-                    <select class="js-select2" name="etiquette" id="tag_search">
+                    <select class="js-select2" name="etiquette[]" id="tag_search" multiple data-placeholder="Étiquettes">
                         <option value="">Étiquettes</option>
                         {% for tag in tags %}
-                            <option value="{{ tag.slug }}" {{ app.request.get('etiquette') == tag.slug ? "selected" : "" }}>{{ tag.title }}</option>
+                            <option value="{{ tag.slug }}" {{ tag.slug in app.request.get('etiquette') ? "selected" : "" }}>{{ tag.title }}</option>
                         {% endfor %}
                     </select>
                 {% endif %}
-                <div class="component-button component-button-secondary component-button-text-white">
-                    <button type="submit"><i class="fas fa-search"></i></button>
+                <div class="component-button-center">
+                    <button class="component-button__link component-button-secondary component-button-text-white" type="submit"><i class="fas fa-search"></i></button>
                 </div>
             </form>
         </div>
