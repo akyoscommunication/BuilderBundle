@@ -44,7 +44,39 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "Akyos\CoreBundle\Entity\PostCategory",
                 "option" => [],
                 "group" => "Général",
-            ],
+            ],[
+                "name" => "Pagination ?",
+                "slug" => "paginator",
+                "desc" => "Afficher une pagination au-delà d'un certain ombre d'articles ?",
+                "type" => "bool",
+                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "option" => [],
+                "group" => "Général",
+            ],[
+                "name" => "Nombre d'articles par page ?",
+                "slug" => "posts_per_page",
+                "desc" => "Par défaut, 9 articles par page. À utiliser uniquement si la pagination est activée.",
+                "type" => "text",
+                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "option" => [],
+                "group" => "Général",
+            ],[
+                "name" => "Formulaire de filtre par catégorie ?",
+                "slug" => "category_filters",
+                "desc" => "Formulaire pour filtrer la liste des articles par catégorie ?",
+                "type" => "bool",
+                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "option" => [],
+                "group" => "Général",
+            ],[
+                "name" => "Formulaire de filtre par étiquette ?",
+                "slug" => "tag_filters",
+                "desc" => "Formulaire pour filtrer la liste des articles par étiquette ?",
+                "type" => "bool",
+                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "option" => [],
+                "group" => "Général",
+            ]
         ];
 
         foreach ($componentFieldArray as $componentField)
