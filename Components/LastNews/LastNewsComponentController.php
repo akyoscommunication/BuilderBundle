@@ -54,7 +54,7 @@ class LastNewsComponentController extends AbstractController implements Componen
                 $qb->setParameters($p);
             }
 
-            $params['news'] = $this->paginator->paginate($qb->getQuery(), $this->requestStack->getCurrentRequest()->query->getInt('page',1),3);
+            $params['news'] = $this->paginator->paginate($qb->getQuery(), $this->requestStack->getCurrentRequest()->query->getInt('page',1),9);
         } else {
             $params['news'] = $params['values']['news'];
         }
