@@ -6,4 +6,7 @@
     {% else %}
         <div class="no-item w-100 text-center">{{ values.no_item_text is defined ? values.no_item_text : "Aucune actualité" }}</div>
     {% endfor %}
+    <div class="w-100 d-flex justify-content-center">
+        {% include '@AkyosCore/crud/elements/_pagination.html.twig' with {'els' : news} %}
+    </div>
 </div>

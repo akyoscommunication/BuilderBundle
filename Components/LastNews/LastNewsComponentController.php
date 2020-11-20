@@ -6,15 +6,21 @@ use Akyos\BuilderBundle\Interfaces\ComponentInterface;
 use Akyos\CoreBundle\Entity\Post;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class LastNewsComponentController extends AbstractController implements ComponentInterface
 {
     private $em;
+    private $requestStack;
+    private $paginator;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, RequestStack $requestStack, PaginatorInterface $paginator)
     {
         $this->em = $em;
+        $this->requestStack = $requestStack;
+        $this->paginator = $paginator;
     }
 
 
@@ -48,7 +54,7 @@ class LastNewsComponentController extends AbstractController implements Componen
                 $qb->setParameters($p);
             }
 
-            $params['news'] = $qb->getQuery()->getResult();
+            $params['news'] = $this->paginator->paginate($qb->getQuery(), $this->requestStack->getCurrentRequest()->query->getInt('page',1),3);
         } else {
             $params['news'] = $params['values']['news'];
         }
