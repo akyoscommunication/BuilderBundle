@@ -4,6 +4,6 @@
             'post' : new
         })|raw }}
     {% else %}
-        <div class="no-item w-100 text-center">Aucune actualité</div>
+        <div class="no-item w-100 text-center">{{ values.no_item_text is defined ? values.no_item_text : "Aucune actualité" }}</div>
     {% endfor %}
 </div>

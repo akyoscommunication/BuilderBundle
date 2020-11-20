@@ -36,6 +36,14 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "Akyos\CoreBundle\Entity\PostCategory",
                 "option" => [],
                 "group" => "Général",
+            ],[
+                "name" => "Texte si pas de résultats",
+                "slug" => "no_item_text",
+                "desc" => "Message à afficher si aucune actualité ne correspond à la recherche",
+                "type" => "text",
+                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "option" => [],
+                "group" => "Général",
             ],
         ];
 
