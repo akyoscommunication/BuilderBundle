@@ -3,5 +3,7 @@
         {{ renderComponentBySlug('news', {
             'post' : new
         })|raw }}
+    {% else %}
+        <div class="no-item w-100 text-center">Aucune actualité</div>
     {% endfor %}
 </div>

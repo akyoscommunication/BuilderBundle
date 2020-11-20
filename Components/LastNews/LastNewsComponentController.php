@@ -25,29 +25,33 @@ class LastNewsComponentController extends AbstractController implements Componen
 
     public function getParameters($params = null)
     {
-        /** @var QueryBuilder $qb */
-        $qb = $this->em->getRepository(Post::class)->createQueryBuilder('p');
-        $p = [];
+        if(!isset($params['values']['news'])) {
+            /** @var QueryBuilder $qb */
+            $qb = $this->em->getRepository(Post::class)->createQueryBuilder('p');
+            $p = [];
 
-        if (isset($params['values']['cat']) and $params['values']['cat']) {
+            if (isset($params['values']['cat']) and $params['values']['cat']) {
+                $qb
+                    ->innerJoin('p.postCategories', 'ppc')
+                    ->andWhere($qb->expr()->eq(':cat', 'ppc'))
+                ;
+                $p['cat'] = $params['values']['cat'];
+            }
+
             $qb
-                ->innerJoin('p.postCategories', 'ppc')
-                ->andWhere($qb->expr()->eq(':cat', 'ppc'))
+                ->andWhere($qb->expr()->eq('p.published', true))
+                ->orderBy('p.createdAt', 'DESC')
+                ->setMaxResults(($params['values']['nb'] ?? 3))
             ;
-            $p['cat'] = $params['values']['cat'];
+
+            if(!empty($p)) {
+                $qb->setParameters($p);
+            }
+
+            $params['news'] = $qb->getQuery()->getResult();
+        } else {
+            $params['news'] = $params['values']['news'];
         }
-
-        $qb
-            ->andWhere($qb->expr()->eq('p.published', true))
-            ->orderBy('p.createdAt', 'DESC')
-            ->setMaxResults(($params['values']['nb'] ?? 3))
-        ;
-
-        if(!empty($p)) {
-            $qb->setParameters($p);
-        }
-
-        $params['news'] = $qb->getQuery()->getResult();
 
         return $params;
     }
