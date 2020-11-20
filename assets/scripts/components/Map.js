@@ -12,11 +12,15 @@ class Map {
 			$('.component-map').each(function() {
 				const id = 'map'
 				const map = $('#'+id)
+				const layers = {
+					'satellite': "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+				}
 				
 				if (map.length) {
 					const lat = parseFloat(map.data('lat'))
 					const lng = parseFloat(map.data('lng'))
 					const zoom = parseFloat(map.data('zoom'))
+					const layer = map.data('layer')
 					
 					const mymap = L.map(id).setView([lat, lng], zoom);
 					
@@ -26,7 +30,7 @@ class Map {
 					});
 					let marker = new L.marker([lat, lng], {icon: icon}).addTo(mymap);
 					
-					L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}').addTo(mymap);
+					L.tileLayer(layers[layer]).addTo(mymap);
 					mymap.invalidateSize();
 				}
 			})

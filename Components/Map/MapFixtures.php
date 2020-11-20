@@ -36,14 +36,23 @@ class MapFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "App\Entity\Back\Job",
                 "option" => [],
                 "group" => "Général",
-            ],
-            [
+            ],[
                 "name" => "Zoom",
                 "slug" => "zoom",
                 "desc" => "Zoom (nombre entre 1 et 18)",
                 "type" => "int",
                 "entity" => "App\Entity\Back\Job",
                 "option" => [],
+                "group" => "Général",
+            ],[
+                "name" => "Style",
+                "slug" => "layer",
+                "desc" => "Type d'affichage de la carte",
+                "type" => "select",
+                "entity" => "App\Entity\Back\Job",
+                "option" => [
+                    "Satellite:satellite",
+                ],
                 "group" => "Général",
             ],
         ];
