@@ -37,6 +37,15 @@ class MapFixtures extends Fixture implements FixtureGroupInterface
                 "option" => [],
                 "group" => "Général",
             ],
+            [
+                "name" => "Zoom",
+                "slug" => "zoom",
+                "desc" => "Zoom (nombre entre 1 et 18)",
+                "type" => "int",
+                "entity" => "App\Entity\Back\Job",
+                "option" => [],
+                "group" => "Général",
+            ],
         ];
 
         foreach ($componentFieldArray as $componentField)
@@ -66,6 +75,6 @@ class MapFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component'];
+        return ['component, component-map'];
     }
 }
