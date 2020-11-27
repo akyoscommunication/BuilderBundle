@@ -174,7 +174,7 @@ class ColFixtures extends Fixture implements FixtureGroupInterface
                 'name' => "Couleur de fond de l'élément à l'intérieur",
                 'slug' => 'background_color_el',
                 'desc' => 'Couleur de fond',
-                'type' => 'color',
+                'type' => 'text',
                 'option' => [],
                 'group' => 'Style',
             ],[

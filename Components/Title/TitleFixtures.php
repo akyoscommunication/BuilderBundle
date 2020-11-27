@@ -77,6 +77,14 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "option" => ["Normal:default","Gras:bold","Fin:light"],
                 "group" => "Style",
             ],[
+                "name" => "Transformation du texte",
+                "slug" => "text_transform",
+                "desc" => "Quelle le style du texte ?",
+                "type" => "select",
+                "entity" => "App\Entity\Platform\Administrator",
+                "option" => ["Normal:normal","minuscule:lowercase","MAJUSCULE:uppercase"],
+                "group" => "Style",
+            ],[
                 "name" => "Police",
                 "slug" => "font",
                 "desc" => "Renseignez le nom de la police à utiliser, si différente de la police par défaut du site.",

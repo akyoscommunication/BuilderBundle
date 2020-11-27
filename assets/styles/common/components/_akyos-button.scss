@@ -1,8 +1,15 @@
 .component-button {
 	@include flex(row, wrap, center, center);
 
+	&.justify-content-full {
+		> .component-button__link {
+			width: 100%;
+		}
+	}
+
 	&__link {
 		width: fit-content;
+		text-align: center;
 		transition: .3s;
 
 		&.component-button {

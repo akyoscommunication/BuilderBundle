@@ -92,6 +92,7 @@ class ButtonFixtures extends Fixture implements FixtureGroupInterface
                     "Droite:end",
                     "Gauche:start",
                     "Centré:center",
+                    "Toute la largeur:full",
                 ],
                 'group' => 'Style',
             ],

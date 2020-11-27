@@ -1,4 +1,4 @@
-import Swiper from 'swiper/swiper-bundle';
+import Swiper from 'swiper';
 
 class ComponentSlider {
 	
