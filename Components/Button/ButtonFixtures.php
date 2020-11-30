@@ -124,6 +124,6 @@ class ButtonFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component'];
+        return ['component', 'component-button'];
     }
 }
