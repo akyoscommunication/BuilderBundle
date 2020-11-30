@@ -2,24 +2,28 @@
 
 namespace Akyos\BuilderBundle\Components\Slider;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class SliderFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Slider');
-        $component->setSlug('slider');
-        $component->setShortDescription('Container pour slider');
-        $component->setIsContainer(true);
-        $component->setPrototype('default');
-
-        $componentFieldArray = [
+        $slug = "slider";
+        $name = "Slider";
+        $shortDescription = "Container pour slider";
+        $isContainer = true;
+        $prototype = "default";
+        $componentFields = [
             [
                 "name" => "Flèches défilement ?",
                 "slug" => "navigation",
@@ -111,26 +115,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
             ],
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setEntity($componentField['entity']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**

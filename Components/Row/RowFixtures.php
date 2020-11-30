@@ -2,24 +2,28 @@
 
 namespace Akyos\BuilderBundle\Components\Row;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class RowFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Rangée');
-        $component->setSlug('row');
-        $component->setShortDescription('Pour placer des éléments de contenu.');
-        $component->setIsContainer(true);
-        $component->setPrototype('row');
-
-        $componentFieldArray = [
+        $slug = "row";
+        $name = "Rangée";
+        $shortDescription = "Pour placer des éléments de contenu.";
+        $isContainer = true;
+        $prototype = "row";
+        $componentFields = [
             [
                 'name' => 'Image de fond',
                 'slug' => 'background_image',
@@ -103,25 +107,7 @@ class RowFixtures extends Fixture implements FixtureGroupInterface
             ]
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**

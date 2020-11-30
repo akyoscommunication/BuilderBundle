@@ -2,24 +2,28 @@
 
 namespace Akyos\BuilderBundle\Components\ImageGallery;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Galerie d\'images');
-        $component->setSlug('image_gallery');
-        $component->setShortDescription('Galerie d\'images avec zoom au clic');
-        $component->setIsContainer(false);
-        $component->setPrototype('default');
-
-        $componentFieldArray = [
+        $slug = "image_gallery";
+        $name = "Galerie d'images";
+        $shortDescription = "Galerie d'images avec zoom au clic";
+        $isContainer = false;
+        $prototype = "default";
+        $componentFields = [
             [
                 "name" => "Style des images",
                 "slug" => "background_size",
@@ -39,26 +43,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
             ],
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setEntity($componentField['entity']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**
