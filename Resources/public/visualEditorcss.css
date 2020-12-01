@@ -468,6 +468,26 @@
   z-index: 9999;
 }
 
+.component-icon-title-box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
 .component-icon-title-box__icon {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -502,6 +522,9 @@
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+}
+
+.component-button.justify-content-full > .component-button__link {
   width: 100%;
 }
 
@@ -509,6 +532,7 @@
   width: -webkit-fit-content;
   width: -moz-fit-content;
   width: fit-content;
+  text-align: center;
   -webkit-transition: .3s;
   -o-transition: .3s;
   transition: .3s;
@@ -1165,6 +1189,21 @@ button.swiper-pagination-bullet {
      object-fit: contain;
 }
 
+.component-image--iframe-16-9 {
+  position: relative;
+  width: 100%;
+  height: 0;
+  padding-bottom: 56.25% !important;
+}
+
+.component-image--iframe-16-9 iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .component-image--position-top-left img {
   -o-object-position: top left;
      object-position: top left;
@@ -1228,15 +1267,28 @@ button.swiper-pagination-bullet {
 
 .component-title--underline {
   position: relative;
+  padding-bottom: 10px;
 }
 
 .component-title--underline:after {
   position: absolute;
   content: "";
-  top: calc(100% + 20px);
+  top: 100%;
   left: 0;
   width: 50px;
   height: 3px;
+}
+
+.component-title--underline.component-title--right:after {
+  left: initial;
+  right: 0;
+}
+
+.component-title--underline.component-title--center:after {
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+       -o-transform: translateX(-50%);
+          transform: translateX(-50%);
 }
 
 .component-title--underline.component-title--white:after {
@@ -1408,11 +1460,27 @@ button.swiper-pagination-bullet {
 }
 
 .component-row--cover {
-  background-size: cover;
+  background-size: cover !important;
 }
 
 .component-row--contain {
-  background-size: contain;
+  background-size: contain !important;
+}
+
+.component-row--bg-position-top {
+  background-position: top !important;
+}
+
+.component-row--bg-position-bottom {
+  background-position: bottom !important;
+}
+
+.component-row--bg-position-left {
+  background-position: left !important;
+}
+
+.component-row--bg-position-right {
+  background-position: right !important;
 }
 
 #akyTabBuilderHeader {

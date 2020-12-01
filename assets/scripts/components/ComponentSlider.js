@@ -1,4 +1,4 @@
-import Swiper from 'swiper/swiper-bundle';
+import Swiper from 'swiper';
 
 class ComponentSlider {
 	
@@ -13,14 +13,15 @@ class ComponentSlider {
 				const id = container.attr('id');
 				const slides_per_view = container.data('slides_per_view');
 				const loop = container.data('loop');
+				const spaceBetween = container.data('space-between') ? container.data('space-between') : 0;
 				const speed = container.data('speed');
 				const slides_per_view_991 = container.data('slides_per_view_991');
 				const slides_per_view_767 = container.data('slides_per_view_767');
 				let navigation = container.data('navigation');
 				if(navigation) {
 					navigation = {
-						prevEl: ('#'+id+' .component-slider-prev'),
-						nextEl: ('#'+id+' .component-slider-next'),
+						prevEl: ('#'+id+' .component-slider-prev,'+'#'+id+' ~ .component-slider-prev'),
+						nextEl: ('#'+id+' .component-slider-next,'+'#'+id+' ~ .component-slider-next'),
 					}
 				} else {
 					navigation = false;
@@ -46,7 +47,7 @@ class ComponentSlider {
 				
 				new Swiper(('#'+id), {
 					slidesPerView: slides_per_view,
-					spaceBetween: 0,
+					spaceBetween: spaceBetween,
 					loop: loop,
 					autoplay: {
 						delay: speed

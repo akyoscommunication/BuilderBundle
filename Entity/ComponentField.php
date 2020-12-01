@@ -5,9 +5,11 @@ namespace Akyos\BuilderBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * @ORM\Entity(repositoryClass="Akyos\BuilderBundle\Repository\ComponentFieldRepository")
+ * @ORM\Table(uniqueConstraints={@UniqueConstraint(name="update_constraint", columns={"name", "component_template_id"})})
  */
 class ComponentField
 {

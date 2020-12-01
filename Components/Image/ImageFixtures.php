@@ -4,26 +4,32 @@ namespace Akyos\BuilderBundle\Components\Image;
 
 use Akyos\BuilderBundle\Entity\ComponentField;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ImageFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Image');
-        $component->setSlug('image');
-        $component->setShortDescription('Une image');
-        $component->setIsContainer(false);
-        $component->setPrototype('default');
-
-        $componentFieldArray = [
+        $slug = "image";
+        $name = "Image";
+        $shortDescription = "Une image";
+        $isContainer = false;
+        $prototype = "default";
+        $componentFields = [
             [
-                "name" => "image",
+                "name" => "Image",
                 "slug" => "image",
-                "desc" => "mon image",
+                "desc" => "Sélectionnez une image",
                 "type" => "image",
                 "entity" => "App\Entity\Program",
                 "option" => [],
@@ -45,9 +51,9 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "option" => [],
                 "group" => "Général",
             ],[
-                "name" => "Redirection au click",
+                "name" => "Lien interne",
                 "slug" => "redirection",
-                "desc" => "Redirection au click",
+                "desc" => "Redirection sur une page interne au clic",
                 "type" => "entity",
                 "entity" => "Akyos\CoreBundle\Entity\Page",
                 "option" => [],
@@ -58,7 +64,7 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "desc" => "Taille de l'image",
                 "type" => "select",
                 "entity" => "App\Entity\Agency",
-                "option" => ["Contain:contain","Cover:cover"],
+                "option" => ["Contain:contain","Cover:cover","Iframe 16/9:iframe-16-9"],
                 "group" => "Général",
             ],[
                 "name" => "Hauteur",
@@ -84,29 +90,18 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "App\Entity\Program",
                 "option" => [],
                 "group" => "Général",
+            ],[
+              "name" => "Lien externe",
+              "slug" => "external_link",
+              "desc" => "Redirection sur une page externe au clic",
+              "type" => "link",
+              "entity" => "Akyos\CoreBundle\Entity\Page",
+              "option" => [],
+              "group" => "Général",
             ]
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setEntity($componentField['entity']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**
@@ -114,6 +109,6 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component'];
+        return ['component', 'component-image'];
     }
 }

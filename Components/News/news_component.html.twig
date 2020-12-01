@@ -1,6 +1,9 @@
-<a class="component-news--link" href="{{ path('single', {'entitySlug':'articles', 'slug':values.post.slug}) }}">
+<a class="component-news--link {{ customClasses is defined ? ' '~customClasses : '' }}" href="{{ path('single', {'entitySlug':'articles', 'slug':values.post.slug}) }}">
     <article class="component-news">
-        <div class="component-news__thumb">{{ renderFileManager(values.post.thumbnailArchive)|raw }}</div>
+        <div class="component-news__thumb">
+            <span class="component-news__thumb__date">{{ values.post.createdAt|format_date(locale="fr", pattern=('d MMMM Y')) }}</span>
+            {{ renderFileManager(values.post.thumbnailArchive)|raw }}
+        </div>
         <div class="component-news__title">{{ values.post.title }}</div>
         <div class="component-news__excerpt">{{ values.post.content|striptags|trim|truncate(155, '...') }}</div>
         <div class="component-news__more">Lire la suite</div>

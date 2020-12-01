@@ -63,7 +63,8 @@ class ComponentValueType extends AbstractType
                                     'entities_greek' => false,
                                     'entities_latin' => false,
                                 ],
-                                'label'    => $field->getName()
+                                'label'    => $field->getName(),
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -71,7 +72,8 @@ class ComponentValueType extends AbstractType
                     case 'textarea':
                         $form
                             ->add('value', TextareaType::class, [
-                                'label'    => $field->getName()
+                                'label'    => $field->getName(),
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -83,7 +85,8 @@ class ComponentValueType extends AbstractType
                                     'placeholder'       => "Numéro",
                                 ],
                                 'label'                 => $field->getName(),
-                                'required'              => false
+                                'required'              => false,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -95,7 +98,8 @@ class ComponentValueType extends AbstractType
                                     'placeholder'       => "Email",
                                 ],
                                 'label'                 => $field->getName(),
-                                'required'              => false
+                                'required'              => false,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -105,7 +109,8 @@ class ComponentValueType extends AbstractType
                             ->add('value', ChoiceType::class, [
                                 'choices' => $this->pages,
                                 'required' => false,
-                                'label'  => $field->getName()
+                                'label'  => $field->getName(),
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -115,7 +120,8 @@ class ComponentValueType extends AbstractType
                             ->add('value', ChoiceType::class, [
                                 'choices' => $this->posts,
                                 'required' => false,
-                                'label' => $field->getName()
+                                'label' => $field->getName(),
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -125,11 +131,12 @@ class ComponentValueType extends AbstractType
                                 'class'=> $field->getEntity(),
                                 'required' => false,
                                 'label'=> $field->getName(),
-                                'placeholder'=> "choix de l'entité",
+                                'placeholder'=> "Sélectionnez un élément",
                                 'choice_label' => function($choice, $key, $value) {
                                     return $choice;
                                 },
-                                'data' => $this->em->getRepository($field->getEntity())->find((int)$componentValue->getValue())
+                                'data' => $this->em->getRepository($field->getEntity())->find((int)$componentValue->getValue()),
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -141,7 +148,8 @@ class ComponentValueType extends AbstractType
                                     'placeholder'       => "Lien",
                                 ],
                                 'label'                 => $field->getName(),
-                                'required'              => false
+                                'required'              => false,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -149,7 +157,8 @@ class ComponentValueType extends AbstractType
                     case 'image':
                         $form->add('value',FileManagerType::class, [
                             'label' => $field->getName(),
-                            'config' => 'full'
+                            'config' => 'full',
+                            'help' => $field->getShortDescription(),
                         ]);
                         break;
 
@@ -159,6 +168,7 @@ class ComponentValueType extends AbstractType
                         }
                         $form->add('value',FileManagerCollectionType::class, [
                             'label' => $field->getName(),
+                            'help' => $field->getShortDescription(),
                             'entry_options' => [
                                 'config' => 'full'
                             ]
@@ -172,7 +182,8 @@ class ComponentValueType extends AbstractType
                                     'placeholder'       => "Valeur",
                                 ],
                                 'label'                 => $field->getName(),
-                                'required'              => false
+                                'required'              => false,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -191,7 +202,8 @@ class ComponentValueType extends AbstractType
                                 ],
                                 'label'                 => $field->getName(),
                                 'required'              => false,
-                                'choices'               => $values
+                                'choices'               => $values,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -205,6 +217,7 @@ class ComponentValueType extends AbstractType
                                 ],
                                 'label'                 => $field->getName(),
                                 'required'              => false,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -213,7 +226,8 @@ class ComponentValueType extends AbstractType
                         $form
                             ->add('value', ColorType::class, [
                                 'label'                 => $field->getName(),
-                                'required'              => false
+                                'required'              => false,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;
@@ -225,7 +239,8 @@ class ComponentValueType extends AbstractType
                                     'placeholder'       => "Valeur",
                                 ],
                                 'label'                 => $field->getName(),
-                                'required'              => false
+                                'required'              => false,
+                                'help' => $field->getShortDescription(),
                             ])
                         ;
                         break;

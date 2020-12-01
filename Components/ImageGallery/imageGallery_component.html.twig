@@ -1,0 +1,37 @@
+{% set random = random() %}
+
+<div class="aky-gallery gallery{{ random }}" data-gallery="{{ random }}">
+<div class="images pictures {{ values.background_size }}">
+    {% for key, image in values.images %}
+        <div class="picture" data-index="{{ key }}" data-caption="{{ getImageAltById(image) }}" data-image="{{ getImagePathById(image) }}" data-title="{{ getImageNameById(image) }}">
+            {{ renderFileManager(image)|raw }}
+        </div>
+    {% endfor %}
+</div>
+
+<div id="galleryModal{{ random }}" class="gallery-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+            {% for key, image in values.images %}
+                <div class="slide">
+                    {{ renderFileManager(image, false)|raw }}
+                </div>
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+            <div class="controls-container">
+                <ul>
+                    <li><a href="javascript:void(0);" class="slides-controls prev" data-value="-1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAVCAYAAABCIB6VAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUFGOTkyRDgwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUFGOTkyRDcwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDc0NzM0MjMwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDc0NzM0MjQwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7eNf21AAABL0lEQVR42rSV3RGCMAzHoecAbOAKjqCvPuEEwATiBMoEsgEwgfriqzoBOIHnBnUCbLxwl6vpBw/0Llfakl//SVMI+74PpmgzOsjm64XqOsv7rvVfq97XQGhzMcxbfEplRx/FgplLld2URQaf3LE5C5bYLw3wjmxejQFDqAXJpw4HtQ2Bt6bIuFQc4BwJ/IU9TVVj2dwIhlYTeITOOnxngwtLmgC+UvYxwEtbZMJxuHc8yAHeolpnZMKjJDtUR5VGGrwh8NIXDAr3+PzECKQGTsh6/HelDTdt6wl9IFS6wLoSCoWQTzgXYCpS33IboBcGerNBOfDglBCnmIEOZVVwUC4VuUNJTaAZjr2/bgHeKk5J5AM1HZ7NCVKyUXYe9QfB8pKOmpY+H/pwqn/eV4ABAMJsUrAW7KuAAAAAAElFTkSuQmCC" alt=""></a></li>
+                    <li><a href="javascript:void(0);" class="slides-controls next" data-value="1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAVCAYAAABCIB6VAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUFGOTkyRDgwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUFGOTkyRDcwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDc0NzM0MjMwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDc0NzM0MjQwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7eNf21AAABL0lEQVR42rSV3RGCMAzHoecAbOAKjqCvPuEEwATiBMoEsgEwgfriqzoBOIHnBnUCbLxwl6vpBw/0Llfakl//SVMI+74PpmgzOsjm64XqOsv7rvVfq97XQGhzMcxbfEplRx/FgplLld2URQaf3LE5C5bYLw3wjmxejQFDqAXJpw4HtQ2Bt6bIuFQc4BwJ/IU9TVVj2dwIhlYTeITOOnxngwtLmgC+UvYxwEtbZMJxuHc8yAHeolpnZMKjJDtUR5VGGrwh8NIXDAr3+PzECKQGTsh6/HelDTdt6wl9IFS6wLoSCoWQTzgXYCpS33IboBcGerNBOfDglBCnmIEOZVVwUC4VuUNJTaAZjr2/bgHeKk5J5AM1HZ7NCVKyUXYe9QfB8pKOmpY+H/pwqn/eV4ABAMJsUrAW7KuAAAAAAElFTkSuQmCC" alt=""></a></li>
+                    <li><a href="javascript:void(0);" data-dismiss="modal"><i class="fas fa-times"></i></a></li>
+                    </ul>
+                </div>
+            <div class="caption-container">
+                <span>&copy; {{ core_options.siteTitle }} </span>
+                <span id="caption{{ random }}"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

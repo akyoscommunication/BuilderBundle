@@ -4,6 +4,8 @@
         >
             {% if values.redirection is defined and values.redirection is not empty %}
                 <a href="{{ getPermalinkById('Page', values.redirection) }}">
+            {% elseif values.external_link is defined and values.external_link is not empty %}
+                <a href="{{ values.external_link }}" target="_blank" rel="noopener noreferrer">
             {% endif %}
 
                 {% if values.no_lazy is defined and values.no_lazy %}
@@ -13,6 +15,8 @@
                 {% endif %}
 
             {% if values.redirection is defined and values.redirection is not empty %}
+                </a>
+            {% elseif values.external_link is defined and values.external_link is not empty %}
                 </a>
             {% endif %}
         </div>

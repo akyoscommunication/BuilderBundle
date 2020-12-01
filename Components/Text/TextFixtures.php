@@ -2,24 +2,28 @@
 
 namespace Akyos\BuilderBundle\Components\Text;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class TextFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Bloc de texte');
-        $component->setSlug('text');
-        $component->setShortDescription('Insérez un bloc de texte');
-        $component->setIsContainer(false);
-        $component->setPrototype('default');
-
-        $componentFieldArray = [
+        $slug = "text";
+        $name = "Bloc de texte";
+        $shortDescription = "Insérez un bloc de texte";
+        $isContainer = false;
+        $prototype = "default";
+        $componentFields = [
             [
                 'name' => 'Contenu',
                 'slug' => 'content',
@@ -30,25 +34,7 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
             ],
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**
@@ -56,6 +42,6 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component'];
+        return ['component', 'component-text'];
     }
 }
