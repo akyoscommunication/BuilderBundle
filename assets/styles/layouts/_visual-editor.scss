@@ -6,6 +6,14 @@
 @import "../common/components";
 @import "../common/global";
 
+form[name="submit_builder"] {
+	position: fixed;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	z-index: 9999;
+}
+
 .aky-builder-component-sortable {
 	width: 100%;
 

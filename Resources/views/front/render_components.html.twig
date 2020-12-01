@@ -14,6 +14,11 @@
             </div>
         </div>
 
+    {% form_theme form 'bootstrap_4_layout.html.twig' %}
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+    {{ form_end(form) }}
+
         <div class="aky-builder-components" id="componentTab">
             <div class="aky-builder-components-header">
                 <h2>Liste des composants disponibles</h2>

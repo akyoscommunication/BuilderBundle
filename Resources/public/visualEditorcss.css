@@ -1423,6 +1423,16 @@ button.swiper-pagination-bullet {
   cursor: pointer;
 }
 
+form[name="submit_builder"] {
+  position: fixed;
+  top: 50%;
+  right: 10px;
+  -webkit-transform: translateY(-50%);
+       -o-transform: translateY(-50%);
+          transform: translateY(-50%);
+  z-index: 9999;
+}
+
 .aky-builder-component-sortable {
   width: 100%;
 }
