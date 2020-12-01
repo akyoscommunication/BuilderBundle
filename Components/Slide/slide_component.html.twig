@@ -1,5 +1,3 @@
-{% for childComponent in component.childComponents %}
-    <div class="swiper-slide">
-        {{ renderComponent(childComponent)|raw }}
-    </div>
-{% endfor %}
+<div class="swiper-slide builder-component--container">
+    {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}
+</div>

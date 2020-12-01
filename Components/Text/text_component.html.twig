@@ -1,3 +1,3 @@
-<div class="aky-text {{ customClasses is defined ? customClasses : '' }}" style="margin: {{ values.margin ?? '' }}">
+<div class="aky-text{{ customClasses is defined and customClasses ? ' '~customClasses : '' }}" style="margin: {{ values.margin ?? '' }}">
     {{ values.content|raw }}
 </div>

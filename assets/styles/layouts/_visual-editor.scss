@@ -1,0 +1,44 @@
+@import "../common/variables";
+
+/** Import theme styles */
+@import "../common/mixins";
+@import "../common/fonts";
+@import "../common/components";
+@import "../common/global";
+
+form[name="submit_builder"] {
+	position: fixed;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	z-index: 9999;
+}
+
+.aky-builder-component-sortable {
+	width: 100%;
+
+	.aky-builder-component {
+		top: 0;
+		left: 0;
+		right: 0;
+		display: none;
+
+		&-sortable {
+			border: 1px solid blue;
+		}
+	}
+
+	&:hover {
+		border: 1px black solid;
+		border-radius: 4px;
+
+		> .aky-builder-component {
+			display: block;
+		}
+	}
+}
+
+.draggable--over {
+	background-color: grey;
+	border: 1px solid black;
+}

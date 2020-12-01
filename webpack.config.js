@@ -18,7 +18,7 @@ let webpackConfig = {
     entry: config.entry,
     output: {
         path: config.paths.dist,
-        filename: "main.js"
+        filename: "[name].js"
     },
     stats: {
         hash: false,
