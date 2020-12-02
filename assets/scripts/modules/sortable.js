@@ -25,8 +25,8 @@ export default class SortableJs {
             plugins: [Plugins.ResizeMirror],
         });
     
-        sortable.on('sortable:sorted', (evt) => {
-            const parent = $(evt.data.newContainer).parents('.aky-builder-component-sortable').children('.aky-builder-component[data-componentid]')
+        sortable.on('sortable:stop', (evt) => {
+            const parent    = $(evt.data.newContainer).parents('.aky-builder-component-sortable').children('.aky-builder-component[data-componentid]')
             let parentId = parent.data('componentid')
             const component = $(evt.data.dragEvent.data.originalSource).children('.aky-builder-component[data-componentid]')
             let componentId = component.data('componentid')
@@ -40,7 +40,6 @@ export default class SortableJs {
                     position: evt.data.newIndex,
                 },
                 success: function (res) {
-                    console.log(res, 'success');
                     new Toast('Composant déplacé', 'success', 'Succès', 5000 );
                 },
                 error: function(er) {

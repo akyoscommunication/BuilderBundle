@@ -48,7 +48,7 @@ class EditComponent {
                                          * Remet les btns des enfants dans leurs composants respectifs
                                          * Avant de remplacer le composant parent édité
                                          */
-                                        newComp.find('.aky-builder-component[data-componentid]').each(function (i) {
+                                        newComp.find('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
                                             const next = $(this).next()
                                             next.addClass('aky-builder-component-sortable position-relative')
     
@@ -60,6 +60,9 @@ class EditComponent {
                                         comp.replaceWith(newComp)
                                         $(newComp)[0].appendChild(cloneParent[0])
                                         $(newComp).addClass('aky-builder-component-sortable position-relative')
+                                        if ($('.visual-editor').length > 0) {
+                                            cloneParent.addClass('position-absolute')
+                                        }
                                         
                                         $('#modalEdit').removeClass('active');
     

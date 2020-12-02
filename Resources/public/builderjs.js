@@ -21696,14 +21696,16 @@ class Builder {
 
         __WEBPACK_IMPORTED_MODULE_6__modules_modal__["a" /* default */].init();
 
-        $('.aky-builder-component[data-componentid]').each(function (i) {
-            const next = $(this).next();
-            next.addClass('aky-builder-component-sortable position-relative');
+        if ($('.visual-editor').length > 0) {
+            $('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
+                const next = $(this).next();
+                next.addClass('aky-builder-component-sortable position-relative');
 
-            if ($(next)[0]) {
-                $(next)[0].appendChild(this);
-            }
-        });
+                if ($(next)[0]) {
+                    $(next)[0].appendChild(this);
+                }
+            });
+        }
 
         setTimeout(() => {
             __WEBPACK_IMPORTED_MODULE_4__modules_sortable__["a" /* default */].init();
@@ -22259,7 +22261,7 @@ class SortableJs {
             plugins: [__WEBPACK_IMPORTED_MODULE_0__shopify_draggable__["Plugins"].ResizeMirror]
         });
 
-        sortable.on('sortable:sorted', evt => {
+        sortable.on('sortable:stop', evt => {
             const parent = $(evt.data.newContainer).parents('.aky-builder-component-sortable').children('.aky-builder-component[data-componentid]');
             let parentId = parent.data('componentid');
             const component = $(evt.data.dragEvent.data.originalSource).children('.aky-builder-component[data-componentid]');
@@ -22274,7 +22276,6 @@ class SortableJs {
                     position: evt.data.newIndex
                 },
                 success: function (res) {
-                    console.log(res, 'success');
                     new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant déplacé', 'success', 'Succès', 5000);
                 },
                 error: function (er) {
@@ -22305,6 +22306,8 @@ class AddComponent {
         $('.aky-builder-components').on('click', '.aky-builder-component', function () {
             let clone = $(this).clone();
 
+            const target = $(this).parents('#componentTab').attr('data-parentcomponent') !== undefined ? $(this).parents('#componentTab').attr('data-parentcomponent') : 'main';
+
             $.ajax({
                 method: 'POST',
                 url: '/admin/builder/save/instance',
@@ -22312,18 +22315,17 @@ class AddComponent {
                     type: $(this).data('type'),
                     typeId: $(this).data('typeid'),
                     componentId: $(this).data('componentid'),
-                    parentComponentId: $(this).parents('#componentTab').attr('data-parentcomponent')
+                    parentComponentId: target
                 },
                 success: function (res) {
-                    console.log(res, 'success');
                     clone.attr('data-componentid', res);
-                    clone.addClass('active');
+                    clone.addClass('active aky-builder-component-sortable');
 
-                    if ($('#componentTab').attr('data-parentcomponent') !== 'main') {
-                        $('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
+                    if (target !== 'main') {
+                        $('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
                     } else {
                         clone.addClass('isParent');
-                        $('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').insertBefore('#componentsRenderContainer > #componentsRenderContainerAdd').fadeOut().fadeIn();
+                        $('#componentsRenderContainer > .builder-component--container').append('<div class="aky-builder-component--parent">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
                     }
 
                     new __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Ajout d\'un composant', 'success', 'Succès', 5000);
@@ -33004,7 +33006,7 @@ class EditComponent {
                                  * Remet les btns des enfants dans leurs composants respectifs
                                  * Avant de remplacer le composant parent édité
                                  */
-                                newComp.find('.aky-builder-component[data-componentid]').each(function (i) {
+                                newComp.find('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
                                     const next = $(this).next();
                                     next.addClass('aky-builder-component-sortable position-relative');
 
@@ -33016,6 +33018,9 @@ class EditComponent {
                                 comp.replaceWith(newComp);
                                 $(newComp)[0].appendChild(cloneParent[0]);
                                 $(newComp).addClass('aky-builder-component-sortable position-relative');
+                                if ($('.visual-editor').length > 0) {
+                                    cloneParent.addClass('position-absolute');
+                                }
 
                                 $('#modalEdit').removeClass('active');
 

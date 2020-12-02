@@ -6,6 +6,8 @@
 @import "../common/components";
 @import "../common/global";
 
+@import "../../lib/CoreBundle/assets/styles/common/shortcodes/akyos-toast";
+
 form[name="submit_builder"] {
 	position: fixed;
 	top: 50%;
@@ -14,8 +16,19 @@ form[name="submit_builder"] {
 	z-index: 9999;
 }
 
+#componentsRenderContainer {
+	> .aky-builder-component-sortable {
+		.aky-builder-component {
+			padding: 1rem;
+			background-color: #f1f1f1;
+		}
+	}
+}
+
 .aky-builder-component-sortable {
 	width: 100%;
+	padding: 2rem;
+	z-index: 1;
 
 	.aky-builder-component {
 		top: 0;

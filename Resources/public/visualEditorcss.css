@@ -134,7 +134,8 @@
 }
 
 #componentsRenderContainer > .aky-builder-component-sortable .aky-builder-component {
-  padding: 1rem;
+  padding-top: 10px;
+  padding-bottom: 10px;
   background-color: #f1f1f1;
 }
 
@@ -170,19 +171,14 @@
           flex: initial;
   max-width: 100%;
   height: auto;
-  margin-bottom: 1rem;
-  padding-bottom: 1rem;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
   cursor: -webkit-grab;
   cursor: grab;
   position: relative;
   text-align: left;
   width: 100%;
   background-color: rgba(241, 241, 241, 0.5);
-}
-
-#componentsRenderContainer .aky-builder-component-sortable {
-  padding: 20px;
-  z-index: 1;
 }
 
 #componentsRenderContainer .aky-builder-component-sortable.ui-sortable-helper {
@@ -1491,6 +1487,121 @@ button.swiper-pagination-bullet {
   cursor: pointer;
 }
 
+.aky-toast-container {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  max-width: 20vw;
+}
+
+.aky-toast-container .aky-toast:last-child {
+  margin-bottom: 0;
+}
+
+.aky-toast {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  color: white;
+  width: 20vw;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  -webkit-box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.15);
+          box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+  -webkit-animation: slidein .3s forwards;
+       -o-animation: slidein .3s forwards;
+          animation: slidein .3s forwards;
+  -webkit-transform-origin: center center;
+       -o-transform-origin: center center;
+          transform-origin: center center;
+}
+
+.aky-toast-message {
+  -webkit-box-flex: 1;
+      -ms-flex: 1 0 80%;
+          flex: 1 0 80%;
+}
+
+.aky-toast-ico {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+}
+
+.aky-toast-close {
+  -webkit-box-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  cursor: pointer;
+}
+
+.aky-toast-el {
+  padding: 0 1rem;
+}
+
+.aky-toast-info {
+  background-color: var(--info);
+}
+
+.aky-toast-error {
+  background-color: var(--danger);
+}
+
+.aky-toast-success {
+  background-color: var(--success);
+}
+
+@-webkit-keyframes slidein {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(10%);
+            transform: translateY(10%);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+            transform: translateY(0%);
+  }
+}
+
+@-o-keyframes slidein {
+  from {
+    opacity: 0;
+    -o-transform: translateY(10%);
+       transform: translateY(10%);
+  }
+
+  to {
+    opacity: 1;
+    -o-transform: translateY(0%);
+       transform: translateY(0%);
+  }
+}
+
+@keyframes slidein {
+  from {
+    opacity: 0;
+    -webkit-transform: translateY(10%);
+         -o-transform: translateY(10%);
+            transform: translateY(10%);
+  }
+
+  to {
+    opacity: 1;
+    -webkit-transform: translateY(0%);
+         -o-transform: translateY(0%);
+            transform: translateY(0%);
+  }
+}
+
 form[name="submit_builder"] {
   position: fixed;
   top: 50%;
@@ -1501,8 +1612,15 @@ form[name="submit_builder"] {
   z-index: 9999;
 }
 
+#componentsRenderContainer > .aky-builder-component-sortable .aky-builder-component {
+  padding: 1rem;
+  background-color: #f1f1f1;
+}
+
 .aky-builder-component-sortable {
   width: 100%;
+  padding: 2rem;
+  z-index: 1;
 }
 
 .aky-builder-component-sortable .aky-builder-component {

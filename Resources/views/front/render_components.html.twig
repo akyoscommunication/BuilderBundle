@@ -3,7 +3,7 @@
 
 {% if edit is defined and edit %}
     {% if first is defined and first %}
-        <div id="componentsRenderContainer">
+        <div id="componentsRenderContainer" class="visual-editor">
             <div class="builder-component--container" data-componentid="main">
     {% endif %}
         {% for component in components %}
@@ -11,6 +11,12 @@
             {{ renderComponent(component, edit, type, typeId)|raw }}
         {% endfor %}
     {% if first is defined and first %}
+            </div>
+            <div class="col-md-12 ui-state-disabled" id="componentsRenderContainerAdd">
+                <div class="toggleComponentTab">
+                    <i class="fas fa-plus"></i>
+                    <i>Ajouter un composant</i>
+                </div>
             </div>
         </div>
 
@@ -38,8 +44,9 @@
                             <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i class="fas fa-times"></i></button>
                         </div>
                         <h3 class="aky-builder-component__title">{{ component.name }}</h3>
-                        <i class="aky-builder-component__desc">{{ component.shortDescription }}</i>
-                        <div class="aky-builder-component-child-render aky-sortable-component-container {{ component.prototype ? 'row' : '' }}"></div>
+                        {% if component.isContainer %}
+                            <div class="aky-builder-component-child-render builder-component--container {{ component.prototype ? 'row' : '' }}"></div>
+                        {% endif %}
                     </div>
                 {% endfor %}
             </div>
@@ -73,7 +80,7 @@
     {% if component.componentTemplate.prototype == 'col' %}
         {% set valProto = component.componentValues|filter(val => val.componentField.slug == 'col')|last %}
     {% endif %}
-    <div class="aky-builder-component active {{ component.parentComponent is null or component.childComponents is not empty ? 'isParent' : '' }}" style="position: absolute;" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}" data-container="{{ component.componentTemplate.isContainer is not null and component.componentTemplate.isContainer ? true : false }}">
+    <div class="aky-builder-component position-absolute active {{ component.parentComponent is null or component.childComponents is not empty ? 'isParent' : '' }}" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}" data-container="{{ component.componentTemplate.isContainer is not null and component.componentTemplate.isContainer ? true : false }}">
         <div class="aky-builder-component-header">
             {% if component.componentTemplate.prototype == 'col' %}
                 <input class="form-control changeColInput" type="number" name="col" value="{{ valProto ? valProto.value : '12' }}" min="1" max="12"/>

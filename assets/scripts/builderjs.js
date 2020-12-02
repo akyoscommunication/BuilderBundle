@@ -23,14 +23,16 @@ class Builder {
         
         modal.init();
         
-        $('.aky-builder-component[data-componentid]').each(function (i) {
-            const next = $(this).next()
-            next.addClass('aky-builder-component-sortable position-relative')
-            
-            if($(next)[0]){
-                $(next)[0].appendChild(this)
-            }
-        })
+        if ($('.visual-editor').length > 0) {
+            $('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
+                const next = $(this).next()
+                next.addClass('aky-builder-component-sortable position-relative')
+        
+                if($(next)[0]){
+                    $(next)[0].appendChild(this)
+                }
+            })
+        }
         
         setTimeout(() => {
             SortableJs.init();
