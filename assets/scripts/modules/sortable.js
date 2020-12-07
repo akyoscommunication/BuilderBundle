@@ -31,21 +31,23 @@ export default class SortableJs {
             const component = $(evt.data.dragEvent.data.originalSource).children('.aky-builder-component[data-componentid]')
             let componentId = component.data('componentid')
     
-            $.ajax({
-                method: 'POST',
-                url: '/admin/builder/component/change-component-position',
-                data: {
-                    parent: parentId,
-                    component: componentId,
-                    position: evt.data.newIndex,
-                },
-                success: function (res) {
-                    new Toast('Composant déplacé', 'success', 'Succès', 5000 );
-                },
-                error: function(er) {
-                    new Toast('Composant non déplacé', 'error', 'Erreur', 5000 );
-                }
-            })
+            if (evt.data.newIndex != evt.data.oldIndex) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/admin/builder/component/change-component-position',
+                    data: {
+                        parent: parentId,
+                        component: componentId,
+                        position: evt.data.newIndex,
+                    },
+                    success: function (res) {
+                        new Toast('Composant déplacé', 'success', 'Succès', 5000 );
+                    },
+                    error: function(er) {
+                        new Toast('Composant non déplacé', 'error', 'Erreur', 5000 );
+                    }
+                })
+            }
         });
     }
 }
