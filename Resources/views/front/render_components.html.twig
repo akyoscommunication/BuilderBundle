@@ -22,6 +22,9 @@
 
     {% form_theme form 'bootstrap_4_layout.html.twig' %}
     {{ form_start(form) }}
+        <div class="d-flex justify-content-end mb-2">
+            <a href="{{ back_url }}" class="btn btn-dark">Retour à l'édition</a>
+        </div>
         {{ form_widget(form) }}
     {{ form_end(form) }}
 

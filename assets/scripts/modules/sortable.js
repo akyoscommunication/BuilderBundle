@@ -26,10 +26,10 @@ export default class SortableJs {
         });
     
         sortable.on('sortable:stop', (evt) => {
-            const parent    = $(evt.data.newContainer).parents('.aky-builder-component-sortable').children('.aky-builder-component[data-componentid]')
-            let parentId = parent.data('componentid')
+            const parent = $(evt.data.newContainer).parents('.aky-builder-component-sortable').children('.aky-builder-component[data-componentid]')
+            let parentId = parent.attr('data-componentid')
             const component = $(evt.data.dragEvent.data.originalSource).children('.aky-builder-component[data-componentid]')
-            let componentId = component.data('componentid')
+            let componentId = component.attr('data-componentid')
     
             if (evt.data.newIndex != evt.data.oldIndex) {
                 $.ajax({

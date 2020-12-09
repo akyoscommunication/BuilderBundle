@@ -21,7 +21,7 @@
     <div id="akyTabBuilderHeader" class="d-flex justify-content-between align-items-start">
         <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
         {% if class_exists(type) %}
-            <a href="{{ path('back_builder_view_edit', { 'type' : type|url_encode, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Editeur visuel</a>
+            <a href="{{ path('back_builder_view_edit', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}" class="btn btn-outline-dark">Editeur visuel</a>
         {% endif %}
 
         {{ form_start(choiceBuilderTemplateForm, { 'attr' : { 'class' : 'not-submit d-flex align-items-center' }}) }}
@@ -39,11 +39,11 @@
             {% for component in instance_components | filter(component => instance_components and component.parentComponent is null) %}
                 {{ _self.componentLoop(component, type, typeId) }}
             {% endfor %}
-            <div class="col-md-12 ui-state-disabled" id="componentsRenderContainerAdd">
-                <div class="toggleComponentTab">
-                    <i class="fas fa-plus"></i>
-                    <i>Ajouter un composant</i>
-                </div>
+        </div>
+        <div class="col-md-12 ui-state-disabled" id="componentsRenderContainerAdd">
+            <div class="toggleComponentTab">
+                <i class="fas fa-plus"></i>
+                <i>Ajouter un composant</i>
             </div>
         </div>
     </div>

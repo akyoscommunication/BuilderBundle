@@ -29,16 +29,13 @@ form[name="submit_builder"] {
 	width: 100%;
 	padding: 2rem;
 	z-index: 1;
+	border: 1px solid blue;
 
 	.aky-builder-component {
 		top: 0;
 		left: 0;
 		right: 0;
 		display: none;
-
-		&-sortable {
-			border: 1px solid blue;
-		}
 	}
 
 	&:hover {

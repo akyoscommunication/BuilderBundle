@@ -1621,6 +1621,7 @@ form[name="submit_builder"] {
   width: 100%;
   padding: 2rem;
   z-index: 1;
+  border: 1px solid blue;
 }
 
 .aky-builder-component-sortable .aky-builder-component {
@@ -1628,10 +1629,6 @@ form[name="submit_builder"] {
   left: 0;
   right: 0;
   display: none;
-}
-
-.aky-builder-component-sortable .aky-builder-component-sortable {
-  border: 1px solid blue;
 }
 
 .aky-builder-component-sortable:hover {

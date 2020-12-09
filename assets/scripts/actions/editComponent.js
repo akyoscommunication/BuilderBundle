@@ -38,35 +38,33 @@ class EditComponent {
                                     success: function (res) {
                                         const newComp = $(res)
                                         
-                                        /**
-                                         * Clone les btn pour les re append dans le nouveau composant
-                                         */
-                                        const cloneParent = parent.clone()
-                                        parent.remove(comp)
-    
-                                        /**
-                                         * Remet les btns des enfants dans leurs composants respectifs
-                                         * Avant de remplacer le composant parent édité
-                                         */
-                                        newComp.find('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
-                                            const next = $(this).next()
-                                            next.addClass('aky-builder-component-sortable position-relative')
-    
-                                            if($(next)[0]){
-                                                $(next)[0].appendChild(this)
-                                            }
-                                        })
-                                        
-                                        comp.replaceWith(newComp)
-                                        $(newComp)[0].appendChild(cloneParent[0])
-                                        $(newComp).addClass('aky-builder-component-sortable position-relative')
                                         if ($('.visual-editor').length > 0) {
+                                            /**
+                                             * Clone les btn pour les re append dans le nouveau composant
+                                             */
+                                            const cloneParent = parent.clone()
+                                            parent.remove(comp)
+    
+                                            /**
+                                             * Remet les btns des enfants dans leurs composants respectifs
+                                             * Avant de remplacer le composant parent édité
+                                             */
+                                            newComp.find('.aky-builder-component[data-componentid]').each(function (i) {
+                                                const next = $(this).next()
+                                                next.addClass('aky-builder-component-sortable position-relative')
+        
+                                                if($(next)[0]){
+                                                    $(next)[0].appendChild(this)
+                                                }
+                                            })
+    
+                                            comp.replaceWith(newComp)
+                                            $(newComp)[0].appendChild(cloneParent[0])
+                                            $(newComp).addClass('aky-builder-component-sortable position-relative')
                                             cloneParent.addClass('position-absolute')
                                         }
                                         
                                         $('#modalEdit').removeClass('active');
-    
-                                        SortableJs.init();
                                         
                                         Modal.checkModal('#modalEdit', '#modalEditComponent');
                                         new Toast('Composant édité', 'success', 'Succès', 5000 );

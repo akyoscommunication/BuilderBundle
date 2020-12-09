@@ -25,19 +25,19 @@ use Symfony\Component\Routing\Annotation\Route;
 class ViewController extends AbstractController
 {
     /**
-     * @Route("/view_edit/{type}/{typeId}", name="view_edit", methods={"GET","POST"})
+     * @Route("/view_edit/{type}/{typeId}/{redirect}", name="view_edit", methods={"GET","POST"})
      * @param $type
      * @param $typeId
+     * @param $redirect
      * @param ComponentRepository $componentRepository
      * @param Request $request
-     *
      * @param Filesystem $filesystem
      * @param KernelInterface $kernel
      * @param CoreService $coreService
      * @param ContainerInterface $container
      * @return Response
      */
-    public function view($type, $typeId, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CoreService $coreService, ContainerInterface $container): Response
+    public function view($type, $typeId, $redirect, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CoreService $coreService, ContainerInterface $container): Response
     {
         $type = urldecode($type);
         $em = $this->getDoctrine()->getManager();
@@ -45,17 +45,6 @@ class ViewController extends AbstractController
         $array = explode('\\', $type);
         $entity = end($array);
         $checkBundle = $coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $type);
-
-        $array = [
-            'andWhere' => [
-                'published' => true,
-                'props' => 'value'
-            ],
-            'orWhere' => [
-                'published' => true,
-                'props' => 'value'
-            ],
-        ];
 
         $form = $this->createForm(SubmitBuilderType::class);
         $form->handleRequest($request);
@@ -92,6 +81,7 @@ class ViewController extends AbstractController
             'page' => $el,
             'type' => $type,
             'typeId' => $typeId,
+            'back_url' => urldecode($redirect),
             'edit' => true,
             'first' => true,
             'form' => $form->createView(),

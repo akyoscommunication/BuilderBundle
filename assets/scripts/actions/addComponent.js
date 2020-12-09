@@ -1,6 +1,7 @@
 import editColComponent from './editColComponent'
 import builder from '../builderjs'
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
+import SortableJs from "../modules/sortable";
 
 class AddComponent {
     static addComponent() {
@@ -13,20 +14,19 @@ class AddComponent {
                 method: 'POST',
                 url: '/admin/builder/save/instance',
                 data: {
-                    type: $(this).data('type'),
-                    typeId: $(this).data('typeid'),
-                    componentId: $(this).data('componentid'),
+                    type: $(this).attr('data-type'),
+                    typeId: $(this).attr('data-typeid'),
+                    componentId: $(this).attr('data-componentid'),
                     parentComponentId: target,
                 },
                 success: function (res) {
                     clone.attr('data-componentid', res);
-                    clone.addClass('active aky-builder-component-sortable');
 
                     if (target !== 'main') {
                         $('#componentsRenderContainer').find('.aky-builder-component[data-componentid='+$('#componentTab').attr('data-parentcomponent')+']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent">'+(clone[0].outerHTML)+'</div>').fadeOut().fadeIn();
                     } else {
                         clone.addClass('isParent');
-                        $('#componentsRenderContainer > .builder-component--container').append('<div class="aky-builder-component--parent">'+(clone[0].outerHTML)+'</div>').fadeOut().fadeIn();
+                        $('#componentsRenderContainer > .builder-component--container').append('<div class="aky-builder-component-sortable col-md-12">'+(clone[0].outerHTML)+'</div>').fadeOut().fadeIn();
                     }
 
                     new Toast('Ajout d\'un composant', 'success', 'Succès', 5000 );
