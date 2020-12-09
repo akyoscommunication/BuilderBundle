@@ -1,7 +1,6 @@
 import editColComponent from './editColComponent'
 import builder from '../builderjs'
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
-import SortableJs from "../modules/sortable";
 
 class AddComponent {
     static addComponent() {

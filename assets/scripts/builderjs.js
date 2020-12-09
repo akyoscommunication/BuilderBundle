@@ -100,7 +100,15 @@ class Builder {
         $('.toggleComponentTab').on('click', function () {
             const modal = $('#componentTab');
             modal.toggleClass('active');
-            modal.attr('data-parentcomponent', $(this).parents('[data-componentid]').data('componentid'));
+            const parent = $(this).parents('[data-componentid]');
+            let componentId;
+            
+            if (!parent.length) {
+                componentId = 'main'
+            } else {
+                componentId = $(this).parents('[data-componentid]').attr('data-componentid')
+            }
+            modal.attr('data-parentcomponent', componentId);
         });
     }
 }
