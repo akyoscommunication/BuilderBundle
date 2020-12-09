@@ -212,6 +212,7 @@
         &-header {
             transition: ease .3s;
             position: absolute;
+            display: flex;
             right: -5px;
             bottom: calc(100% - 20px);
 

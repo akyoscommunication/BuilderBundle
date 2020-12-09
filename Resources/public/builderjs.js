@@ -22325,7 +22325,7 @@ class AddComponent {
                     clone.attr('data-componentid', res);
 
                     if (target !== 'main') {
-                        $('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
+                        $('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
                     } else {
                         clone.addClass('isParent');
                         $('#componentsRenderContainer > .builder-component--container').append('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
