@@ -22,6 +22,7 @@ export default class SortableJs {
             mirror: {
                 constrainDimensions: true,
             },
+            delay: 200,
             plugins: [Plugins.ResizeMirror],
         });
     
