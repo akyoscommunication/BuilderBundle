@@ -100,15 +100,16 @@ class BuilderController extends AbstractController
     }
 
     /**
-     * @Route("/reset/temp/component/{type}/{typeId}", name="reset_temp_component")
+     * @Route("/reset/temp/component/{type}/{typeId}/{redirect}", name="reset_temp_component")
      * @param $type
      * @param $typeId
      *
+     * @param $redirect
      * @return Response
      */
-    public function resetTemp($type, $typeId):Response
+    public function resetTemp($type, $typeId, $redirect):Response
     {
-        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
+        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => urldecode($type), 'typeId' => $typeId, 'isTemp' => true]);
         $em = $this->getDoctrine()->getManager();
 
         foreach ($tempComponents as $tempComponent) {
@@ -116,6 +117,6 @@ class BuilderController extends AbstractController
         }
         $em->flush();
 
-        return $this->redirectToRoute(strtolower($type).'_edit', ['id' => $typeId]);
+        return $this->redirect(urldecode($redirect));
     }
 }

@@ -94,7 +94,8 @@
 #componentsRenderContainer{
     > .aky-builder-component-sortable {
         .aky-builder-component {
-            padding: 1rem;
+            padding-top: 10px;
+            padding-bottom: 10px;
             background-color: #f1f1f1;
         }
     }
@@ -119,8 +120,8 @@
         flex: initial;
         max-width: 100%;
         height: auto;
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
         cursor: grab;
         position: relative;
         text-align: left;
@@ -128,8 +129,6 @@
         background-color: rgba(241,241,241, .5);
 
         &-sortable{
-            padding: 20px;
-            z-index: 1;
 
             &.ui-sortable-helper {
                 background-color: transparent !important;
@@ -213,6 +212,7 @@
         &-header {
             transition: ease .3s;
             position: absolute;
+            display: flex;
             right: -5px;
             bottom: calc(100% - 20px);
 

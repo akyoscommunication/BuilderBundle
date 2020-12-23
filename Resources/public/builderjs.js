@@ -21629,7 +21629,7 @@ return jQuery;
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Toast);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(12)))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
 
 /***/ }),
 /* 3 */
@@ -21665,12 +21665,12 @@ module.exports = g;
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */(function($, jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__actions_addComponent__ = __webpack_require__(11);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_editComponent__ = __webpack_require__(13);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_deleteComponent__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__actions_editComponent__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__actions_deleteComponent__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__actions_editColComponent__ = __webpack_require__(5);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_sortable__ = __webpack_require__(10);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_collectionForm__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_modal__ = __webpack_require__(6);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_collectionForm__ = __webpack_require__(35);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__modules_modal__ = __webpack_require__(7);
 
 
 
@@ -21696,14 +21696,16 @@ class Builder {
 
         __WEBPACK_IMPORTED_MODULE_6__modules_modal__["a" /* default */].init();
 
-        $('.aky-builder-component[data-componentid]').each(function (i) {
-            const next = $(this).next();
-            next.addClass('aky-builder-component-sortable position-relative');
+        if ($('.visual-editor').length > 0) {
+            $('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
+                const next = $(this).next();
+                next.addClass('aky-builder-component-sortable position-relative');
 
-            if ($(next)[0]) {
-                $(next)[0].appendChild(this);
-            }
-        });
+                if ($(next)[0]) {
+                    $(next)[0].appendChild(this);
+                }
+            });
+        }
 
         setTimeout(() => {
             __WEBPACK_IMPORTED_MODULE_4__modules_sortable__["a" /* default */].init();
@@ -21771,7 +21773,15 @@ class Builder {
         $('.toggleComponentTab').on('click', function () {
             const modal = $('#componentTab');
             modal.toggleClass('active');
-            modal.attr('data-parentcomponent', $(this).parents('[data-componentid]').data('componentid'));
+            const parent = $(this).parents('[data-componentid]');
+            let componentId;
+
+            if (!parent.length) {
+                componentId = 'main';
+            } else {
+                componentId = $(this).parents('[data-componentid]').attr('data-componentid');
+            }
+            modal.attr('data-parentcomponent', componentId);
         });
     }
 }
@@ -21829,521 +21839,6 @@ class EditColComponent {
 
 /***/ }),
 /* 6 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {class Modal {
-    static init() {
-        $('.aky-modal .close').click(function () {
-            $(this).parents('.aky-modal').removeClass('active');
-            Modal.checkModal('#modalEdit', '#modalEditComponent');
-        });
-    }
-    static checkModal(target, content) {
-        if (!$(target).hasClass('active')) {
-            $(target).find(content).html('<img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader" width="128" height="128">');
-        }
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (Modal);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 7 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {class LoadPreview {
-    static init() {
-        const _this = this;
-
-        // $('.aky-file-input input[type=text]').on('change', function () {
-        //     _this.loadPreview($(this));
-        //
-        // });
-    }
-
-    static loadPreview(that, path) {
-        const file = that.val();
-
-        const previewContainer = that.parents('.aky-file').find('.aky-file-preview');
-        previewContainer.html('');
-        previewContainer.append('<img src="' + location.origin + path + '" width="100%"/>');
-
-        $.ajax({
-            method: 'GET',
-            url: '/file-manager/render-file/' + file,
-            success: function (res) {
-                const previewContainer = that.parents('.aky-file').find('.aky-file-preview');
-                previewContainer.html('');
-                previewContainer.append(res);
-            },
-            error: function (er) {
-                console.log(er, 'error');
-            }
-        });
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (LoadPreview);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports) {
-
-// shim for using process in browser
-var process = module.exports = {};
-
-// cached from whatever global is present so that test runners that stub it
-// don't break things.  But we need to wrap it in a try catch in case it is
-// wrapped in strict mode code which doesn't define any globals.  It's inside a
-// function because try/catches deoptimize in certain engines.
-
-var cachedSetTimeout;
-var cachedClearTimeout;
-
-function defaultSetTimout() {
-    throw new Error('setTimeout has not been defined');
-}
-function defaultClearTimeout () {
-    throw new Error('clearTimeout has not been defined');
-}
-(function () {
-    try {
-        if (typeof setTimeout === 'function') {
-            cachedSetTimeout = setTimeout;
-        } else {
-            cachedSetTimeout = defaultSetTimout;
-        }
-    } catch (e) {
-        cachedSetTimeout = defaultSetTimout;
-    }
-    try {
-        if (typeof clearTimeout === 'function') {
-            cachedClearTimeout = clearTimeout;
-        } else {
-            cachedClearTimeout = defaultClearTimeout;
-        }
-    } catch (e) {
-        cachedClearTimeout = defaultClearTimeout;
-    }
-} ())
-function runTimeout(fun) {
-    if (cachedSetTimeout === setTimeout) {
-        //normal enviroments in sane situations
-        return setTimeout(fun, 0);
-    }
-    // if setTimeout wasn't available but was latter defined
-    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
-        cachedSetTimeout = setTimeout;
-        return setTimeout(fun, 0);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedSetTimeout(fun, 0);
-    } catch(e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
-            return cachedSetTimeout.call(null, fun, 0);
-        } catch(e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
-            return cachedSetTimeout.call(this, fun, 0);
-        }
-    }
-
-
-}
-function runClearTimeout(marker) {
-    if (cachedClearTimeout === clearTimeout) {
-        //normal enviroments in sane situations
-        return clearTimeout(marker);
-    }
-    // if clearTimeout wasn't available but was latter defined
-    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
-        cachedClearTimeout = clearTimeout;
-        return clearTimeout(marker);
-    }
-    try {
-        // when when somebody has screwed with setTimeout but no I.E. maddness
-        return cachedClearTimeout(marker);
-    } catch (e){
-        try {
-            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
-            return cachedClearTimeout.call(null, marker);
-        } catch (e){
-            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
-            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
-            return cachedClearTimeout.call(this, marker);
-        }
-    }
-
-
-
-}
-var queue = [];
-var draining = false;
-var currentQueue;
-var queueIndex = -1;
-
-function cleanUpNextTick() {
-    if (!draining || !currentQueue) {
-        return;
-    }
-    draining = false;
-    if (currentQueue.length) {
-        queue = currentQueue.concat(queue);
-    } else {
-        queueIndex = -1;
-    }
-    if (queue.length) {
-        drainQueue();
-    }
-}
-
-function drainQueue() {
-    if (draining) {
-        return;
-    }
-    var timeout = runTimeout(cleanUpNextTick);
-    draining = true;
-
-    var len = queue.length;
-    while(len) {
-        currentQueue = queue;
-        queue = [];
-        while (++queueIndex < len) {
-            if (currentQueue) {
-                currentQueue[queueIndex].run();
-            }
-        }
-        queueIndex = -1;
-        len = queue.length;
-    }
-    currentQueue = null;
-    draining = false;
-    runClearTimeout(timeout);
-}
-
-process.nextTick = function (fun) {
-    var args = new Array(arguments.length - 1);
-    if (arguments.length > 1) {
-        for (var i = 1; i < arguments.length; i++) {
-            args[i - 1] = arguments[i];
-        }
-    }
-    queue.push(new Item(fun, args));
-    if (queue.length === 1 && !draining) {
-        runTimeout(drainQueue);
-    }
-};
-
-// v8 likes predictible objects
-function Item(fun, array) {
-    this.fun = fun;
-    this.array = array;
-}
-Item.prototype.run = function () {
-    this.fun.apply(null, this.array);
-};
-process.title = 'browser';
-process.browser = true;
-process.env = {};
-process.argv = [];
-process.version = ''; // empty string to avoid regexp issues
-process.versions = {};
-
-function noop() {}
-
-process.on = noop;
-process.addListener = noop;
-process.once = noop;
-process.off = noop;
-process.removeListener = noop;
-process.removeAllListeners = noop;
-process.emit = noop;
-process.prependListener = noop;
-process.prependOnceListener = noop;
-
-process.listeners = function (name) { return [] }
-
-process.binding = function (name) {
-    throw new Error('process.binding is not supported');
-};
-
-process.cwd = function () { return '/' };
-process.chdir = function (dir) {
-    throw new Error('process.chdir is not supported');
-};
-process.umask = function() { return 0; };
-
-
-/***/ }),
-/* 9 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-class SpinningDots extends HTMLElement {
-  constructor() {
-    super()
-    this.root = this.attachShadow({ mode: 'open' })
-  }
-
-  connectedCallback() {
-    const styles = window.getComputedStyle(this)
-    const width = this.intFromPx(styles.width, 28)
-    const strokeWidth = this.intFromPx(styles.strokeWidth, (4 / 28) * width, 1)
-    const circles = this.intFromPx(this.getAttribute('dots'), 8)
-    this.root.innerHTML = `<div>
-    ${this.buildStyles(width, circles, strokeWidth)}
-    ${this.buildCircles(width, circles, strokeWidth / 2)}
-    ${this.buildTrail(width, strokeWidth)}
-    </div>`
-  }
-
-  disconnectedCallback() {
-    this.root.innerHTML = ''
-  }
-
-  /**
-   * Builds a SVG with n circles equally spaced around a circle
-   * @param {number} w canvas width
-   * @param {number} n circles count
-   * @param {number} r circles radius
-   * @return {string}
-   */
-  buildCircles(w, n, r) {
-    const circleRadius = w / 2 - r
-    let dom = `<svg class="circles" width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" fill="none" xmlns="http://www.w3.org/2000/svg">`
-    for (let i = 0; i < n; i++) {
-      const a = (Math.PI / (n / 2)) * i
-      const x = circleRadius * Math.sin(a) + w / 2
-      const y = circleRadius * Math.cos(a) + w / 2
-      dom += `<circle cx="${x}" cy="${y}" r="${r}" fill="currentColor"/>`
-    }
-    return dom + `</svg>`
-  }
-
-  /**
-   * Builds a SVG circle
-   * @param {number} w canvas width
-   * @param {number} stroke stroke width
-   * @return {string}
-   */
-  buildTrail(w, stroke) {
-    return `<svg class="halo" width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" fill="none" xmlns="http://www.w3.org/2000/svg">
-<circle cx="${w / 2}" cy="${w / 2}" r="${w / 2 -
-      stroke / 2}" stroke-width="${stroke}" stroke-linecap="round" stroke="currentColor"/>
-</svg>`
-  }
-
-  /**
-   * Build the style
-   * @param {number} w canvas width
-   * @param {number} n number of section for the trail
-   * @param {number} stroke size of the stroke
-   * @return {string}
-   */
-  buildStyles(w, n, stroke) {
-    const offset = Math.PI * (w - stroke)
-    return `<style>
-      :host {
-        display: inline-block;
-      }
-      div {
-        animation: fadeIn .4s cubic-bezier(.1,.6,.3,1);
-        position: relative;
-        width: ${w}px;
-        height: ${w}px;
-      }
-      svg {
-        position: absolute;
-        top: 0;
-        left: 0;
-      }
-      .circles {
-        animation: spin 16s linear infinite;
-      }
-      .halo {
-        animation: spin2 1.6s cubic-bezier(.5,.15,.5,.85)  infinite;
-      } 
-      .halo circle {
-        stroke-dasharray: ${offset};
-        stroke-dashoffset: ${offset + offset / n};
-        animation: trail 1.6s cubic-bezier(.5,.15,.5,.85)   infinite;
-      }
-      @keyframes spin {
-          from {transform: rotate(0deg); }
-          to {transform: rotate(360deg); }
-      }
-      @keyframes spin2 {
-          from {transform: rotate(0deg); }
-          to {transform: rotate(720deg); }
-      }
-      @keyframes trail {
-        0% { stroke-dashoffset: ${offset + offset / n}; }
-        50% { stroke-dashoffset: ${offset + (2.5 * offset) / n}; }
-        100% { stroke-dashoffset: ${offset + offset / n}; }
-      }
-      @keyframes fadeIn {
-        from { opacity: 0; transform: scale(.1) }
-        to { opacity: 1; transform: scale(1) }
-      }
-    </style>`
-  }
-
-  /**
-   * Extract an int from a string
-   * @param {string} value "20px" "auto"
-   * @param {number} initial default value
-   * @param {number} min assign default value if the value is under this threshold
-   */
-  intFromPx(value, initial, min = 0) {
-    if (value === null || value === undefined) {
-      return initial
-    }
-    value = parseInt(value.replace('px', ''), 10)
-    if (value > min) {
-      return value
-    }
-    return initial
-  }
-}
-
-try {
-  customElements.define('spinning-dots', SpinningDots)
-} catch (e) {
-  if (e instanceof DOMException) {
-    console.error('DOMException : ' + e.message)
-  } else {
-    throw e
-  }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (SpinningDots);
-
-
-/***/ }),
-/* 10 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shopify_draggable__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shopify_draggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__shopify_draggable__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
-
-
-
-const Classes = {
-    draggable: 'aky-builder-component-sortable:not(.ui-state-disabled)',
-    capacity: 'aky-sortable-component-container'
-};
-
-class SortableJs {
-    static init() {
-        this.sortComponent();
-    }
-    static sortComponent() {
-        const containers = document.querySelectorAll('#componentsRenderContainer .builder-component--container');
-
-        if (containers.length === 0) {
-            return false;
-        }
-
-        const sortable = new __WEBPACK_IMPORTED_MODULE_0__shopify_draggable__["Sortable"](containers, {
-            draggable: `.${Classes.draggable}`,
-            mirror: {
-                constrainDimensions: true
-            },
-            plugins: [__WEBPACK_IMPORTED_MODULE_0__shopify_draggable__["Plugins"].ResizeMirror]
-        });
-
-        sortable.on('sortable:sorted', evt => {
-            const parent = $(evt.data.newContainer).parents('.aky-builder-component-sortable').children('.aky-builder-component[data-componentid]');
-            let parentId = parent.data('componentid');
-            const component = $(evt.data.dragEvent.data.originalSource).children('.aky-builder-component[data-componentid]');
-            let componentId = component.data('componentid');
-
-            $.ajax({
-                method: 'POST',
-                url: '/admin/builder/component/change-component-position',
-                data: {
-                    parent: parentId,
-                    component: componentId,
-                    position: evt.data.newIndex
-                },
-                success: function (res) {
-                    console.log(res, 'success');
-                    new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant déplacé', 'success', 'Succès', 5000);
-                },
-                error: function (er) {
-                    new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant non déplacé', 'error', 'Erreur', 5000);
-                }
-            });
-        });
-    }
-}
-/* harmony export (immutable) */ __webpack_exports__["a"] = SortableJs;
-
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 11 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__editColComponent__ = __webpack_require__(5);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__builderjs__ = __webpack_require__(4);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
-
-
-
-
-class AddComponent {
-    static addComponent() {
-        $('.aky-builder-components').on('click', '.aky-builder-component', function () {
-            let clone = $(this).clone();
-
-            $.ajax({
-                method: 'POST',
-                url: '/admin/builder/save/instance',
-                data: {
-                    type: $(this).data('type'),
-                    typeId: $(this).data('typeid'),
-                    componentId: $(this).data('componentid'),
-                    parentComponentId: $(this).parents('#componentTab').attr('data-parentcomponent')
-                },
-                success: function (res) {
-                    console.log(res, 'success');
-                    clone.attr('data-componentid', res);
-                    clone.addClass('active');
-
-                    if ($('#componentTab').attr('data-parentcomponent') !== 'main') {
-                        $('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
-                    } else {
-                        clone.addClass('isParent');
-                        $('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').insertBefore('#componentsRenderContainer > #componentsRenderContainerAdd').fadeOut().fadeIn();
-                    }
-
-                    new __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Ajout d\'un composant', 'success', 'Succès', 5000);
-
-                    __WEBPACK_IMPORTED_MODULE_0__editColComponent__["a" /* default */].changeCol();
-                    __WEBPACK_IMPORTED_MODULE_1__builderjs__["default"].toggleComponentTab();
-                },
-                error: function (er) {
-                    console.log(er, 'error');
-                }
-            });
-        });
-    }
-}
-
-/* harmony default export */ __webpack_exports__["a"] = (AddComponent);
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
-
-/***/ }),
-/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -32948,14 +32443,386 @@ return jQuery;
 
 
 /***/ }),
-/* 13 */
+/* 7 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_modal__ = __webpack_require__(6);
+/* WEBPACK VAR INJECTION */(function($) {class Modal {
+    static init() {
+        $('.aky-modal .close').click(function () {
+            $(this).parents('.aky-modal').removeClass('active');
+            Modal.checkModal('#modalEdit', '#modalEditComponent');
+        });
+    }
+    static checkModal(target, content) {
+        if (!$(target).hasClass('active')) {
+            $(target).find(content).html('<img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader" width="128" height="128">');
+        }
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (Modal);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 8 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {class LoadPreview {
+    static init() {
+        const _this = this;
+
+        // $('.aky-file-input input[type=text]').on('change', function () {
+        //     _this.loadPreview($(this));
+        //
+        // });
+    }
+
+    static loadPreview(that, path) {
+        const file = that.val();
+
+        const previewContainer = that.parents('.aky-file').find('.aky-file-preview');
+        previewContainer.html('');
+        previewContainer.append('<img src="' + location.origin + path + '" width="100%"/>');
+
+        $.ajax({
+            method: 'GET',
+            url: '/file-manager/render-file/' + file,
+            success: function (res) {
+                const previewContainer = that.parents('.aky-file').find('.aky-file-preview');
+                previewContainer.html('');
+                previewContainer.append(res);
+            },
+            error: function (er) {
+                console.log(er, 'error');
+            }
+        });
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (LoadPreview);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
+
+/***/ }),
+/* 9 */
+/***/ (function(module, exports) {
+
+// shim for using process in browser
+var process = module.exports = {};
+
+// cached from whatever global is present so that test runners that stub it
+// don't break things.  But we need to wrap it in a try catch in case it is
+// wrapped in strict mode code which doesn't define any globals.  It's inside a
+// function because try/catches deoptimize in certain engines.
+
+var cachedSetTimeout;
+var cachedClearTimeout;
+
+function defaultSetTimout() {
+    throw new Error('setTimeout has not been defined');
+}
+function defaultClearTimeout () {
+    throw new Error('clearTimeout has not been defined');
+}
+(function () {
+    try {
+        if (typeof setTimeout === 'function') {
+            cachedSetTimeout = setTimeout;
+        } else {
+            cachedSetTimeout = defaultSetTimout;
+        }
+    } catch (e) {
+        cachedSetTimeout = defaultSetTimout;
+    }
+    try {
+        if (typeof clearTimeout === 'function') {
+            cachedClearTimeout = clearTimeout;
+        } else {
+            cachedClearTimeout = defaultClearTimeout;
+        }
+    } catch (e) {
+        cachedClearTimeout = defaultClearTimeout;
+    }
+} ())
+function runTimeout(fun) {
+    if (cachedSetTimeout === setTimeout) {
+        //normal enviroments in sane situations
+        return setTimeout(fun, 0);
+    }
+    // if setTimeout wasn't available but was latter defined
+    if ((cachedSetTimeout === defaultSetTimout || !cachedSetTimeout) && setTimeout) {
+        cachedSetTimeout = setTimeout;
+        return setTimeout(fun, 0);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedSetTimeout(fun, 0);
+    } catch(e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't trust the global object when called normally
+            return cachedSetTimeout.call(null, fun, 0);
+        } catch(e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error
+            return cachedSetTimeout.call(this, fun, 0);
+        }
+    }
+
+
+}
+function runClearTimeout(marker) {
+    if (cachedClearTimeout === clearTimeout) {
+        //normal enviroments in sane situations
+        return clearTimeout(marker);
+    }
+    // if clearTimeout wasn't available but was latter defined
+    if ((cachedClearTimeout === defaultClearTimeout || !cachedClearTimeout) && clearTimeout) {
+        cachedClearTimeout = clearTimeout;
+        return clearTimeout(marker);
+    }
+    try {
+        // when when somebody has screwed with setTimeout but no I.E. maddness
+        return cachedClearTimeout(marker);
+    } catch (e){
+        try {
+            // When we are in I.E. but the script has been evaled so I.E. doesn't  trust the global object when called normally
+            return cachedClearTimeout.call(null, marker);
+        } catch (e){
+            // same as above but when it's a version of I.E. that must have the global object for 'this', hopfully our context correct otherwise it will throw a global error.
+            // Some versions of I.E. have different rules for clearTimeout vs setTimeout
+            return cachedClearTimeout.call(this, marker);
+        }
+    }
+
+
+
+}
+var queue = [];
+var draining = false;
+var currentQueue;
+var queueIndex = -1;
+
+function cleanUpNextTick() {
+    if (!draining || !currentQueue) {
+        return;
+    }
+    draining = false;
+    if (currentQueue.length) {
+        queue = currentQueue.concat(queue);
+    } else {
+        queueIndex = -1;
+    }
+    if (queue.length) {
+        drainQueue();
+    }
+}
+
+function drainQueue() {
+    if (draining) {
+        return;
+    }
+    var timeout = runTimeout(cleanUpNextTick);
+    draining = true;
+
+    var len = queue.length;
+    while(len) {
+        currentQueue = queue;
+        queue = [];
+        while (++queueIndex < len) {
+            if (currentQueue) {
+                currentQueue[queueIndex].run();
+            }
+        }
+        queueIndex = -1;
+        len = queue.length;
+    }
+    currentQueue = null;
+    draining = false;
+    runClearTimeout(timeout);
+}
+
+process.nextTick = function (fun) {
+    var args = new Array(arguments.length - 1);
+    if (arguments.length > 1) {
+        for (var i = 1; i < arguments.length; i++) {
+            args[i - 1] = arguments[i];
+        }
+    }
+    queue.push(new Item(fun, args));
+    if (queue.length === 1 && !draining) {
+        runTimeout(drainQueue);
+    }
+};
+
+// v8 likes predictible objects
+function Item(fun, array) {
+    this.fun = fun;
+    this.array = array;
+}
+Item.prototype.run = function () {
+    this.fun.apply(null, this.array);
+};
+process.title = 'browser';
+process.browser = true;
+process.env = {};
+process.argv = [];
+process.version = ''; // empty string to avoid regexp issues
+process.versions = {};
+
+function noop() {}
+
+process.on = noop;
+process.addListener = noop;
+process.once = noop;
+process.off = noop;
+process.removeListener = noop;
+process.removeAllListeners = noop;
+process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
+
+process.binding = function (name) {
+    throw new Error('process.binding is not supported');
+};
+
+process.cwd = function () { return '/' };
+process.chdir = function (dir) {
+    throw new Error('process.chdir is not supported');
+};
+process.umask = function() { return 0; };
+
+
+/***/ }),
+/* 10 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shopify_draggable__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__shopify_draggable___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0__shopify_draggable__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_FixCKEditor__ = __webpack_require__(14);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FileManagerBundle_assets_scripts_main__ = __webpack_require__(15);
+
+
+
+const Classes = {
+    draggable: 'aky-builder-component-sortable:not(.ui-state-disabled)',
+    capacity: 'aky-sortable-component-container'
+};
+
+class SortableJs {
+    static init() {
+        this.sortComponent();
+    }
+    static sortComponent() {
+        const containers = document.querySelectorAll('#componentsRenderContainer .builder-component--container');
+
+        if (containers.length === 0) {
+            return false;
+        }
+
+        const sortable = new __WEBPACK_IMPORTED_MODULE_0__shopify_draggable__["Sortable"](containers, {
+            draggable: `.${Classes.draggable}`,
+            mirror: {
+                constrainDimensions: true
+            },
+            delay: 200,
+            plugins: [__WEBPACK_IMPORTED_MODULE_0__shopify_draggable__["Plugins"].ResizeMirror]
+        });
+
+        sortable.on('sortable:stop', evt => {
+            const parent = $(evt.data.newContainer).parents('.aky-builder-component-sortable').children('.aky-builder-component[data-componentid]');
+            let parentId = parent.attr('data-componentid');
+            const component = $(evt.data.dragEvent.data.originalSource).children('.aky-builder-component[data-componentid]');
+            let componentId = component.attr('data-componentid');
+
+            if (evt.data.newIndex != evt.data.oldIndex) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/admin/builder/component/change-component-position',
+                    data: {
+                        parent: parentId,
+                        component: componentId,
+                        position: evt.data.newIndex
+                    },
+                    success: function (res) {
+                        new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant déplacé', 'success', 'Succès', 5000);
+                    },
+                    error: function (er) {
+                        new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant non déplacé', 'error', 'Erreur', 5000);
+                    }
+                });
+            }
+        });
+    }
+}
+/* harmony export (immutable) */ __webpack_exports__["a"] = SortableJs;
+
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 11 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__editColComponent__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__builderjs__ = __webpack_require__(4);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
+
+
+
+
+class AddComponent {
+    static addComponent() {
+        $('.aky-builder-components').on('click', '.aky-builder-component', function () {
+            let clone = $(this).clone();
+
+            const target = $(this).parents('#componentTab').attr('data-parentcomponent') !== undefined ? $(this).parents('#componentTab').attr('data-parentcomponent') : 'main';
+
+            $.ajax({
+                method: 'POST',
+                url: '/admin/builder/save/instance',
+                data: {
+                    type: $(this).attr('data-type'),
+                    typeId: $(this).attr('data-typeid'),
+                    componentId: $(this).attr('data-componentid'),
+                    parentComponentId: target
+                },
+                success: function (res) {
+                    clone.attr('data-componentid', res);
+
+                    if (target !== 'main') {
+                        $('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
+                    } else {
+                        clone.addClass('isParent');
+                        $('#componentsRenderContainer > .builder-component--container').append('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
+                    }
+
+                    new __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Ajout d\'un composant', 'success', 'Succès', 5000);
+
+                    __WEBPACK_IMPORTED_MODULE_0__editColComponent__["a" /* default */].changeCol();
+                    __WEBPACK_IMPORTED_MODULE_1__builderjs__["default"].toggleComponentTab();
+                },
+                error: function (er) {
+                    console.log(er, 'error');
+                }
+            });
+        });
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (AddComponent);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
+
+/***/ }),
+/* 12 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_modal__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__ = __webpack_require__(2);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_FixCKEditor__ = __webpack_require__(13);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__FileManagerBundle_assets_scripts_main__ = __webpack_require__(14);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_sortable__ = __webpack_require__(10);
 
 
@@ -32994,32 +32861,33 @@ class EditComponent {
                             success: function (res) {
                                 const newComp = $(res);
 
-                                /**
-                                 * Clone les btn pour les re append dans le nouveau composant
-                                 */
-                                const cloneParent = parent.clone();
-                                parent.remove(comp);
+                                if ($('.visual-editor').length > 0) {
+                                    /**
+                                     * Clone les btn pour les re append dans le nouveau composant
+                                     */
+                                    const cloneParent = parent.clone();
+                                    parent.remove(comp);
 
-                                /**
-                                 * Remet les btns des enfants dans leurs composants respectifs
-                                 * Avant de remplacer le composant parent édité
-                                 */
-                                newComp.find('.aky-builder-component[data-componentid]').each(function (i) {
-                                    const next = $(this).next();
-                                    next.addClass('aky-builder-component-sortable position-relative');
+                                    /**
+                                     * Remet les btns des enfants dans leurs composants respectifs
+                                     * Avant de remplacer le composant parent édité
+                                     */
+                                    newComp.find('.aky-builder-component[data-componentid]').each(function (i) {
+                                        const next = $(this).next();
+                                        next.addClass('aky-builder-component-sortable position-relative');
 
-                                    if ($(next)[0]) {
-                                        $(next)[0].appendChild(this);
-                                    }
-                                });
+                                        if ($(next)[0]) {
+                                            $(next)[0].appendChild(this);
+                                        }
+                                    });
 
-                                comp.replaceWith(newComp);
-                                $(newComp)[0].appendChild(cloneParent[0]);
-                                $(newComp).addClass('aky-builder-component-sortable position-relative');
+                                    comp.replaceWith(newComp);
+                                    $(newComp)[0].appendChild(cloneParent[0]);
+                                    $(newComp).addClass('aky-builder-component-sortable position-relative');
+                                    cloneParent.addClass('position-absolute');
+                                }
 
                                 $('#modalEdit').removeClass('active');
-
-                                __WEBPACK_IMPORTED_MODULE_4__modules_sortable__["a" /* default */].init();
 
                                 __WEBPACK_IMPORTED_MODULE_0__modules_modal__["a" /* default */].checkModal('#modalEdit', '#modalEditComponent');
                                 new __WEBPACK_IMPORTED_MODULE_1__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Composant édité', 'success', 'Succès', 5000);
@@ -33040,7 +32908,7 @@ class EditComponent {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -33059,21 +32927,22 @@ class FixCKEditor {
 /* harmony default export */ __webpack_exports__["a"] = (FixCKEditor);
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($, jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_iframeAdd__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_loadPreview__ = __webpack_require__(7);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_removeFile__ = __webpack_require__(19);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_editFile__ = __webpack_require__(20);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_manageFolder__ = __webpack_require__(21);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_moveManager__ = __webpack_require__(22);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_utils__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__grafikart_drop_files_element__ = __webpack_require__(30);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__grafikart_spinning_dots_element__ = __webpack_require__(9);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_symfony_collection__ = __webpack_require__(31);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9_symfony_collection___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9_symfony_collection__);
+/* WEBPACK VAR INJECTION */(function($, jQuery) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__modules_iframeAdd__ = __webpack_require__(15);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__modules_loadPreview__ = __webpack_require__(8);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__modules_removeFile__ = __webpack_require__(18);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__modules_editFile__ = __webpack_require__(19);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__modules_manageFolder__ = __webpack_require__(20);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__modules_moveManager__ = __webpack_require__(21);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__common_utils__ = __webpack_require__(22);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__grafikart_drop_files_element__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_symfony_collection__ = __webpack_require__(30);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8_symfony_collection___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8_symfony_collection__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__CoreBundle_assets_scripts_modules_collectionType__ = __webpack_require__(31);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__grafikart_spinning_dots_element__ = __webpack_require__(32);
 
 
 
@@ -33086,21 +32955,17 @@ class FixCKEditor {
 
 
 
-// import initCollectionType from "../../../CoreBundle/assets/scripts/modules/collectionType";
-// import AkyUppyInit from "./modules/_uppy";
 
 
 class FileManager {
     static init() {
-        console.log("filemanger");
         new __WEBPACK_IMPORTED_MODULE_0__modules_iframeAdd__["a" /* default */]();
         __WEBPACK_IMPORTED_MODULE_1__modules_loadPreview__["a" /* default */].init();
         __WEBPACK_IMPORTED_MODULE_2__modules_removeFile__["a" /* default */].init();
         __WEBPACK_IMPORTED_MODULE_3__modules_editFile__["a" /* default */].init();
         __WEBPACK_IMPORTED_MODULE_4__modules_manageFolder__["a" /* default */].init();
         __WEBPACK_IMPORTED_MODULE_5__modules_moveManager__["a" /* default */].init();
-        // initCollectionType.initDataPrototype('.aky-file-collection', '.aky-file');
-        // AkyUppyInit.init();
+        __WEBPACK_IMPORTED_MODULE_9__CoreBundle_assets_scripts_modules_collectionType__["a" /* default */].initDataPrototype('.aky-file-collection', '.aky-file');
 
         this.initFileCollection();
     }
@@ -33133,20 +32998,20 @@ class FileManager {
 /* harmony default export */ __webpack_exports__["a"] = (FileManager);
 
 jQuery(document).ready(function () {
-    new __WEBPACK_IMPORTED_MODULE_8__grafikart_spinning_dots_element__["a" /* default */]();
+    new __WEBPACK_IMPORTED_MODULE_10__grafikart_spinning_dots_element__["a" /* default */]();
     FileManager.init();
     __WEBPACK_IMPORTED_MODULE_6__common_utils__["a" /* default */].init();
 });
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0), __webpack_require__(0)))
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap__ = __webpack_require__(17);
+/* WEBPACK VAR INJECTION */(function($) {/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_bootstrap___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_bootstrap__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__loadPreview__ = __webpack_require__(7);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__loadPreview__ = __webpack_require__(8);
 
 
 
@@ -33175,12 +33040,12 @@ class IframeAdd {
             _this.clickButton($iframe);
         });
 
-        const fileManagerInputs = $('.aky-file-container input');
+        const fileManagerInputs = $('.aky-file-container .aky-file-input input');
         const forms = fileManagerInputs.parents('form');
         forms.on('submit', function (e) {
             e.preventDefault();
             let valid = false;
-            const inputs = $(this).find('.aky-file-container input');
+            const inputs = $(this).find('.aky-file-container .aky-file-input input');
             inputs.each(function () {
                 $(this).parents('.aky-file-container').find('.empty-field').remove();
                 if ($(this)[0].hasAttribute('data-required') && !$(this).val()) {
@@ -33260,7 +33125,7 @@ class IframeAdd {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /*!
@@ -33269,7 +33134,7 @@ class IframeAdd {
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/main/LICENSE)
   */
 (function (global, factory) {
-   true ? factory(exports, __webpack_require__(0), __webpack_require__(18)) :
+   true ? factory(exports, __webpack_require__(0), __webpack_require__(17)) :
   typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.bootstrap = {}, global.jQuery, global.Popper));
 }(this, (function (exports, $, Popper) { 'use strict';
@@ -37676,7 +37541,7 @@ class IframeAdd {
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40266,7 +40131,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(3)))
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40283,7 +40148,7 @@ Popper.Defaults = Defaults;
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 20 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40327,7 +40192,7 @@ class EditFile {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 21 */
+/* 20 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40344,7 +40209,7 @@ class EditFile {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 22 */
+/* 21 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -40362,14 +40227,14 @@ class EditFile {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(0)))
 
 /***/ }),
-/* 23 */
+/* 22 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__ = __webpack_require__(24);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_brands_svg_icons__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__fortawesome_free_regular_svg_icons__ = __webpack_require__(29);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__fortawesome_fontawesome_svg_core__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__fortawesome_free_brands_svg_icons__ = __webpack_require__(26);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__fortawesome_free_solid_svg_icons__ = __webpack_require__(27);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__fortawesome_free_regular_svg_icons__ = __webpack_require__(28);
 
 // import the Facebook and Twitter icons
 
@@ -40388,7 +40253,7 @@ class EditFile {
 });
 
 /***/ }),
-/* 24 */
+/* 23 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -42895,10 +42760,10 @@ var autoReplace = function autoReplace() {
 
 
 
-/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(8), __webpack_require__(3), __webpack_require__(25).setImmediate))
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(9), __webpack_require__(3), __webpack_require__(24).setImmediate))
 
 /***/ }),
-/* 25 */
+/* 24 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global) {var scope = (typeof global !== "undefined" && global) ||
@@ -42954,7 +42819,7 @@ exports._unrefActive = exports.active = function(item) {
 };
 
 // setimmediate attaches itself to the global object
-__webpack_require__(26);
+__webpack_require__(25);
 // On some exotic environments, it's not clear which object `setimmediate` was
 // able to install onto.  Search each possibility in the same order as the
 // `setimmediate` library.
@@ -42968,7 +42833,7 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
 
 /***/ }),
-/* 26 */
+/* 25 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(global, process) {(function (global, undefined) {
@@ -43158,10 +43023,10 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
     attachTo.clearImmediate = clearImmediate;
 }(typeof self === "undefined" ? typeof global === "undefined" ? this : global : self));
 
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(8)))
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3), __webpack_require__(9)))
 
 /***/ }),
-/* 27 */
+/* 26 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -46385,7 +46250,7 @@ var _iconsCache = {
 
 
 /***/ }),
-/* 28 */
+/* 27 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -53417,7 +53282,7 @@ var _iconsCache = {
 
 
 /***/ }),
-/* 29 */
+/* 28 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54499,7 +54364,7 @@ var _iconsCache = {
 
 
 /***/ }),
-/* 30 */
+/* 29 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -54895,7 +54760,7 @@ catch (e) {
 
 
 /***/ }),
-/* 31 */
+/* 30 */
 /***/ (function(module, exports, __webpack_require__) {
 
 /* WEBPACK VAR INJECTION */(function(jQuery) {/*
@@ -55910,7 +55775,212 @@ catch (e) {
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
 
 /***/ }),
+/* 31 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function($) {class initCollectionType {
+
+    static initDataPrototype(proto = '.collection_prototype', childs = '.card-header__title') {
+        const _this = this;
+
+        const collectionHolder = $(proto);
+        collectionHolder.after('<button id="add_component" class="btn btn-outline-primary">Ajouter un champ</button>');
+        const addFieldLink = $('#add_component');
+        collectionHolder.data('index', collectionHolder.children('.form-group').length);
+
+        collectionHolder.children(childs).each(function () {
+            _this.addCloneFormDeleteLink($(this));
+        });
+
+        addFieldLink.on('click', function (e) {
+            e.preventDefault();
+            _this.addCloneForm(collectionHolder);
+        });
+    }
+
+    static addCloneForm($collectionHolder) {
+        // get the new index
+        const index = $collectionHolder.data('index');
+
+        // Get the data-prototype explained earlier
+        // Replace '__name__' in the prototype's HTML to
+        // instead be a number based on how many items we have
+        const $prototype = $($collectionHolder.data('prototype').replace(/__name__/g, index));
+
+        // increase the index with one for the next item
+        $collectionHolder.data('index', index + 1);
+
+        // add a delete link to the new form
+        this.addCloneFormDeleteLink($prototype);
+
+        // Display the form in the page
+        $collectionHolder.append($prototype);
+    }
+
+    static addCloneFormDeleteLink($newForm) {
+        const $deleteFormLink = $('<a href="#" class="btn btn-outline-danger">Supprimer ce champ <i class="fas fa-times"></i></a>');
+        $newForm.append($deleteFormLink);
+
+        $deleteFormLink.on('click', function (e) {
+            e.preventDefault();
+
+            // remove the div for the invitationProduct form
+            $newForm.remove();
+        });
+    }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (initCollectionType);
+/* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(6)))
+
+/***/ }),
 /* 32 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+class SpinningDots extends HTMLElement {
+  constructor() {
+    super()
+    this.root = this.attachShadow({ mode: 'open' })
+  }
+
+  connectedCallback() {
+    const styles = window.getComputedStyle(this)
+    const width = this.intFromPx(styles.width, 28)
+    const strokeWidth = this.intFromPx(styles.strokeWidth, (4 / 28) * width, 1)
+    const circles = this.intFromPx(this.getAttribute('dots'), 8)
+    this.root.innerHTML = `<div>
+    ${this.buildStyles(width, circles, strokeWidth)}
+    ${this.buildCircles(width, circles, strokeWidth / 2)}
+    ${this.buildTrail(width, strokeWidth)}
+    </div>`
+  }
+
+  disconnectedCallback() {
+    this.root.innerHTML = ''
+  }
+
+  /**
+   * Builds a SVG with n circles equally spaced around a circle
+   * @param {number} w canvas width
+   * @param {number} n circles count
+   * @param {number} r circles radius
+   * @return {string}
+   */
+  buildCircles(w, n, r) {
+    const circleRadius = w / 2 - r
+    let dom = `<svg class="circles" width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" fill="none" xmlns="http://www.w3.org/2000/svg">`
+    for (let i = 0; i < n; i++) {
+      const a = (Math.PI / (n / 2)) * i
+      const x = circleRadius * Math.sin(a) + w / 2
+      const y = circleRadius * Math.cos(a) + w / 2
+      dom += `<circle cx="${x}" cy="${y}" r="${r}" fill="currentColor"/>`
+    }
+    return dom + `</svg>`
+  }
+
+  /**
+   * Builds a SVG circle
+   * @param {number} w canvas width
+   * @param {number} stroke stroke width
+   * @return {string}
+   */
+  buildTrail(w, stroke) {
+    return `<svg class="halo" width="${w}" height="${w}" viewBox="0 0 ${w} ${w}" fill="none" xmlns="http://www.w3.org/2000/svg">
+<circle cx="${w / 2}" cy="${w / 2}" r="${w / 2 -
+      stroke / 2}" stroke-width="${stroke}" stroke-linecap="round" stroke="currentColor"/>
+</svg>`
+  }
+
+  /**
+   * Build the style
+   * @param {number} w canvas width
+   * @param {number} n number of section for the trail
+   * @param {number} stroke size of the stroke
+   * @return {string}
+   */
+  buildStyles(w, n, stroke) {
+    const offset = Math.PI * (w - stroke)
+    return `<style>
+      :host {
+        display: inline-block;
+      }
+      div {
+        animation: fadeIn .4s cubic-bezier(.1,.6,.3,1);
+        position: relative;
+        width: ${w}px;
+        height: ${w}px;
+      }
+      svg {
+        position: absolute;
+        top: 0;
+        left: 0;
+      }
+      .circles {
+        animation: spin 16s linear infinite;
+      }
+      .halo {
+        animation: spin2 1.6s cubic-bezier(.5,.15,.5,.85)  infinite;
+      } 
+      .halo circle {
+        stroke-dasharray: ${offset};
+        stroke-dashoffset: ${offset + offset / n};
+        animation: trail 1.6s cubic-bezier(.5,.15,.5,.85)   infinite;
+      }
+      @keyframes spin {
+          from {transform: rotate(0deg); }
+          to {transform: rotate(360deg); }
+      }
+      @keyframes spin2 {
+          from {transform: rotate(0deg); }
+          to {transform: rotate(720deg); }
+      }
+      @keyframes trail {
+        0% { stroke-dashoffset: ${offset + offset / n}; }
+        50% { stroke-dashoffset: ${offset + (2.5 * offset) / n}; }
+        100% { stroke-dashoffset: ${offset + offset / n}; }
+      }
+      @keyframes fadeIn {
+        from { opacity: 0; transform: scale(.1) }
+        to { opacity: 1; transform: scale(1) }
+      }
+    </style>`
+  }
+
+  /**
+   * Extract an int from a string
+   * @param {string} value "20px" "auto"
+   * @param {number} initial default value
+   * @param {number} min assign default value if the value is under this threshold
+   */
+  intFromPx(value, initial, min = 0) {
+    if (value === null || value === undefined) {
+      return initial
+    }
+    value = parseInt(value.replace('px', ''), 10)
+    if (value > min) {
+      return value
+    }
+    return initial
+  }
+}
+
+try {
+  customElements.define('spinning-dots', SpinningDots)
+} catch (e) {
+  if (e instanceof DOMException) {
+    console.error('DOMException : ' + e.message)
+  } else {
+    throw e
+  }
+}
+
+/* harmony default export */ __webpack_exports__["a"] = (SpinningDots);
+
+
+/***/ }),
+/* 33 */
 /***/ (function(module, exports, __webpack_require__) {
 
 (function webpackUniversalModuleDefinition(root, factory) {
@@ -62934,7 +63004,7 @@ exports.Plugins = Plugins;
 });
 
 /***/ }),
-/* 33 */
+/* 34 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -62983,7 +63053,7 @@ class DeleteComponent {
 /* WEBPACK VAR INJECTION */}.call(__webpack_exports__, __webpack_require__(1)))
 
 /***/ }),
-/* 34 */
+/* 35 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

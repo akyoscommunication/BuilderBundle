@@ -23,14 +23,16 @@ class Builder {
         
         modal.init();
         
-        $('.aky-builder-component[data-componentid]').each(function (i) {
-            const next = $(this).next()
-            next.addClass('aky-builder-component-sortable position-relative')
-            
-            if($(next)[0]){
-                $(next)[0].appendChild(this)
-            }
-        })
+        if ($('.visual-editor').length > 0) {
+            $('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
+                const next = $(this).next()
+                next.addClass('aky-builder-component-sortable position-relative')
+        
+                if($(next)[0]){
+                    $(next)[0].appendChild(this)
+                }
+            })
+        }
         
         setTimeout(() => {
             SortableJs.init();
@@ -98,7 +100,15 @@ class Builder {
         $('.toggleComponentTab').on('click', function () {
             const modal = $('#componentTab');
             modal.toggleClass('active');
-            modal.attr('data-parentcomponent', $(this).parents('[data-componentid]').data('componentid'));
+            const parent = $(this).parents('[data-componentid]');
+            let componentId;
+            
+            if (!parent.length) {
+                componentId = 'main'
+            } else {
+                componentId = $(this).parents('[data-componentid]').attr('data-componentid')
+            }
+            modal.attr('data-parentcomponent', componentId);
         });
     }
 }
