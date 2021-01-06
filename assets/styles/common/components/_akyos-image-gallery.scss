@@ -41,6 +41,22 @@
 			}
 		}
 	}
+
+    .component-slider {
+        width: 100%;
+
+        img {
+            object-fit: cover;
+        }
+    }
+
+    .cover {
+        .component-slider {
+            img {
+                object-fit: cover;
+            }
+        }
+    }
 }
 
 .gallery-modal {

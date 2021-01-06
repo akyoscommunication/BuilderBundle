@@ -44,8 +44,7 @@ class ComponentSlider {
 				} else {
 					scrollbar = false;
 				}
-				
-				new Swiper(('#'+id), {
+				const slider = new Swiper(('#'+id), {
 					slidesPerView: slides_per_view,
 					spaceBetween: spaceBetween,
 					loop: loop,
