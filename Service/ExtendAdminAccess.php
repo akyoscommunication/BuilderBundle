@@ -5,6 +5,7 @@ use Akyos\CoreBundle\Entity\AdminAccess;
 use Akyos\CoreBundle\Repository\AdminAccessRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
+use Symfony\Component\HttpFoundation\Response;
 
 class ExtendAdminAccess
 {
@@ -53,5 +54,7 @@ class ExtendAdminAccess
             $this->entityManager->persist($adminAccess);
             $this->entityManager->flush();
         }
+        return new Response('true');
+
     }
 }
