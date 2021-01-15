@@ -64,3 +64,6 @@ services:
     component.map:
         alias: Akyos\BuilderBundle\Components\Map\MapComponentController
         public: true
+    component.form:
+        alias: Akyos\BuilderBundle\Components\Form\FormComponentController
+        public: true
