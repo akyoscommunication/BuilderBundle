@@ -3,7 +3,7 @@ import editComponent from './actions/editComponent'
 import deleteComponent from './actions/deleteComponent'
 import editColComponent from './actions/editColComponent'
 
-import sortableComponent from './modules/sortable'
+import SortableJs from './modules/sortable'
 
 import collectionForm from './modules/collectionForm'
 import modal from './modules/modal'
@@ -20,9 +20,23 @@ class Builder {
         editComponent.editComponent();
         deleteComponent.deleteComponent();
         editColComponent.changeCol();
-
-        sortableComponent.init();
+        
         modal.init();
+        
+        if ($('.visual-editor').length > 0) {
+            $('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
+                const next = $(this).next()
+                next.addClass('aky-builder-component-sortable position-relative')
+        
+                if($(next)[0]){
+                    $(next)[0].appendChild(this)
+                }
+            })
+        }
+        
+        setTimeout(() => {
+            SortableJs.init();
+        }, 800)
     }
 
     static initFieldsCollectionForm() {
@@ -86,7 +100,15 @@ class Builder {
         $('.toggleComponentTab').on('click', function () {
             const modal = $('#componentTab');
             modal.toggleClass('active');
-            modal.attr('data-parentcomponent', $(this).parents('[data-componentid]').data('componentid'));
+            const parent = $(this).parents('[data-componentid]');
+            let componentId;
+            
+            if (!parent.length) {
+                componentId = 'main'
+            } else {
+                componentId = $(this).parents('[data-componentid]').attr('data-componentid')
+            }
+            modal.attr('data-parentcomponent', componentId);
         });
     }
 }

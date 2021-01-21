@@ -28,19 +28,23 @@ class RenderComponentController
         $this->em = $entityManager;
     }
 
-    public function renderComponent(Component $component)
+    public function renderComponent(Component $component, $edit = false, $type = null, $typeId = null)
     {
         $slug = $component->getComponentTemplate()->getSlug();
 
         $builderClassName = '\Akyos\BuilderBundle\Components\\'.$this->camelCase($slug).'\\'.$this->camelCase($slug).'ComponentController';
         $appClassName = '\App\Components\\'.$this->camelCase($slug).'\\'.$this->camelCase($slug).'ComponentController';
 
+        $params['edit'] = $edit;
+        $params['type'] = $type;
+        $params['typeId'] = $typeId;
+        $params['component'] = $component;
+        $params['values'] = array();
+        $params['customClasses'] = $component->getCustomClasses();
+        $params['customId'] = $component->getCustomId();
+
         if(class_exists($appClassName)) {
             $view = $appClassName::getTemplateName();
-            $params['component'] = $component;
-            $params['values'] = array();
-            $params['customClasses'] = $component->getCustomClasses();
-            $params['customId'] = $component->getCustomId();
             foreach ($component->getComponentValues() as $value) {
                 if($value->getComponentField()->getType()=== 'entity'){
                     $params['values'][$value->getComponentField()->getSlug()] = $this->em->getRepository($value->getComponentField()->getEntity())->find((int)$value->getValue());
@@ -58,10 +62,6 @@ class RenderComponentController
 
         } elseif(class_exists($builderClassName)) {
             $view = $builderClassName::getTemplateName();
-            $params['component'] = $component;
-            $params['values'] = array();
-            $params['customClasses'] = $component->getCustomClasses();
-            $params['customId'] = $component->getCustomId();
             foreach ($component->getComponentValues() as $value) {
                 if($value->getComponentField()->getType()=== 'entity'){
                     $params['values'][$value->getComponentField()->getSlug()] = $this->em->getRepository($value->getComponentField()->getEntity())->find((int)$value->getValue());
@@ -82,14 +82,19 @@ class RenderComponentController
         }
     }
 
-    public function renderComponentBySlug($componentSlug, $values)
+    public function renderComponentBySlug($componentSlug, $values, $component, $edit, $type, $typeId)
     {
         $builderClassName = '\Akyos\BuilderBundle\Components\\'.$this->camelCase($componentSlug).'\\'.$this->camelCase($componentSlug).'ComponentController';
         $appClassName = '\App\Components\\'.$this->camelCase($componentSlug).'\\'.$this->camelCase($componentSlug).'ComponentController';
 
+        $params['values'] = $values;
+        $params['component'] = $component;
+        $params['edit'] = $edit;
+        $params['type'] = $type;
+        $params['typeId'] = $typeId;
+
         if(class_exists($appClassName)) {
             $view = $appClassName::getTemplateName();
-            $params['values'] = $values;
             $params = $this->container->get('component.'.strtolower($componentSlug))->getParameters($params);
             if($params instanceof Response) {
                 return $params;
@@ -98,7 +103,6 @@ class RenderComponentController
 
         } elseif(class_exists($builderClassName)) {
             $view = $builderClassName::getTemplateName();
-            $params['values'] = $values;
             $params = $this->container->get('component.'.strtolower($componentSlug))->getParameters($params);
             if($params instanceof Response) {
                 return $params;

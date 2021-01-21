@@ -1,5 +1,5 @@
 .aky-builder-components{
-    background-color: $white;
+    background-color: white;
     position: fixed;
     top: 175px;
     bottom: 0;
@@ -50,8 +50,8 @@
             margin: 10px;
             max-width: calc(100%/3);
             height: 15vh;
-            background-color: $second;
-            color: $white;
+            background-color: var(--secondary);
+            color: white;
             cursor: pointer;
             font-family: 'Montserrat', sans-serif;
             display: flex;
@@ -63,6 +63,7 @@
             &__title {
                 font-size: 1rem;
                 font-weight: bold;
+                color: black;
             }
             &__desc {
                 font-size: .8rem;
@@ -93,14 +94,15 @@
 #componentsRenderContainer{
     > .aky-builder-component-sortable {
         .aky-builder-component {
-            padding: 1rem;
+            padding-top: 10px;
+            padding-bottom: 10px;
             background-color: #f1f1f1;
         }
     }
 
     &Add {
         > .toggleComponentTab {
-            border: 1px dotted $black;
+            border: 1px dotted black;
             border-radius: 15px;
             padding: 2rem;
             display: flex;
@@ -110,31 +112,32 @@
             transition: ease .3s;
 
             &:hover {
-                background-color: $grey;
+                background-color: grey;
             }
         }
     }
     .aky-builder-component{
-        //box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.1);
         flex: initial;
         max-width: 100%;
         height: auto;
-        margin-bottom: 1rem;
-        padding-bottom: 1rem;
+        margin-bottom: 10px;
+        padding-bottom: 10px;
         cursor: grab;
         position: relative;
         text-align: left;
         width: 100%;
+        background-color: rgba(241,241,241, .5);
 
         &-sortable{
+
             &.ui-sortable-helper {
                 background-color: transparent !important;
-                border: none;
+                border: 1px solid black !important;
                 > .aky-builder-component {
-                    background-color: $second !important;
-                    color: $white;
+                    background-color: var(--secondary) !important;
+                    color: white;
                     .aky-builder-component-child-render {
-                        color: $black;
+                        color: black;
                     }
                 }
             }
@@ -149,6 +152,7 @@
             font-weight: bold;
             font-size: 1rem;
             line-height: 1;
+            color: black;
         }
 
         &__desc {
@@ -162,8 +166,8 @@
             display: inline-flex;
             &-content{
                 display: none;
-                color: $white;
-                background-color: $black;
+                color: white;
+                background-color: black;
                 padding: 1rem 2rem;
                 position: absolute;
                 font-family: 'Montserrat', sans-serif;
@@ -194,7 +198,7 @@
 
         &.isParent{
             padding: 1rem 1rem 0;
-            background-color: #f1f1f1;
+            background-color: rgba(241,241,241, .5);
         }
         &.onDeleting{
             .aky-builder-component{
@@ -208,6 +212,7 @@
         &-header {
             transition: ease .3s;
             position: absolute;
+            display: flex;
             right: -5px;
             bottom: calc(100% - 20px);
 
@@ -235,7 +240,7 @@
 
             .aky-builder-component{
                 padding: 1rem;
-                background-color: $white;
+                background-color: white;
 
                 &.isParent {
                     padding: 1rem 1rem 0;

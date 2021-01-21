@@ -19,7 +19,10 @@
 
 <div class="tab-pane fade" id="builder" role="tabpanel" aria-labelledby="builder-tab">
     <div id="akyTabBuilderHeader" class="d-flex justify-content-between align-items-start">
-        <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type, 'typeId' : typeId }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
+        <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
+        {% if class_exists(type) %}
+            <a href="{{ path('back_builder_view_edit', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}" class="btn btn-outline-dark">Editeur visuel</a>
+        {% endif %}
 
         {{ form_start(choiceBuilderTemplateForm, { 'attr' : { 'class' : 'not-submit d-flex align-items-center' }}) }}
             {{ form_widget(choiceBuilderTemplateForm) }}
@@ -31,10 +34,12 @@
         {{ form_end(makeBuilderTemplateForm) }}
     </div>
     {{ _self.render_flashbag() }}
-    <div id="componentsRenderContainer" class="aky-sortable-component-container row" data-componentid="main">
-        {% for component in instance_components | filter(component => instance_components and component.parentComponent is null) %}
-            {{ _self.componentLoop(component, type, typeId) }}
-        {% endfor %}
+    <div id="componentsRenderContainer">
+        <div class="builder-component--container" data-componentid="main">
+            {% for component in instance_components | filter(component => instance_components and component.parentComponent is null) %}
+                {{ _self.componentLoop(component, type, typeId) }}
+            {% endfor %}
+        </div>
         <div class="col-md-12 ui-state-disabled" id="componentsRenderContainerAdd">
             <div class="toggleComponentTab">
                 <i class="fas fa-plus"></i>
@@ -117,8 +122,8 @@
                     </div>
                 </div>
             {% endif %}
-            {% if component.componentTemplate.isContainer is not null %}
-                <div class="aky-builder-component-child-render aky-sortable-component-container {{ component.componentTemplate.prototype ? 'row' : '' }}">
+            {% if component.componentTemplate.isContainer %}
+                <div class="aky-builder-component-child-render builder-component--container {{ component.componentTemplate.prototype ? 'row' : '' }}">
                     {% for childComponent in component.childComponents | filter(childComponent => component.childComponents|length > 0) %}
                         {{ _self.componentLoop(childComponent) }}
                     {% endfor %}
@@ -142,5 +147,5 @@
     </div>
 </div>
 
-<link rel="stylesheet" href="{{ asset('bundles/akyosbuilder/main.css') }}">
-<script src="{{ asset("bundles/akyosbuilder/main.js") }}" type="application/javascript"></script>
+<link rel="stylesheet" href="{{ asset('bundles/akyosbuilder/buildercss.css') }}">
+<script src="{{ asset("bundles/akyosbuilder/builderjs.js") }}" type="application/javascript"></script>

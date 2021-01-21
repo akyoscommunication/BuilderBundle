@@ -41,6 +41,22 @@
 			}
 		}
 	}
+
+    .component-slider {
+        width: 100%;
+
+        img {
+            object-fit: cover;
+        }
+    }
+
+    .cover {
+        .component-slider {
+            img {
+                object-fit: cover;
+            }
+        }
+    }
 }
 
 .gallery-modal {
@@ -54,10 +70,10 @@
 				@include flex(row, nowrap, center, center);
 
 				img {
-					width: auto;
-					height: auto;
+					width: 100%;
+					height: 100%;
 					max-height: 90vh;
-					object-fit: cover;
+					object-fit: contain;
 				}
 			}
 		}

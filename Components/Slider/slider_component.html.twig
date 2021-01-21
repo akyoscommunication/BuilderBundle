@@ -12,12 +12,8 @@
 
     <div class="component-slider{{ customClasses is defined ? ' '~customClasses : '' }}" style="{{ values.height is defined and values.height != "" ? 'height:'~values.height~';' : '' }}">
         <div id="slider{{ component.id }}" class="swiper-container" data-direction="{{ direction }}" data-speed="{{ speed }}" data-autoplay="{{ autoplay }}" data-loop="{{ loop }}" data-slides_per_view="{{ slides_per_view }}" data-slides_per_view_991="{{ slides_per_view_991 }}" data-slides_per_view_767="{{ slides_per_view_767 }}" data-pagination="{{ pagination }}" data-navigation="{{ navigation }}" data-scrollbar="{{ scrollbar }}">
-            <div class="swiper-wrapper">
-                {% for childComponent in component.childComponents %}
-                    <div class="swiper-slide">
-                        {{ renderComponent(childComponent)|raw }}
-                    </div>
-                {% endfor %}
+            <div class="swiper-wrapper builder-component--container">
+                {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}
             </div>
             {% if values.navigation is defined and values.navigation %}
                 <div class="swiper-button-next component-slider-next"></div>

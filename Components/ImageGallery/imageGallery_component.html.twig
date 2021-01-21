@@ -1,35 +1,73 @@
 {% set random = random() %}
 
 <div class="aky-gallery gallery{{ random }}" data-gallery="{{ random }}">
-<div class="images pictures {{ values.background_size }}">
-    {% for key, image in values.images %}
-        <div class="picture" data-index="{{ key }}" data-caption="{{ getImageAltById(image) }}" data-image="{{ getImagePathById(image) }}" data-title="{{ getImageNameById(image) }}">
-            {{ renderFileManager(image)|raw }}
-        </div>
-    {% endfor %}
-</div>
+    <div class="images {{ values.isSlider is defined and values.isSlider ? '' : 'pictures' }} {{ values.background_size }}">
+        {% if values.isSlider is defined and values.isSlider %}
+            {% set pagination = values.pagination is defined and values.pagination == "1" ? true : false %}
+            {% set height = values.height is defined ? values.height : "500px" %}
+            {% set navigation = values.navigation is defined and values.navigation == "1" ? true : false %}
+            {% set scrollbar = values.scrollbar is defined and values.scrollbar == "1" ? true : false %}
+            {% set direction = values.direction is defined and values.direction is not null ? values.direction : 'horizontal' %}
+            {% set speed = values.speed is defined and values.speed is not null ? values.speed : 5000 %}
+            {% set autoplay = values.autoplay is defined and values.autoplay != "" ? values.autoplay : true %}
+            {% set loop = values.loop is defined and values.loop != "" ? values.loop : true %}
+            {% set space_between = values.space_between is defined and values.space_between is not null ? values.space_between : '10px' %}
+            {% set slides_per_view = values.slides_per_view is defined and values.slides_per_view is not null ? values.slides_per_view : 1 %}
+            {% set slides_per_view_991 = values.slides_per_view_991 is defined and values.slides_per_view_991 is not null ? values.slides_per_view_991 : 1 %}
+            {% set slides_per_view_767 = values.slides_per_view_767 is defined and values.slides_per_view_767 is not null ? values.slides_per_view_767 : 1 %}
 
-<div id="galleryModal{{ random }}" class="gallery-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
-<div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-    <div class="modal-content">
-        <div class="modal-body">
+            <div class="component-slider{{ customClasses is defined ? ' '~customClasses : '' }}" style="{{ 'height:'~height~';' }}">
+                <div id="slider{{ random }}" class="swiper-container" data-direction="{{ direction }}" data-speed="{{ speed }}" data-autoplay="{{ autoplay }}" data-loop="{{ loop }}" data-slides_per_view="{{ slides_per_view }}" data-slides_per_view_991="{{ slides_per_view_991 }}" data-slides_per_view_767="{{ slides_per_view_767 }}" data-pagination="{{ pagination }}" data-navigation="{{ navigation }}" data-scrollbar="{{ scrollbar }}" data-space-between="{{ space_between }}">
+                    <div class="swiper-wrapper builder-component--container">
+                        {% for key, image in values.images %}
+                            <div class="swiper-slide picture" data-index="{{ key }}" data-caption="{{ getImageAltById(image) }}" data-image="{{ getImagePathById(image) }}" data-title="{{ getImageNameById(image) }}">
+                                {{ renderFileManager(image, false)|raw }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    {% if navigation %}
+                        <div class="swiper-button-next component-slider-next"></div>
+                        <div class="swiper-button-prev component-slider-prev"></div>
+                    {% endif %}
+                    {% if pagination %}
+                        <div class="swiper-pagination component-slider-pagination"></div>
+                    {% endif %}
+                    {% if scrollbar %}
+                        <div class="swiper-scrollbar component-slider-scrollbar"></div>
+                    {% endif %}
+                </div>
+            </div>
+        {% else %}
             {% for key, image in values.images %}
-                <div class="slide">
-                    {{ renderFileManager(image, false)|raw }}
+                <div class="picture" data-index="{{ key }}" data-caption="{{ getImageAltById(image) }}" data-image="{{ getImagePathById(image) }}" data-title="{{ getImageNameById(image) }}">
+                    {{ renderFileManager(image)|raw }}
                 </div>
             {% endfor %}
-        </div>
-        <div class="modal-footer">
-            <div class="controls-container">
-                <ul>
-                    <li><a href="javascript:void(0);" class="slides-controls prev" data-value="-1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAVCAYAAABCIB6VAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUFGOTkyRDgwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUFGOTkyRDcwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDc0NzM0MjMwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDc0NzM0MjQwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7eNf21AAABL0lEQVR42rSV3RGCMAzHoecAbOAKjqCvPuEEwATiBMoEsgEwgfriqzoBOIHnBnUCbLxwl6vpBw/0Llfakl//SVMI+74PpmgzOsjm64XqOsv7rvVfq97XQGhzMcxbfEplRx/FgplLld2URQaf3LE5C5bYLw3wjmxejQFDqAXJpw4HtQ2Bt6bIuFQc4BwJ/IU9TVVj2dwIhlYTeITOOnxngwtLmgC+UvYxwEtbZMJxuHc8yAHeolpnZMKjJDtUR5VGGrwh8NIXDAr3+PzECKQGTsh6/HelDTdt6wl9IFS6wLoSCoWQTzgXYCpS33IboBcGerNBOfDglBCnmIEOZVVwUC4VuUNJTaAZjr2/bgHeKk5J5AM1HZ7NCVKyUXYe9QfB8pKOmpY+H/pwqn/eV4ABAMJsUrAW7KuAAAAAAElFTkSuQmCC" alt=""></a></li>
-                    <li><a href="javascript:void(0);" class="slides-controls next" data-value="1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAVCAYAAABCIB6VAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUFGOTkyRDgwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUFGOTkyRDcwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDc0NzM0MjMwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDc0NzM0MjQwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7eNf21AAABL0lEQVR42rSV3RGCMAzHoecAbOAKjqCvPuEEwATiBMoEsgEwgfriqzoBOIHnBnUCbLxwl6vpBw/0Llfakl//SVMI+74PpmgzOsjm64XqOsv7rvVfq97XQGhzMcxbfEplRx/FgplLld2URQaf3LE5C5bYLw3wjmxejQFDqAXJpw4HtQ2Bt6bIuFQc4BwJ/IU9TVVj2dwIhlYTeITOOnxngwtLmgC+UvYxwEtbZMJxuHc8yAHeolpnZMKjJDtUR5VGGrwh8NIXDAr3+PzECKQGTsh6/HelDTdt6wl9IFS6wLoSCoWQTzgXYCpS33IboBcGerNBOfDglBCnmIEOZVVwUC4VuUNJTaAZjr2/bgHeKk5J5AM1HZ7NCVKyUXYe9QfB8pKOmpY+H/pwqn/eV4ABAMJsUrAW7KuAAAAAAElFTkSuQmCC" alt=""></a></li>
-                    <li><a href="javascript:void(0);" data-dismiss="modal"><i class="fas fa-times"></i></a></li>
-                    </ul>
-                </div>
-            <div class="caption-container">
-                <span>&copy; {{ core_options.siteTitle }} </span>
-                <span id="caption{{ random }}"></span>
+        {% endif %}
+    </div>
+
+    <div id="galleryModal{{ random }}" class="gallery-modal modal fade" tabindex="-1" role="dialog" aria-labelledby="galleryModal" aria-hidden="true">
+    <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-body">
+                {% for key, image in values.images %}
+                    <div class="slide">
+                        {{ renderFileManager(image, false)|raw }}
+                    </div>
+                {% endfor %}
+            </div>
+            <div class="modal-footer">
+                <div class="controls-container">
+                    <ul>
+                        <li><a href="javascript:void(0);" class="slides-controls prev" data-value="-1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAVCAYAAABCIB6VAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUFGOTkyRDgwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUFGOTkyRDcwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDc0NzM0MjMwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDc0NzM0MjQwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7eNf21AAABL0lEQVR42rSV3RGCMAzHoecAbOAKjqCvPuEEwATiBMoEsgEwgfriqzoBOIHnBnUCbLxwl6vpBw/0Llfakl//SVMI+74PpmgzOsjm64XqOsv7rvVfq97XQGhzMcxbfEplRx/FgplLld2URQaf3LE5C5bYLw3wjmxejQFDqAXJpw4HtQ2Bt6bIuFQc4BwJ/IU9TVVj2dwIhlYTeITOOnxngwtLmgC+UvYxwEtbZMJxuHc8yAHeolpnZMKjJDtUR5VGGrwh8NIXDAr3+PzECKQGTsh6/HelDTdt6wl9IFS6wLoSCoWQTzgXYCpS33IboBcGerNBOfDglBCnmIEOZVVwUC4VuUNJTaAZjr2/bgHeKk5J5AM1HZ7NCVKyUXYe9QfB8pKOmpY+H/pwqn/eV4ABAMJsUrAW7KuAAAAAAElFTkSuQmCC" alt=""></a></li>
+                        <li><a href="javascript:void(0);" class="slides-controls next" data-value="1"><img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAVCAYAAABCIB6VAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAyZpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADw/eHBhY2tldCBiZWdpbj0i77u/IiBpZD0iVzVNME1wQ2VoaUh6cmVTek5UY3prYzlkIj8+IDx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IkFkb2JlIFhNUCBDb3JlIDUuNi1jMTQ4IDc5LjE2NDAzNiwgMjAxOS8wOC8xMy0wMTowNjo1NyAgICAgICAgIj4gPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4gPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bWxuczp4bXA9Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC8iIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6RUFGOTkyRDgwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6RUFGOTkyRDcwNkY0MTFFQTlERjdGRTQwQUREQTAzNzciIHhtcDpDcmVhdG9yVG9vbD0iQWRvYmUgUGhvdG9zaG9wIENDIDIwMTkgKFdpbmRvd3MpIj4gPHhtcE1NOkRlcml2ZWRGcm9tIHN0UmVmOmluc3RhbmNlSUQ9InhtcC5paWQ6RDc0NzM0MjMwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiIHN0UmVmOmRvY3VtZW50SUQ9InhtcC5kaWQ6RDc0NzM0MjQwMTREMTFFQUEyRDNGRkNCODIzMzFBM0EiLz4gPC9yZGY6RGVzY3JpcHRpb24+IDwvcmRmOlJERj4gPC94OnhtcG1ldGE+IDw/eHBhY2tldCBlbmQ9InIiPz7eNf21AAABL0lEQVR42rSV3RGCMAzHoecAbOAKjqCvPuEEwATiBMoEsgEwgfriqzoBOIHnBnUCbLxwl6vpBw/0Llfakl//SVMI+74PpmgzOsjm64XqOsv7rvVfq97XQGhzMcxbfEplRx/FgplLld2URQaf3LE5C5bYLw3wjmxejQFDqAXJpw4HtQ2Bt6bIuFQc4BwJ/IU9TVVj2dwIhlYTeITOOnxngwtLmgC+UvYxwEtbZMJxuHc8yAHeolpnZMKjJDtUR5VGGrwh8NIXDAr3+PzECKQGTsh6/HelDTdt6wl9IFS6wLoSCoWQTzgXYCpS33IboBcGerNBOfDglBCnmIEOZVVwUC4VuUNJTaAZjr2/bgHeKk5J5AM1HZ7NCVKyUXYe9QfB8pKOmpY+H/pwqn/eV4ABAMJsUrAW7KuAAAAAAElFTkSuQmCC" alt=""></a></li>
+                        <li><a href="javascript:void(0);" data-dismiss="modal"><i class="fas fa-times"></i></a></li>
+                        </ul>
+                    </div>
+                <div class="caption-container">
+                    <span>&copy; {{ core_options.siteTitle }} </span>
+                    <span id="caption{{ random }}"></span>
+                    </div>
                 </div>
             </div>
         </div>

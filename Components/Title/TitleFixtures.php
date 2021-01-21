@@ -2,24 +2,28 @@
 
 namespace Akyos\BuilderBundle\Components\Title;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class TitleFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Titre');
-        $component->setSlug('title');
-        $component->setShortDescription('Titre');
-        $component->setIsContainer(false);
-        $component->setPrototype('default');
-
-        $componentFieldArray = [
+        $slug = "title";
+        $name = "Titre";
+        $shortDescription = "Affiche un titre";
+        $isContainer = false;
+        $prototype = "default";
+        $componentFields = [
             [
                 "name" => "Contenu texte",
                 "slug" => "text_content",
@@ -77,6 +81,14 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "option" => ["Normal:default","Gras:bold","Fin:light"],
                 "group" => "Style",
             ],[
+                "name" => "Transformation du texte",
+                "slug" => "text_transform",
+                "desc" => "Quelle le style du texte ?",
+                "type" => "select",
+                "entity" => "App\Entity\Platform\Administrator",
+                "option" => ["Normal:normal","minuscule:lowercase","MAJUSCULE:uppercase"],
+                "group" => "Style",
+            ],[
                 "name" => "Police",
                 "slug" => "font",
                 "desc" => "Renseignez le nom de la police à utiliser, si différente de la police par défaut du site.",
@@ -87,26 +99,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
             ],
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setEntity($componentField['entity']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**
@@ -114,6 +107,6 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component'];
+        return ['component', 'component-title'];
     }
 }

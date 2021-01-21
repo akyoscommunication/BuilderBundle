@@ -39,3 +39,31 @@ services:
     component.text:
         alias: Akyos\BuilderBundle\Components\Text\TextComponentController
         public: true
+
+    component.slider:
+        alias: Akyos\BuilderBundle\Components\Slider\SliderComponentController
+        public: true
+    component.slide:
+        alias: Akyos\BuilderBundle\Components\Slide\SlideComponentController
+        public: true
+    component.title:
+        alias: Akyos\BuilderBundle\Components\Title\TitleComponentController
+        public: true
+    component.icon_title_box:
+        alias: Akyos\BuilderBundle\Components\IconTitleBox\IconTitleBoxComponentController
+        public: true
+    component.last_news:
+        alias: Akyos\BuilderBundle\Components\LastNews\LastNewsComponentController
+        public: true
+    component.news:
+        alias: Akyos\BuilderBundle\Components\News\NewsComponentController
+        public: true
+    component.image_gallery:
+        alias: Akyos\BuilderBundle\Components\ImageGallery\ImageGalleryComponentController
+        public: true
+    component.map:
+        alias: Akyos\BuilderBundle\Components\Map\MapComponentController
+        public: true
+    component.form:
+        alias: Akyos\BuilderBundle\Components\Form\FormComponentController
+        public: true

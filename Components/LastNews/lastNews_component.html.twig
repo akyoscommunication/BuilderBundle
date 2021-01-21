@@ -24,13 +24,15 @@
             </form>
         </div>
     {% endif %}
-    {% for new in news %}
-        {{ renderComponentBySlug('news', {
-            'post' : new
-        })|raw }}
-    {% else %}
-        <div class="no-item w-100 text-center">{{ values.no_item_text is defined ? values.no_item_text : "Aucune actualité" }}</div>
-    {% endfor %}
+    <div class="component-last-news--row">
+        {% for new in news %}
+            {{ renderComponentBySlug('news', {
+                'post' : new
+            })|raw }}
+        {% else %}
+            <div class="no-item w-100 text-center">{{ values.no_item_text is defined ? values.no_item_text : "Aucune actualité" }}</div>
+        {% endfor %}
+    </div>
     {% if values.paginator is defined and values.paginator %}
         <div class="w-100 d-flex justify-content-center component-last-news__paginator">
             {% include '@AkyosCore/crud/elements/_pagination.html.twig' with {'els' : news} %}

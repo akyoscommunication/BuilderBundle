@@ -154,6 +154,7 @@ class Builder
         $componentsProd = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => false));
         $componentsTemp = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => true));
 
+
         // TODO => If there are no more temp component.
         if ($componentsProd && !$componentsTemp) {
             foreach ($componentsProd as $deleteComponent) {

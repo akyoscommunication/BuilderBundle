@@ -2,24 +2,28 @@
 
 namespace Akyos\BuilderBundle\Components\ImageGallery;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Galerie d\'images');
-        $component->setSlug('image_gallery');
-        $component->setShortDescription('Galerie d\'images avec zoom au clic');
-        $component->setIsContainer(false);
-        $component->setPrototype('default');
-
-        $componentFieldArray = [
+        $slug = "image_gallery";
+        $name = "Galerie d'images";
+        $shortDescription = "Galerie d'images avec zoom au clic";
+        $isContainer = false;
+        $prototype = "default";
+        $componentFields = [
             [
                 "name" => "Style des images",
                 "slug" => "background_size",
@@ -36,29 +40,106 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
                 "entity" => "App\Entity\Back\Job",
                 "option" => [],
                 "group" => "Général",
-            ],
+            ],[
+				"name" => "Afficher sous forme de slider ?",
+				"slug" => "isSlider",
+				"desc" => "Afficher la gallerie sous forme de slider ? Si oui, remplissez les informations ci-dessous",
+				"type" => "bool",
+				"entity" => "App\Entity\Platform\AG\AG",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Flèches défilement ?",
+				"slug" => "navigation",
+				"desc" => "Afficher les flèches ? (Oui par défaut)",
+				"type" => "bool",
+				"entity" => "App\Entity\Platform\AG\AG",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Pagination ?",
+				"slug" => "pagination",
+				"desc" => "Afficher la pagination ? (Non par défaut)",
+				"type" => "bool",
+				"entity" => "App\Entity\Platform\AG\AG",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Scrollbar ?",
+				"slug" => "scrollbar",
+				"desc" => "Afficher la scrollbar ? (Non par défaut)",
+				"type" => "bool",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Sens de défilement",
+				"slug" => "direction",
+				"desc" => "Sens de défilement des slides (Horizontal par défaut)",
+				"type" => "select",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => ["Horizontal:horizontal","Vertical:vertical"],
+				"group" => "Slider",
+			],[
+				"name" => "Hauteur du slider",
+				"slug" => "height",
+				"desc" => "Hauteur du slider",
+				"type" => "text",
+				"entity" => "App\Entity\Platform\AG\AG",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Vitesse de défilement",
+				"slug" => "speed",
+				"desc" => "Vitesse de défilement des slides en millisecondes (5000 par défaut)",
+				"type" => "int",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Défilement automatique ?",
+				"slug" => "autoplay",
+				"desc" => "Est-ce que les slides défilent automatiquement ? (Oui par défaut)",
+				"type" => "bool",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Boucle ?",
+				"slug" => "loop",
+				"desc" => "Est-ce que les slides défilent à l'infini ? (Oui par défaut)",
+				"type" => "bool",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Nombre de slides par vue",
+				"slug" => "slides_per_view",
+				"desc" => "Nombre de slides visibles en même temps (1 par défaut)",
+				"type" => "int",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Nombre de slides par vue (< 991px)",
+				"slug" => "slides_per_view_991",
+				"desc" => "Nombre de slides visibles en même temps, format tablette (1 par défaut)",
+				"type" => "int",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => [],
+				"group" => "Slider",
+			],[
+				"name" => "Nombre de slides par vue (< 767px)",
+				"slug" => "slides_per_view_767",
+				"desc" => "Nombre de slides visibles en même temps, format smartphone (1 par défaut)",
+				"type" => "int",
+				"entity" => "App\Entity\Platform\Administrator",
+				"option" => [],
+				"group" => "Slider",
+			]
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setEntity($componentField['entity']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**

@@ -2,24 +2,28 @@
 
 namespace Akyos\BuilderBundle\Components\Button;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
 class ButtonFixtures extends Fixture implements FixtureGroupInterface
 {
+    private $fixturesHelpers;
+
+    public function __construct(FixturesHelpers $fixturesHelpers)
+    {
+        $this->fixturesHelpers = $fixturesHelpers;
+    }
+
     public function load(ObjectManager $manager): void
     {
-        $component = new ComponentTemplate();
-        $component->setName('Button');
-        $component->setSlug('button');
-        $component->setShortDescription('Un simple bouton');
-        $component->setIsContainer(false);
-        $component->setPrototype('default');
-
-        $componentFieldArray = [
+        $slug = "button";
+        $name = "Button";
+        $shortDescription = "Un simple bouton";
+        $isContainer = false;
+        $prototype = "default";
+        $componentFields = [
             [
                 'name' => 'Lien',
                 'slug' => 'link',
@@ -92,30 +96,13 @@ class ButtonFixtures extends Fixture implements FixtureGroupInterface
                     "Droite:end",
                     "Gauche:start",
                     "Centré:center",
+                    "Toute la largeur:full",
                 ],
                 'group' => 'Style',
             ],
         ];
 
-        foreach ($componentFieldArray as $componentField)
-        {
-            $newComponentField = new ComponentField();
-
-            $newComponentField->setComponentTemplate($component);
-
-            $newComponentField->setName($componentField['name']);
-            $newComponentField->setSlug($componentField['slug']);
-            $newComponentField->setShortDescription($componentField['desc']);
-            $newComponentField->setType($componentField['type']);
-            $newComponentField->setFieldValues($componentField['option']);
-            $newComponentField->setGroups($componentField['group']);
-
-            $manager->persist($newComponentField);
-        }
-
-         $manager->persist($component);
-
-        $manager->flush();
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
     }
 
     /**
@@ -123,6 +110,6 @@ class ButtonFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component'];
+        return ['component', 'component-button'];
     }
 }
