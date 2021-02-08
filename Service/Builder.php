@@ -70,7 +70,6 @@ class Builder
                 'typeId' => $objectId,
             ]);
 
-
         foreach ($this->em->getEventManager()->getListeners() as $event => $listeners) {
             foreach ($listeners as $hash => $listener) {
                 if ($listener instanceof TranslatableListener) {
