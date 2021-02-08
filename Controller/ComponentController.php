@@ -115,15 +115,15 @@ class ComponentController extends AbstractController
         $component = $componentRepository->find($request->get('component'));
         $oldParent = $component->getParentComponent();
 
-        $newParent = $request->get('parent') ? $componentRepository->find($request->get('parent')) : null ;
-        $newPosition = $request->get('position');
+        $newParent = $request->get('parent') ? $componentRepository->find($request->get('parent')) : null;
+        $newPosition = (int)$request->get('position');
 
         $em = $this->getDoctrine()->getManager();
 
         if ( $oldParent && $newParent ) {
             // TODO : If new and old parent are components
             if ($newParent->getId() != $oldParent->getId()) {
-                foreach ($componentRepository->find($newParent)->getChildComponents() as $item) {
+                foreach ($componentRepository->find($newParent)->getChildComponents()->getValues() as $item) {
                     // TODO : change all children positions and set new position
                     if ($item->getPosition() >= $newPosition) {
                         $item->setPosition($item->getPosition()+1);
@@ -141,7 +141,7 @@ class ComponentController extends AbstractController
                 }
             } else {
                 // TODO : if is same parent
-                foreach ($componentRepository->find($newParent)->getChildComponents() as $item) {
+                foreach ($componentRepository->find($newParent)->getChildComponents()->getValues() as $item) {
                     // TODO : change all children positions and set new position
                     if (($component->getPosition() > $newPosition) && ($item->getPosition() >= $newPosition) && ($item->getPosition() < $component->getPosition())) {
                         $item->setPosition($item->getPosition()+1);
@@ -173,7 +173,7 @@ class ComponentController extends AbstractController
         } elseif ( $oldParent == null && $newParent ) {
             // TODO : If OldParent was 'main' and now component has got parent
 
-            foreach ($componentRepository->find($newParent)->getChildComponents() as $item) {
+            foreach ($componentRepository->find($newParent)->getChildComponents()->getValues() as $item) {
                 // TODO : change all children positions and set new position
                 if ($item->getPosition() >= $newPosition) {
                     $item->setPosition($item->getPosition()+1);

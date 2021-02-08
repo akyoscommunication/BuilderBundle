@@ -79,6 +79,7 @@ class ViewController extends AbstractController
             'componentTemplates' => $componentTemplates,
             'components' => $components,
             'page' => $el,
+            'element' => $el,
             'type' => $type,
             'typeId' => $typeId,
             'back_url' => urldecode($redirect),

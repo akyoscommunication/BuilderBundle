@@ -21,13 +21,11 @@ class AddComponent {
                 success: function (res) {
                     clone.attr('data-componentid', res);
 
-                    console.log(target)
                     if (target !== 'main') {
-                        console.log('diff main')
-                        console.log($('#componentsRenderContainer').find('.aky-builder-component[data-componentid='+$('#componentTab').attr('data-parentcomponent')+']').children('.aky-builder-component-child-render'))
-                        $('#componentsRenderContainer').find('.aky-builder-component[data-componentid='+$('#componentTab').attr('data-parentcomponent')+']').children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent col-md-12">'+(clone[0].outerHTML)+'</div>').fadeOut().fadeIn();
+                        const endpoint = $('#componentsRenderContainer').find('.aky-builder-component[data-componentid='+$('#componentTab').attr('data-parentcomponent')+']')
+                        console.log($('#componentsRenderContainer').find('.aky-builder-component[data-componentid='+$('#componentTab').attr('data-parentcomponent')+']'))
+                        endpoint.children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent aky-builder-component-sortable col-md-12">'+(clone[0].outerHTML)+'</div>').fadeOut().fadeIn();
                     } else {
-                        console.log('main')
                         clone.addClass('isParent');
                         $('#componentsRenderContainer > .builder-component--container').append('<div class="aky-builder-component-sortable col-md-12">'+(clone[0].outerHTML)+'</div>').fadeOut().fadeIn();
                     }
