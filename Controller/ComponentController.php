@@ -83,7 +83,7 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
+     * @Route("/{id}", name="delete", methods={"POST"})
      */
     public function delete(Request $request, Component $component, ComponentRepository $componentRepository): Response
     {

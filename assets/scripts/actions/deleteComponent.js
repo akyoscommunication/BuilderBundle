@@ -26,7 +26,7 @@ class DeleteComponent {
                     '</div>').show('slow');
 
                 $.ajax({
-                    method: 'DELETE',
+                    method: 'POST',
                     url: '/admin/builder/component/'+parent.data('componentid'),
                     success: function (res) {
                         console.log(res, 'success');
