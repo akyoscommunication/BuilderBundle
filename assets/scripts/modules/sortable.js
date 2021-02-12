@@ -32,7 +32,8 @@ export default class SortableJs {
             const component = $(evt.data.dragEvent.data.originalSource).children('.aky-builder-component[data-componentid]')
             let componentId = component.attr('data-componentid')
     
-            if (evt.data.newIndex != evt.data.oldIndex) {
+            console.log(evt.data.newIndex, evt.data.oldIndex)
+            if (evt.data.newIndex !== evt.data.oldIndex) {
                 $.ajax({
                     method: 'POST',
                     url: '/admin/builder/component/change-component-position',

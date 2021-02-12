@@ -1,3 +1,5 @@
+import 'bootstrap/js/dist/modal';
+
 class Gallery {
 	
 	constructor() {

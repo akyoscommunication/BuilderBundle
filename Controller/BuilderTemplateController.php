@@ -50,10 +50,10 @@ class BuilderTemplateController extends AbstractController
             'title' => 'Templates de page builder',
             'entity' => 'BuilderTemplate',
             'route' => 'builder_template',
-            'fields' => array(
+            'fields' => [
                 'ID' => 'Id',
                 'Titre du template' => 'Title',
-            ),
+            ],
         ]);
     }
 
@@ -80,7 +80,8 @@ class BuilderTemplateController extends AbstractController
      * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
      * @param Request $request
      * @param BuilderTemplate $builderTemplate
-     * @param BuilderController $builderController
+     * @param BuilderHandler $builderHandler
+     * @param ContainerInterface $container
      * @return Response
      */
     public function edit(Request $request, BuilderTemplate $builderTemplate, BuilderHandler $builderHandler, ContainerInterface $container): Response
@@ -93,7 +94,7 @@ class BuilderTemplateController extends AbstractController
         return $this->render('@AkyosCore/crud/edit.html.twig', [
             'el' => $builderTemplate,
             'title' => 'BuilderTemplate',
-            'entity' => 'BuilderTemplate',
+            'entity' => BuilderTemplate::class,
             'route' => 'builder_template',
             'form' => $form->createView(),
         ]);
