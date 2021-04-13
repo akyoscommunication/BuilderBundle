@@ -9,6 +9,7 @@ use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentValueRepository;
 use Akyos\BuilderBundle\Twig\BuilderExtension;
+use Gedmo\Translatable\Entity\Translation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -51,7 +52,7 @@ class ComponentController extends AbstractController
      * @param Request $request
      * @param Component $component
      * @param ComponentFieldRepository $componentFieldRepository
-     *
+     * @param BuilderExtension $builderExtension
      * @return Response
      */
     public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository, BuilderExtension $builderExtension): Response

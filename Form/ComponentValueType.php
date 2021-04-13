@@ -3,11 +3,13 @@
 namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\ComponentValue;
+use Akyos\BuilderBundle\Entity\ComponentValueTranslation;
 use Akyos\CoreBundle\Repository\PostRepository;
 use Akyos\FileManagerBundle\Form\Type\FileManagerCollectionType;
 use Akyos\FileManagerBundle\Form\Type\FileManagerType;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
+use Gedmo\Translatable\Entity\Translation;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -23,6 +25,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Akyos\CoreBundle\Repository\PageRepository;
 
@@ -31,8 +34,10 @@ class ComponentValueType extends AbstractType
     private $pages;
     private $posts;
     private $em;
+    /** @var RequestStack */
+    private RequestStack $request;
 
-    public function __construct(PageRepository $pageRepository, PostRepository $postRepository, EntityManagerInterface $em) {
+    public function __construct(PageRepository $pageRepository, PostRepository $postRepository, EntityManagerInterface $em, RequestStack $request) {
         $pages = $pageRepository->findAll();
         foreach($pages as $page) {
             $this->pages[$page->getTitle()] = $page->getId();
@@ -42,6 +47,7 @@ class ComponentValueType extends AbstractType
             $this->posts[$post->getTitle()] = $post->getId();
         }
         $this->em = $em;
+        $this->request = $request;
     }
 
     public function buildForm(FormBuilderInterface $builder, array $options)

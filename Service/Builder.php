@@ -13,6 +13,7 @@ use Akyos\BuilderBundle\Form\MakeTemplateType;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
+use Gedmo\Translatable\Entity\Translation;
 use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
 use Gedmo\Translatable\TranslatableListener;
 use Psr\Container\ContainerInterface;
@@ -217,15 +218,15 @@ class Builder
                 $clone->addComponentValue($cloneValue);
                 $this->em->persist($cloneValue);
 
-//                foreach ($componentValue->getTranslations()->getValues() as $trans) {
-//                    $newTrans = new ComponentValueTranslation();
-//                    $newTrans->setField('value');
-//                    $newTrans->setObject($cloneValue);
-//                    $newTrans->setContent($trans->getContent());
-//                    $newTrans->setLocale($trans->getLocale());
-//
-//                    $this->em->persist($newTrans);
-//                }
+                foreach ($componentValue->getTranslations()->getValues() as $trans) {
+                    $newTrans = new ComponentValueTranslation();
+                    $newTrans->setField('value');
+                    $newTrans->setObject($cloneValue);
+                    $newTrans->setContent($trans->getContent());
+                    $newTrans->setLocale($trans->getLocale());
+
+                    $this->em->persist($newTrans);
+                }
             }
         }
         if ($component->getChildComponents()) {
