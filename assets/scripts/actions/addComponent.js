@@ -31,7 +31,7 @@ class AddComponent {
                     
                     const dataUrl = clone.find('.aky-builder-component-header .aky-builder-component-header__edit').attr('data-url')
                     
-                    clone.find('.aky-builder-component-header .aky-builder-component-header__edit').attr('data-url', dataUrl.replace('#id#', res))
+                    clone.find('.aky-builder-component-header .aky-builder-component-header__edit').attr('data-url', dataUrl.replace('%23id%23', res))
 
                     new Toast('Ajout d\'un composant', 'success', 'Succès', 5000 );
 
