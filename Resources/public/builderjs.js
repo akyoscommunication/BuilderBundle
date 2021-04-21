@@ -32794,12 +32794,15 @@ class AddComponent {
 
                     if (target !== 'main') {
                         const endpoint = $('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']');
-                        console.log($('#componentsRenderContainer').find('.aky-builder-component[data-componentid=' + $('#componentTab').attr('data-parentcomponent') + ']'));
                         endpoint.children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
                     } else {
                         clone.addClass('isParent');
                         $('#componentsRenderContainer > .builder-component--container').append('<div class="aky-builder-component-sortable col-md-12">' + clone[0].outerHTML + '</div>').fadeOut().fadeIn();
                     }
+
+                    const dataUrl = clone.find('.aky-builder-component-header .aky-builder-component-header__edit').attr('data-url');
+
+                    clone.find('.aky-builder-component-header .aky-builder-component-header__edit').attr('data-url', dataUrl.replace('#id#', res));
 
                     new __WEBPACK_IMPORTED_MODULE_2__CoreBundle_assets_scripts_modules_Toast__["a" /* default */]('Ajout d\'un composant', 'success', 'Succès', 5000);
 
