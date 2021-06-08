@@ -84,27 +84,7 @@ class ComponentController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"})
-     */
-    public function delete(Request $request, Component $component, ComponentRepository $componentRepository): Response
-    {
-//        if ($this->isCsrfTokenValid('delete'.$component->getId(), $request->request->get('_token'))) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->remove($component);
-            $entityManager->flush();
-//        }
-
-//        foreach ( $componentRepository->findAll(array(), array('position' => 'ASC')) as $key => $resetComponent ) {
-//            if ($resetComponent->getParentComponent() === null) {
-//                $resetComponent->setPosition($key);
-//            }
-//        }
-
-        return new JsonResponse('valid');
-    }
-
-    /**
-     * @Route("/change-component-position", methods={"POST"}, options={"expose"=true})
+     * @Route("/change-component-position", methods={"POST"})
      * @param Request $request
      *
      * @param ComponentRepository $componentRepository
@@ -232,6 +212,26 @@ class ComponentController extends AbstractController
             $valueToChange->setValue($col);
             $em->flush();
         }
+
+        return new JsonResponse('valid');
+    }
+
+    /**
+     * @Route("/{id}", name="delete", methods={"POST"})
+     */
+    public function delete(Request $request, Component $component, ComponentRepository $componentRepository): Response
+    {
+//        if ($this->isCsrfTokenValid('delete'.$component->getId(), $request->request->get('_token'))) {
+        $entityManager = $this->getDoctrine()->getManager();
+        $entityManager->remove($component);
+        $entityManager->flush();
+//        }
+
+//        foreach ( $componentRepository->findAll(array(), array('position' => 'ASC')) as $key => $resetComponent ) {
+//            if ($resetComponent->getParentComponent() === null) {
+//                $resetComponent->setPosition($key);
+//            }
+//        }
 
         return new JsonResponse('valid');
     }

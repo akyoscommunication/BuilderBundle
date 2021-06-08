@@ -233,6 +233,19 @@
   width: -webkit-max-content;
   width: -moz-max-content;
   width: max-content;
+  max-height: 300px;
+  overflow-y: scroll;
+}
+
+#componentsRenderContainer .aky-builder-component-info-content::-webkit-scrollbar {
+  width: 5px;
+  height: 8px;
+  background-color: #aaa;
+  /* or add it to the track */
+}
+
+#componentsRenderContainer .aky-builder-component-info-content::-webkit-scrollbar-thumb {
+  background: #000;
 }
 
 #componentsRenderContainer .aky-builder-component-info-content__title {
