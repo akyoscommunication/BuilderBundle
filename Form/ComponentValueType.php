@@ -34,8 +34,7 @@ class ComponentValueType extends AbstractType
     private $pages;
     private $posts;
     private $em;
-    /** @var RequestStack */
-    private RequestStack $request;
+    private $request;
 
     public function __construct(PageRepository $pageRepository, PostRepository $postRepository, EntityManagerInterface $em, RequestStack $request) {
         $pages = $pageRepository->findAll();
