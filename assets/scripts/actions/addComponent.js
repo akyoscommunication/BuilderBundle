@@ -24,7 +24,7 @@ class AddComponent {
                     const dataUrl = clone.find('.aky-builder-component-header .aky-builder-component-header__edit').attr('data-url')
     
                     clone.find('.aky-builder-component-header .aky-builder-component-header__edit').attr('data-url', dataUrl.replace('%23id%23', res))
-
+                    
                     if (target !== 'main') {
                         const endpoint = $('#componentsRenderContainer').find('.aky-builder-component[data-componentid='+$('#componentTab').attr('data-parentcomponent')+']')
                         endpoint.children('.aky-builder-component-child-render').append('<div class="aky-builder-component--parent aky-builder-component-sortable col-md-12">'+(clone[0].outerHTML)+'</div>').fadeOut().fadeIn();

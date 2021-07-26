@@ -33,6 +33,8 @@
     "webpack-merge": "~4.1.1"
   },
   "dependencies": {
+    "@grafikart/drop-files-element": "^1.0.9",
+    "@grafikart/spinning-dots-element": "^1.1.0",
     "@shopify/draggable": "^1.0.0-beta.8",
     "bootstrap": "^4.1.3",
     "cross-env": "^5.2.0",

@@ -11,7 +11,7 @@ class EditComponent {
             const c = $(this).parents('.aky-builder-component[data-componentid]')
             const componentid = c.data('componentid')
             const type = c.data('type')
-            const typeId = c.data('typeId')
+            const typeId = c.attr('data-typeid')
             const url = $(this).attr('data-url')
             const path = url+'?type='+type+'&typeId='+typeId
             const parent = $(this).parents('.aky-builder-component[data-componentid]')

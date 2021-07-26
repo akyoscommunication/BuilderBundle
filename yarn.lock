@@ -2,6 +2,16 @@
 # yarn lockfile v1
 
 
+"@grafikart/drop-files-element@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@grafikart/drop-files-element/-/drop-files-element-1.0.9.tgz#6dbf1353d675c925cdeaf0f137a20681caa7e0e5"
+  integrity sha512-Eo2T8bQ30plnT+FOPW8xtGhe6+qDdbhT1IOeA0G18AiSI8nJF9LlmyZLh+PSy6UUnv3+6TMa3QOQIo/zroJQ4g==
+
+"@grafikart/spinning-dots-element@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@grafikart/spinning-dots-element/-/spinning-dots-element-1.1.0.tgz#640949f1ecc132356586eda1c2f4fb58757dae43"
+  integrity sha512-GrgVm/9roqLhzuOUeTytCU/Lwk4zjBws64SziL0D8ZsGYnTISSvOZjmRvzrPkGMMN4wgKdTYRUO5pg81nPP7Bw==
+
 "@shopify/draggable@^1.0.0-beta.8":
   version "1.0.0-beta.8"
   resolved "https://registry.yarnpkg.com/@shopify/draggable/-/draggable-1.0.0-beta.8.tgz#2eb3c2f72298ce3e53fe16f34ab124cc495cd4fc"

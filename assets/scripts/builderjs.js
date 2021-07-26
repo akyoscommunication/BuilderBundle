@@ -96,15 +96,18 @@ class Builder {
     }
 
     static toggleComponentTab() {
-        $('.toggleComponentTab').off('click');
-        $('.toggleComponentTab').on('click', function () {
+        const tab = $('.toggleComponentTab')
+        tab.off('click');
+        tab.on('click', function () {
             const modal = $('#componentTab');
             modal.toggleClass('active');
             const parent = $(this).parents('[data-componentid]');
             let componentId;
             
             if (!parent.length) {
-                componentId = 'main'
+                if (!$(this).parents('#componentTab').length) {
+                    componentId = 'main'
+                }
             } else {
                 componentId = $(this).parents('[data-componentid]').attr('data-componentid')
             }
