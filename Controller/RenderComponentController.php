@@ -45,7 +45,7 @@ class RenderComponentController
         $params['type'] = $type;
         $params['typeId'] = $typeId;
         $params['component'] = $component;
-        $params['values'] = array();
+        $params['values'] = [];
         $params['customClasses'] = $component->getCustomClasses();
         $params['customId'] = $component->getCustomId();
 

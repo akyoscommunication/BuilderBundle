@@ -130,9 +130,9 @@ class Builder
      */
     public function initCloneComponents($type, $typeId): bool
     {
-        $components = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'parentComponent' => null));
-        $componentsTemp = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => true));
-        $componentsProd = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => false));
+        $components = $this->em->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'parentComponent' => null]);
+        $componentsTemp = $this->em->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
+        $componentsProd = $this->em->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => false]);
 
         // Check if there are temp components updated
         if ($componentsProd) {
@@ -167,9 +167,9 @@ class Builder
     public function tempToProd($type, $typeId): bool
     {
         // Get each components of page.
-        $newComponents = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId));
-        $componentsProd = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => false));
-        $componentsTemp = $this->em->getRepository(Component::class)->findBy(array('type' => $type, 'typeId' => $typeId, 'isTemp' => true));
+        $newComponents = $this->em->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId]);
+        $componentsProd = $this->em->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => false]);
+        $componentsTemp = $this->em->getRepository(Component::class)->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true]);
 
         // TODO => If there are no more temp component.
         if ($componentsProd && !$componentsTemp) {

@@ -55,9 +55,9 @@ class ComponentType extends AbstractType
             ->add('visibilityXL')
             ->add('componentValues', CollectionType::class, [
                 'entry_type'    => ComponentValueType::class,
-                'entry_options' => array(
+                'entry_options' => [
                     'label' => false
-                ),
+                ],
                 'label' => false
             ])
         ;

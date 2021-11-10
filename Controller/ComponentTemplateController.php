@@ -48,12 +48,12 @@ class ComponentTemplateController extends AbstractController
             'title' => 'Templates de composants',
             'entity' => 'ComponentTemplate',
             'route' => 'templates_builder',
-            'fields' => array(
+            'fields' => [
                 'ID' => 'Id',
                 'Nom' => 'Name',
                 'Slug' => 'Slug',
                 'Petite description' => 'ShortDescription',
-            ),
+            ],
         ]);
     }
 
@@ -163,7 +163,7 @@ class ComponentTemplateController extends AbstractController
     {
         if ($this->isCsrfTokenValid('delete'.$componentTemplate->getId(), $request->request->get('_token'))) {
             $em = $this->getDoctrine()->getManager();
-            $instanceComponents = $componentRepository->findBy(array('componentTemplate' => $componentTemplate->getId()));
+            $instanceComponents = $componentRepository->findBy(['componentTemplate' => $componentTemplate->getId()]);
 
             foreach ($instanceComponents as $instanceComponent) {
                 foreach ($instanceComponent->getChildComponents() as $childComponent){

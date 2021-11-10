@@ -139,7 +139,7 @@ class ComponentController extends AbstractController
             foreach ($oldParent->getChildComponents() as $position => $item) {
                 $item->setPosition($position);
             }
-            foreach ($componentRepository->findBy(array('parentComponent' => null, 'type' => $component->getType(), 'typeId' => $component->getTypeId(), 'isTemp' => true), array('position' => 'ASC')) as $item) {
+            foreach ($componentRepository->findBy(['parentComponent' => null, 'type' => $component->getType(), 'typeId' => $component->getTypeId(), 'isTemp' => true], ['position' => 'ASC']) as $item) {
                 // TODO : change all children positions and set new position
                 if ($item->getPosition() >= $newPosition) {
                     $item->setPosition($item->getPosition()+1);
@@ -166,12 +166,12 @@ class ComponentController extends AbstractController
 
             $em->flush();
 
-            foreach ($componentRepository->findBy(array('parentComponent' => null, 'type' => $component->getType(), 'typeId' => $component->getTypeId(), 'isTemp' => true), array('position' => 'ASC')) as $position => $item ) {
+            foreach ($componentRepository->findBy(['parentComponent' => null, 'type' => $component->getType(), 'typeId' => $component->getTypeId(), 'isTemp' => true], ['position' => 'ASC']) as $position => $item ) {
                 $item->setPosition($position);
             }
         } else {
             // TODO : IF is the same parent "main"
-            foreach ($componentRepository->findBy(array('parentComponent' => null, 'type' => $component->getType(), 'typeId' => $component->getTypeId(), 'isTemp' => true), array('position' => 'ASC')) as $item) {
+            foreach ($componentRepository->findBy(['parentComponent' => null, 'type' => $component->getType(), 'typeId' => $component->getTypeId(), 'isTemp' => true], ['position' => 'ASC']) as $item) {
                 if (($component->getPosition() > $newPosition) && ($item->getPosition() >= $newPosition) && ($item->getPosition() < $component->getPosition())) {
                     // TODO : If new position is smaller than old
                     $item->setPosition($item->getPosition()+1);
