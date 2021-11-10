@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ButtonFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -110,6 +110,6 @@ class ButtonFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-button'];
+        return ['component', 'builder-components', 'component-button'];
     }
 }

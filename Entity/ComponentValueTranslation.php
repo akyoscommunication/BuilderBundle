@@ -2,7 +2,6 @@
 
 namespace Akyos\BuilderBundle\Entity;
 
-use Akyos\BuilderBundle\Repository\ComponentValueTranslationRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Translatable\Entity\MappedSuperclass\AbstractPersonalTranslation;
 

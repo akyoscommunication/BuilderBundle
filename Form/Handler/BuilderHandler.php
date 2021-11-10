@@ -1,8 +1,6 @@
 <?php
 
-
 namespace Akyos\BuilderBundle\Form\Handler;
-
 
 use Akyos\BuilderBundle\AkyosBuilderBundle;
 use Akyos\BuilderBundle\Entity\BuilderOptions;
@@ -15,8 +13,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BuilderHandler extends AbstractController
 {
-    private $em;
-    private $coreService;
+    private EntityManagerInterface $em;
+    private CoreService $coreService;
 
     public function __construct(EntityManagerInterface $em, CoreService $coreService)
     {
@@ -31,10 +29,8 @@ class BuilderHandler extends AbstractController
 
         $form->handleRequest($request);
 
-        if ($check) {
-            if (!$form->isSubmitted()) {
-                $container->get('render.builder')->initCloneComponents($entityName, $element->getId());
-            }
+        if ($check && !$form->isSubmitted()) {
+            $container->get('render.builder')->initCloneComponents($entityName, $element->getId());
         }
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -43,7 +39,6 @@ class BuilderHandler extends AbstractController
             }
 
             $this->em->flush();
-
             $this->addFlash('success', "L'élément à bien été modifié.");
             return true;
         }

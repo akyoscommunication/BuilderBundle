@@ -5,21 +5,18 @@ namespace Akyos\BuilderBundle\Components\Form;
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Akyos\FormBundle\Controller\ContactFormFieldController;
-use Symfony\Component\HttpFoundation\RequestStack;
 
 
 class FormComponentController extends AbstractController implements ComponentInterface
 {
-    protected $form;
-    private $request;
+    protected ContactFormFieldController $form;
 
-    public function __construct(ContactFormFieldController $form, RequestStack $requestStack)
+    public function __construct(ContactFormFieldController $form)
     {
-        $this->request = $requestStack;
         $this->form = $form;
     }
 
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return '@BuilderComponents/Form/form_component.html.twig';
     }

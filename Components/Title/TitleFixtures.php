@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class TitleFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -29,7 +29,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "text_content",
                 "desc" => "Quel est le contenu du titre ?",
                 "type" => "text",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -37,7 +37,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "font_size",
                 "desc" => "Taille de la police en px",
                 "type" => "text",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Style",
             ],[
@@ -45,7 +45,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "tag",
                 "desc" => "Nom de la balise utilisée (h1, h2, h3, div, ...)",
                 "type" => "select",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => ["h1:h1","h2:h2","h3:h3","h4:h4","h5:h5","h6:h6","div:div","p:p","span:span"],
                 "group" => "Général",
             ],[
@@ -53,7 +53,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "color",
                 "desc" => "Choisissez la couleur du texte",
                 "type" => "select",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => ["Couleur principale:primary","Couleur secondaire:secondary","Blanc:white","Noir:black"],
                 "group" => "Style",
             ],[
@@ -61,7 +61,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "has_decoration",
                 "desc" => "Afficher un trait de décoration sous le titre ?",
                 "type" => "bool",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -69,7 +69,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "position",
                 "desc" => "Alignement du texte et du soulignement si présent",
                 "type" => "select",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => ["Gauche:left","Centre:center","Droite:right"],
                 "group" => "Général",
             ],[
@@ -77,7 +77,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "font_weight",
                 "desc" => "Quelle est l'épaisseur du texte ?",
                 "type" => "select",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => ["Normal:default","Gras:bold","Fin:light"],
                 "group" => "Style",
             ],[
@@ -85,7 +85,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "text_transform",
                 "desc" => "Quelle le style du texte ?",
                 "type" => "select",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => ["Normal:normal","minuscule:lowercase","MAJUSCULE:uppercase"],
                 "group" => "Style",
             ],[
@@ -93,7 +93,7 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "font",
                 "desc" => "Renseignez le nom de la police à utiliser, si différente de la police par défaut du site.",
                 "type" => "text",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Style",
             ],
@@ -107,6 +107,6 @@ class TitleFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-title'];
+        return ['component', 'builder-components', 'component-title'];
     }
 }

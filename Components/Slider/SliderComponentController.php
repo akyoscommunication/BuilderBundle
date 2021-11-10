@@ -14,7 +14,6 @@ class SliderComponentController extends AbstractController implements ComponentI
 
     public function getParameters($params = null)
     {
-        
         return $params;
     }
 }

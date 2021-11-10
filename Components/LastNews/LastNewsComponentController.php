@@ -10,15 +10,16 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class LastNewsComponentController extends AbstractController implements ComponentInterface
 {
-    private $em;
-    private $requestStack;
-    private $paginator;
-    private $postCategoryRepository;
-    private $postTagRepository;
+    private EntityManagerInterface $em;
+    private RequestStack $requestStack;
+    private PaginatorInterface $paginator;
+    private PostCategoryRepository $postCategoryRepository;
+    private PostTagRepository $postTagRepository;
 
     public function __construct(EntityManagerInterface $em, RequestStack $requestStack, PaginatorInterface $paginator, PostCategoryRepository $postCategoryRepository, PostTagRepository $postTagRepository)
     {
@@ -29,8 +30,7 @@ class LastNewsComponentController extends AbstractController implements Componen
         $this->postTagRepository = $postTagRepository;
     }
 
-
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return '@BuilderComponents/LastNews/lastNews_component.html.twig';
     }
@@ -40,9 +40,11 @@ class LastNewsComponentController extends AbstractController implements Componen
         if(!isset($params['values']['news'])) {
             /** @var QueryBuilder $qb */
             $qb = $this->em->getRepository(Post::class)->createQueryBuilder('p');
+            /** @var Request $currentRequest */
+            $currentRequest = $this->requestStack->getCurrentRequest();
             $p = [];
 
-            if (isset($params['values']['cat']) and $params['values']['cat']) {
+            if (isset($params['values']['cat']) && $params['values']['cat']) {
                 $qb
                     ->innerJoin('p.postCategories', 'ppc')
                     ->andWhere($qb->expr()->eq(':cat', 'ppc'))
@@ -59,37 +61,37 @@ class LastNewsComponentController extends AbstractController implements Componen
             if (isset($params['values']['category_filters'], $params['values']['tag_filters']) && $params['values']['category_filters'] && $params['values']['tag_filters']) {
                 $params['categories'] = $this->postCategoryRepository->findAll();
                 $params['tags'] = $this->postTagRepository->findAll();
-                if($this->requestStack->getCurrentRequest()->get('categorie')) {
+                if($currentRequest->get('categorie')) {
                     $qb
                         ->innerJoin('p.postCategories', 'pc')
                         ->andWhere($qb->expr()->in('pc.slug', ':catSearch'))
-                        ->setParameter('catSearch', $this->requestStack->getCurrentRequest()->get('categorie'))
+                        ->setParameter('catSearch', $currentRequest->get('categorie'))
                     ;
                 }
-                if($this->requestStack->getCurrentRequest()->get('etiquette')) {
+                if($currentRequest->get('etiquette')) {
                     $qb
                         ->innerJoin('p.postTags', 'pt')
                         ->andWhere($qb->expr()->in('pt.slug', ':tagSearch'))
-                        ->setParameter('tagSearch', $this->requestStack->getCurrentRequest()->get('etiquette'))
+                        ->setParameter('tagSearch', $currentRequest->get('etiquette'))
                     ;
                 }
 
             } elseif(isset($params['values']['category_filters']) && $params['values']['category_filters']) {
                 $params['categories'] = $this->postCategoryRepository->findAll();
-                if($this->requestStack->getCurrentRequest()->get('categorie')) {
+                if($currentRequest->get('categorie')) {
                     $qb
                         ->innerJoin('p.postCategories', 'pc')
                         ->andWhere($qb->expr()->in('pc.slug', ':catSearch'))
-                        ->setParameter('catSearch', $this->requestStack->getCurrentRequest()->get('categorie'))
+                        ->setParameter('catSearch', $currentRequest->get('categorie'))
                     ;
                 }
             } elseif(isset($params['values']['tag_filters']) && $params['values']['tag_filters']) {
                 $params['tags'] = $this->postTagRepository->findAll();
-                if($this->requestStack->getCurrentRequest()->get('etiquette')) {
+                if($currentRequest->get('etiquette')) {
                     $qb
                         ->innerJoin('p.postTags', 'pt')
                         ->andWhere($qb->expr()->in('pt.slug', ':tagSearch'))
-                        ->setParameter('tagSearch', $this->requestStack->getCurrentRequest()->get('etiquette'))
+                        ->setParameter('tagSearch', $currentRequest->get('etiquette'))
                     ;
                 }
             }
@@ -99,7 +101,7 @@ class LastNewsComponentController extends AbstractController implements Componen
             }
 
             if(isset($params['values']['paginator']) && $params['values']['paginator']) {
-                $params['news'] = $this->paginator->paginate($qb->getQuery(), $this->requestStack->getCurrentRequest()->query->getInt('page',1), isset($params['values']['posts_per_page']) && $params['values']['posts_per_page'] ? $params['values']['posts_per_page'] : 9);
+                $params['news'] = $this->paginator->paginate($qb->getQuery(), $currentRequest->query->getInt('page',1), isset($params['values']['posts_per_page']) && $params['values']['posts_per_page'] ? $params['values']['posts_per_page'] : 9);
             } else {
                 $params['news'] = $qb->getQuery()->getResult();
             }

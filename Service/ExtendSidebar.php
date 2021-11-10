@@ -8,8 +8,8 @@ use Symfony\Component\Security\Core\Security;
 
 class ExtendSidebar
 {
-    private $router;
-    private $security;
+    private UrlGeneratorInterface $router;
+    private Security $security;
 
     public function __construct(UrlGeneratorInterface $router, Security $security)
     {
@@ -17,7 +17,11 @@ class ExtendSidebar
         $this->security = $security;
     }
 
-    public function getTemplate($route)
+    /**
+     * @param $route
+     * @return Response
+     */
+    public function getTemplate($route): Response
     {
         $template ='';
         if($this->security->isGranted('builder')){
@@ -26,11 +30,14 @@ class ExtendSidebar
         if($this->security->isGranted('modeles-du-builder')){
             $template .= '<li class="'.(strpos($route,"builder_template") !== false ? "active" : "").'"><a href="'.$this->router->generate('builder_template_index').'">Template du builder</a></li>';
         }
-        ;
         return new Response($template);
     }
 
-    public function getOptionsTemplate($route)
+    /**
+     * @param $route
+     * @return Response
+     */
+    public function getOptionsTemplate($route): Response
     {
         $template = '';
         if($this->security->isGranted('options-du-builder')){

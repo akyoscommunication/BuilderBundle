@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class SliderFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -45,7 +45,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "scrollbar",
                 "desc" => "Afficher la scrollbar ? (Non par défaut)",
                 "type" => "bool",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Navigation",
             ],[
@@ -53,7 +53,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "direction",
                 "desc" => "Sens de défilement des slides (Horizontal par défaut)",
                 "type" => "select",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => ["Horizontal:horizontal","Vertical:vertical"],
                 "group" => "Général",
             ],[
@@ -69,7 +69,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "speed",
                 "desc" => "Vitesse de défilement des slides en millisecondes (5000 par défaut)",
                 "type" => "int",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -77,7 +77,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "autoplay",
                 "desc" => "Est-ce que les slides défilent automatiquement ? (Oui par défaut)",
                 "type" => "bool",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -85,7 +85,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "loop",
                 "desc" => "Est-ce que les slides défilent à l'infini ? (Oui par défaut)",
                 "type" => "bool",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -93,7 +93,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "slides_per_view",
                 "desc" => "Nombre de slides visibles en même temps (1 par défaut)",
                 "type" => "int",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Slides par vue",
             ],[
@@ -101,7 +101,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "slides_per_view_991",
                 "desc" => "Nombre de slides visibles en même temps, format tablette (1 par défaut)",
                 "type" => "int",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Slides par vue",
             ],[
@@ -109,7 +109,7 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "slides_per_view_767",
                 "desc" => "Nombre de slides visibles en même temps, format smartphone (1 par défaut)",
                 "type" => "int",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Slides par vue",
             ],
@@ -123,6 +123,6 @@ class SliderFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-slider'];
+        return ['component', 'builder-components', 'component-slider'];
     }
 }

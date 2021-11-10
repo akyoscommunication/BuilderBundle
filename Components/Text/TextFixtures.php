@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class TextFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -42,6 +42,6 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-text'];
+        return ['component', 'builder-components', 'component-text'];
     }
 }

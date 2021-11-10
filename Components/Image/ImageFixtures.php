@@ -2,16 +2,15 @@
 
 namespace Akyos\BuilderBundle\Components\Image;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
+use Akyos\CoreBundle\Entity\Page;
 
 class ImageFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -55,7 +54,7 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "redirection",
                 "desc" => "Redirection sur une page interne au clic",
                 "type" => "entity",
-                "entity" => "Akyos\CoreBundle\Entity\Page",
+                "entity" => Page::class,
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -95,7 +94,7 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
               "slug" => "external_link",
               "desc" => "Redirection sur une page externe au clic",
               "type" => "link",
-              "entity" => "Akyos\CoreBundle\Entity\Page",
+              "entity" => Page::class,
               "option" => [],
               "group" => "Général",
             ]
@@ -109,6 +108,6 @@ class ImageFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-image'];
+        return ['component', 'builder-components', 'component-image'];
     }
 }

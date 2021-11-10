@@ -7,14 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MapComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return '@BuilderComponents/Map/map_component.html.twig';
     }
 
     public function getParameters($params = null)
     {
-        
         return $params;
     }
 }

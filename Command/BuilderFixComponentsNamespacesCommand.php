@@ -12,11 +12,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 
 class BuilderFixComponentsNamespacesCommand extends Command
 {
-    protected static $defaultName = 'builder:fix-components-namespaces';
-    /** @var EntityManagerInterface */
-    private $em;
-    /** @var CoreExtension */
-    private $coreExtension;
+    protected static string $defaultName = 'builder:fix-components-namespaces';
+    private EntityManagerInterface $em;
+    private CoreExtension $coreExtension;
 
     public function __construct(string $name = null, EntityManagerInterface $em, CoreExtension $coreExtension)
     {

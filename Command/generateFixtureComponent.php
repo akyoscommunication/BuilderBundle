@@ -11,11 +11,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class generateFixtureComponent extends Command
 {
-
-    protected static $defaultName = 'app:make:componentFixture';
-
-    /** @var EntityManagerInterface */
-    private $em;
+    protected static string $defaultName = 'app:make:componentFixture';
+    private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -38,9 +35,7 @@ class generateFixtureComponent extends Command
         $component = $this->em->getRepository(ComponentTemplate::class)->find($input->getArgument('id'));
         $name = $component->getSlug();
 
-        $componentDir = __DIR__ . '/../../../src/Components/';
-        $nameLCFirst = lcfirst(join('', array_map( function($word) { return ucfirst($word); } , explode('_', $name))));
-        $nameUCFirst = ucfirst(join('', array_map( function($word) { return ucfirst($word); } , explode('_', $name))));
+        $nameUCFirst = ucfirst(implode('', array_map( static function($word) { return ucfirst($word); } , explode('_', $name))));
         $componentComponentDir = __DIR__ . '/../../../src/Components/'.$nameUCFirst."/";
 
         $fixtureContent = "<?php
@@ -78,7 +73,7 @@ class ${nameUCFirst}"."Fixtures extends Fixture implements FixtureGroupInterface
                 "desc" => "'.$field->getShortDescription().'",
                 "type" => "'.$field->getType().'",
                 "entity" => "'.$field->getEntity().'",
-                "option" => ['.implode(',', array_map(function ($e) {
+                "option" => ['.implode(',', array_map(static function ($e) {
                     return '"'.$e.'"';
                 }, $field->getFieldValues())).'],
                 "group" => "'.$field->getGroups().'",

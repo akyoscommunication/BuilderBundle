@@ -3,8 +3,6 @@
 namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\CoreBundle\Repository\PageRepository;
-use Akyos\CoreBundle\Repository\PostRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -15,14 +13,11 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ComponentFieldType extends AbstractType
 {
-
-    private $entityManager;
-    private $entities;
+    private array $entities;
 
     public function __construct( EntityManagerInterface $entityManager) {
-        $this->entityManager = $entityManager;
         $this->entities = array();
-        $meta = $this->entityManager->getMetadataFactory()->getAllMetadata();
+        $meta = $entityManager->getMetadataFactory()->getAllMetadata();
         foreach ($meta as $m) {
             if(!preg_match('/Component|Option|Menu|ContactForm|User|Gedmo|BuilderTemplate|NewPasswordRequest|seo|Redirect301|File/i', $m->getName())) {
                 $this->entities[] = $m->getName();
@@ -31,8 +26,6 @@ class ComponentFieldType extends AbstractType
     }
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-
-
         $builder
             ->add('name', null, [
                 'label' => "Nom du paramètre"
@@ -67,7 +60,7 @@ class ComponentFieldType extends AbstractType
             ])
             ->add('entity', ChoiceType::class, [
                 'label' => "choisir un élément",
-                'choices'=>$this->entities,
+                'choices'=> $this->entities,
                 'choice_label' => function ($choice, $key, $value) {
                     return $value;
                 }
@@ -95,7 +88,6 @@ class ComponentFieldType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => ComponentField::class,
-
         ]);
     }
 }

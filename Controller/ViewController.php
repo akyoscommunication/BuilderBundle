@@ -45,22 +45,22 @@ class ViewController extends AbstractController
         $array = explode('\\', $type);
         $entity = end($array);
         $checkBundle = $coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $type);
-
         $form = $this->createForm(SubmitBuilderType::class);
         $form->handleRequest($request);
-        if ($checkBundle) {
-            if (!$form->isSubmitted()) {
-                $container->get('render.builder')->initCloneComponents($type, $el->getId());
-            }
+
+        if ($checkBundle && !$form->isSubmitted()) {
+            $container->get('render.builder')->initCloneComponents($type, $el->getId());
         }
+
         if ($form->isSubmitted() && $form->isValid()) {
             if ($checkBundle) {
                 $container->get('render.builder')->tempToProd($type, $el->getId());
             }
             $em->flush();
-
             return $this->redirect($request->getUri());
-        } elseif ($form->isSubmitted() && !($form->isValid())) {
+        }
+
+        if ($form->isSubmitted() && !($form->isValid())) {
             throw $this->createNotFoundException("Formulaire invalide.");
         }
 

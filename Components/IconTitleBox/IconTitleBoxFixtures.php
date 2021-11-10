@@ -2,8 +2,6 @@
 
 namespace Akyos\BuilderBundle\Components\IconTitleBox;
 
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
@@ -11,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class IconTitleBoxFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -31,7 +29,7 @@ class IconTitleBoxFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "icon",
                 "desc" => "Choisissez l'icône",
                 "type" => "image",
-                "entity" => "App\Entity\Platform\Administrator",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -69,6 +67,6 @@ class IconTitleBoxFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-icon-title-box'];
+        return ['component', 'builder-components', 'component-icon-title-box'];
     }
 }

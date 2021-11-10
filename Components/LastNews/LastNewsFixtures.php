@@ -6,10 +6,11 @@ use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
+use Akyos\CoreBundle\Entity\PostCategory;
 
 class LastNewsFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -29,7 +30,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "nb",
                 "desc" => "Nombre d'actualité à afficher",
                 "type" => "int",
-                "entity" => "App\Entity\Back\Team",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -37,7 +38,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "cat",
                 "desc" => "Catégorie à afficher",
                 "type" => "entity",
-                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "entity" => PostCategory::class,
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -45,7 +46,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "no_item_text",
                 "desc" => "Message à afficher si aucune actualité ne correspond à la recherche",
                 "type" => "text",
-                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -53,7 +54,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "paginator",
                 "desc" => "Afficher une pagination au-delà d'un certain ombre d'articles ?",
                 "type" => "bool",
-                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -61,7 +62,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "posts_per_page",
                 "desc" => "Par défaut, 9 articles par page. À utiliser uniquement si la pagination est activée.",
                 "type" => "text",
-                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -69,7 +70,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "category_filters",
                 "desc" => "Formulaire pour filtrer la liste des articles par catégorie ?",
                 "type" => "bool",
-                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -77,7 +78,7 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "tag_filters",
                 "desc" => "Formulaire pour filtrer la liste des articles par étiquette ?",
                 "type" => "bool",
-                "entity" => "Akyos\CoreBundle\Entity\PostCategory",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ]
@@ -91,6 +92,6 @@ class LastNewsFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-last-news'];
+        return ['component', 'builder-components', 'component-last-news'];
     }
 }

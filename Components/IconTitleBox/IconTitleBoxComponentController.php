@@ -7,14 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class IconTitleBoxComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return '@BuilderComponents/IconTitleBox/iconTitleBox_component.html.twig';
     }
 
     public function getParameters($params = null)
     {
-        
         return $params;
     }
 }

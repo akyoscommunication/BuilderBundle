@@ -4,13 +4,12 @@ namespace Akyos\BuilderBundle\Service;
 use Akyos\CoreBundle\Entity\AdminAccess;
 use Akyos\CoreBundle\Repository\AdminAccessRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Entity;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExtendAdminAccess
 {
-    private $adminAccessRepository;
-    private $entityManager;
+    private AdminAccessRepository $adminAccessRepository;
+    private EntityManagerInterface $entityManager;
 
     public function __construct(AdminAccessRepository $adminAccessRepository, EntityManagerInterface $entityManager)
     {
@@ -18,10 +17,12 @@ class ExtendAdminAccess
         $this->entityManager = $entityManager;
     }
 
-    public function setDefaults()
+    /**
+     * @return Response
+     */
+    public function setDefaults(): Response
     {
-        if (!$this->adminAccessRepository->findOneByName("Builder"))
-        {
+        if (!$this->adminAccessRepository->findOneBy(['name' => 'Builder'])) {
             $adminAccess = new AdminAccess();
             $adminAccess
                 ->setName('Builder')
@@ -31,8 +32,8 @@ class ExtendAdminAccess
             $this->entityManager->persist($adminAccess);
             $this->entityManager->flush();
         }
-        if (!$this->adminAccessRepository->findOneByName("Modèles du builder"))
-        {
+
+        if (!$this->adminAccessRepository->findOneBy(['name' => 'Modèles du builder'])) {
             $adminAccess = new AdminAccess();
             $adminAccess
                 ->setName('Modèles du builder')
@@ -43,8 +44,7 @@ class ExtendAdminAccess
             $this->entityManager->flush();
         }
 
-        if (!$this->adminAccessRepository->findOneByName("Options du builder"))
-        {
+        if (!$this->adminAccessRepository->findOneBy(['name' => 'Options du builder'])) {
             $adminAccess = new AdminAccess();
             $adminAccess
                 ->setName('Options du builder')
@@ -54,7 +54,7 @@ class ExtendAdminAccess
             $this->entityManager->persist($adminAccess);
             $this->entityManager->flush();
         }
-        return new Response('true');
 
+        return new Response('true');
     }
 }

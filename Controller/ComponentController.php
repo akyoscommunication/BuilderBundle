@@ -9,7 +9,6 @@ use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentValueRepository;
 use Akyos\BuilderBundle\Twig\BuilderExtension;
-use Gedmo\Translatable\Entity\Translation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -93,6 +92,7 @@ class ComponentController extends AbstractController
      */
     public function changeComponentPosition(Request $request, ComponentRepository $componentRepository): JsonResponse
     {
+        /** @var Component $component */
         $component = $componentRepository->find($request->get('component'));
         $oldParent = $component->getParentComponent();
 
@@ -103,7 +103,7 @@ class ComponentController extends AbstractController
 
         if ( $oldParent && $newParent ) {
             // TODO : If new and old parent are components
-            if ($newParent->getId() != $oldParent->getId()) {
+            if ($newParent->getId() !== $oldParent->getId()) {
                 foreach ($componentRepository->find($newParent)->getChildComponents()->getValues() as $item) {
                     // TODO : change all children positions and set new position
                     if ($item->getPosition() >= $newPosition) {
@@ -134,7 +134,7 @@ class ComponentController extends AbstractController
 
                 $em->flush();
             }
-        } elseif ( $oldParent && $newParent == null ) {
+        } elseif ($oldParent && !$newParent) {
             // TODO : If OldParent was component and now he don't has any parent
             foreach ($oldParent->getChildComponents() as $position => $item) {
                 $item->setPosition($position);
@@ -151,7 +151,7 @@ class ComponentController extends AbstractController
 
             $em->flush();
 
-        } elseif ( $oldParent == null && $newParent ) {
+        } elseif (!$oldParent && $newParent ) {
             // TODO : If OldParent was 'main' and now component has got parent
 
             foreach ($componentRepository->find($newParent)->getChildComponents()->getValues() as $item) {
@@ -195,17 +195,14 @@ class ComponentController extends AbstractController
     /**
      * @Route("/edit/col", methods={"POST"}, options={"expose"=true})
      * @param Request $request
-     *
-     * @param ComponentRepository $componentRepository
      * @param ComponentValueRepository $componentValueRepository
      *
      * @return JsonResponse
      */
-    public function changeComponentCol(Request $request, ComponentRepository $componentRepository, ComponentValueRepository $componentValueRepository): JsonResponse
+    public function changeComponentCol(Request $request, ComponentValueRepository $componentValueRepository): JsonResponse
     {
         $em = $this->getDoctrine()->getManager();
         $col = $request->get('col');
-//        $component = $componentRepository->find($request->get('component'));
 
         $valueToChange = $componentValueRepository->findOneValueCol($request->get('component'));
         if ($valueToChange instanceof ComponentValue) {
@@ -218,20 +215,14 @@ class ComponentController extends AbstractController
 
     /**
      * @Route("/{id}", name="delete", methods={"POST"})
+     * @param Component $component
+     * @return Response
      */
-    public function delete(Request $request, Component $component, ComponentRepository $componentRepository): Response
+    public function delete(Component $component): Response
     {
-//        if ($this->isCsrfTokenValid('delete'.$component->getId(), $request->request->get('_token'))) {
         $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($component);
         $entityManager->flush();
-//        }
-
-//        foreach ( $componentRepository->findAll(array(), array('position' => 'ASC')) as $key => $resetComponent ) {
-//            if ($resetComponent->getParentComponent() === null) {
-//                $resetComponent->setPosition($key);
-//            }
-//        }
 
         return new JsonResponse('valid');
     }

@@ -3,7 +3,7 @@
   "description": "AkyosCMS for Symfony - Builder",
   "type": "symfony-bundle",
   "require": {
-    "php": "^7.2"
+    "php": "^7.4"
   },
   "require-dev": {
   },

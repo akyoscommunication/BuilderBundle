@@ -6,10 +6,11 @@ use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
+use Akyos\CoreBundle\Entity\Post;
 
 class NewsFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -29,7 +30,7 @@ class NewsFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "post",
                 "desc" => "Actualité",
                 "type" => "entity",
-                "entity" => "Akyos\CoreBundle\Entity\Post",
+                "entity" => Post::class,
                 "option" => [],
                 "group" => "Général",
             ],
@@ -43,6 +44,6 @@ class NewsFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-news'];
+        return ['component', 'builder-components', 'component-news'];
     }
 }

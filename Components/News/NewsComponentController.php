@@ -7,14 +7,13 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class NewsComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName()
+    public function getTemplateName(): string
     {
         return '@BuilderComponents/News/news_component.html.twig';
     }
 
     public function getParameters($params = null)
     {
-        
         return $params;
     }
 }

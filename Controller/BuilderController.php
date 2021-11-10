@@ -2,20 +2,14 @@
 
 namespace Akyos\BuilderBundle\Controller;
 
-use Akyos\BuilderBundle\Entity\BuilderTemplate;
 use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Entity\ComponentValue;
-use Akyos\BuilderBundle\Entity\ComponentValueTranslation;
-use Akyos\BuilderBundle\Form\ChoiceBuilderTemplateType;
-use Akyos\BuilderBundle\Form\MakeTemplateType;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
-use Gedmo\Translatable\Entity\Translation;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,13 +18,6 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BuilderController extends AbstractController
 {
-    private $request;
-
-    public function __construct(RequestStack $request)
-    {
-        $this->request = $request->getCurrentRequest();
-    }
-
     /**
      * @Route("/{id}", name="delete", methods={"DELETE"})
      * @param Request $request
@@ -60,14 +47,15 @@ class BuilderController extends AbstractController
     {
         $em = $this->getDoctrine()->getManager();
         $component = new Component();
-        $componentTemplate = $componentTemplateRepository->findOneBy(array('id' => $request->get('componentId')));
-
+        /** @var ComponentTemplate $componentTemplate */
+        $componentTemplate = $componentTemplateRepository->findOneBy(['id' => $request->get('componentId')]);
         $component->setComponentTemplate($componentTemplate);
         $component->setType($request->get('type'));
-        $component->setTypeId(intval($request->get('typeId')));
+        $component->setTypeId((int)$request->get('typeId'));
 
         if ($request->get('parentComponentId') !== 'main') {
-            $parentComponent = $componentRepository->findOneBy(array('id' => $request->get('parentComponentId')));
+            /** @var Component $parentComponent */
+            $parentComponent = $componentRepository->findOneBy(['id' => $request->get('parentComponentId')]);
             $component->setParentComponent($parentComponent);
             $component->setPosition((int)count($componentRepository->findBy(['type' => $request->get('type'), 'typeId' => $request->get('typeId'), 'parentComponent' => $parentComponent->getId(), 'isTemp' => true])));
         } else {

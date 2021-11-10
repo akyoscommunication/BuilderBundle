@@ -3,12 +3,14 @@
 namespace Akyos\BuilderBundle;
 
 use Akyos\BuilderBundle\DependencyInjection\BuilderBundleExtension;
-use Symfony\Bundle\TwigBundle\DependencyInjection\TwigExtension;
 use Symfony\Component\HttpKernel\Bundle\Bundle;
 
 class AkyosBuilderBundle extends Bundle
 {
-    public function getContainerExtension()
+    /**
+     * @return BuilderBundleExtension
+     */
+    public function getContainerExtension(): BuilderBundleExtension
     {
         return new BuilderBundleExtension();
     }

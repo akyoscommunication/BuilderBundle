@@ -5,20 +5,17 @@ namespace Akyos\BuilderBundle\Controller;
 use Akyos\BuilderBundle\AkyosBuilderBundle;
 use Akyos\BuilderBundle\Entity\BuilderOptions;
 use Akyos\BuilderBundle\Entity\BuilderTemplate;
-use Akyos\BuilderBundle\Entity\Component;
 use Akyos\BuilderBundle\Form\BuilderTemplateType;
 use Akyos\BuilderBundle\Form\Handler\BuilderHandler;
 use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
 use Akyos\CoreBundle\Services\CoreService;
+use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\KernelInterface;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin/builder/templates", name="builder_template_")
@@ -59,13 +56,9 @@ class BuilderTemplateController extends AbstractController
 
     /**
      * @Route("/new", name="new", methods={"GET","POST"})
-     * @param Request $request
-     * @param KernelInterface $kernel
-     *
      * @return Response
-     * @throws Exception
      */
-    public function new(Request $request, KernelInterface $kernel): Response
+    public function new(): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $builderTemplate = new BuilderTemplate();
@@ -116,7 +109,10 @@ class BuilderTemplateController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
 
             if ($coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entity)) {
-                $container->get('render.builder')->onDeleteEntity($entity, $builderTemplate->getId());
+                try {
+                    $container->get('render.builder')->onDeleteEntity($entity, $builderTemplate->getId());
+                } catch (Exception $e) {
+                }
             }
 
             $entityManager->remove($builderTemplate);

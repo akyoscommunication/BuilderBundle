@@ -14,7 +14,6 @@ class ImageComponentController extends AbstractController implements ComponentIn
 
     public function getParameters($params = null)
     {
-
         return $params;
     }
 }

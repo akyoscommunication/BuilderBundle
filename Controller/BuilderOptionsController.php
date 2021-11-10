@@ -9,11 +9,10 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin/builder/options", name="builder_options")
- * @isGranted("options-du-builder")
+ * @isGranted ("options-du-builder")
  */
 class BuilderOptionsController extends AbstractController
 {
@@ -32,7 +31,7 @@ class BuilderOptionsController extends AbstractController
             $builderOptions = $builderOptions[0];
         }
 
-        $entities = array();
+        $entities = [];
         $em =$this->getDoctrine()->getManager();
         $meta = $em->getMetadataFactory()->getAllMetadata();
         foreach ($meta as $m) {

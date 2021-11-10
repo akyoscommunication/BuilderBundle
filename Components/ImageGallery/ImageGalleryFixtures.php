@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -29,7 +29,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "background_size",
                 "desc" => "Est-ce que l'image remplit tout le bloc ou est-ce qu'elle est visible en entier, peu importe son format ?",
                 "type" => "select",
-                "entity" => "App\Entity\Back\Job",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => ["Remplit tout son conteneur:cover","Visible en entier:contain"],
                 "group" => "Général",
             ],[
@@ -37,7 +37,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
                 "slug" => "images",
                 "desc" => "Liste des images à afficher",
                 "type" => "gallery",
-                "entity" => "App\Entity\Back\Job",
+                "entity" => "App\Entity\Platform\AG\AG",
                 "option" => [],
                 "group" => "Général",
             ],[
@@ -69,7 +69,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "scrollbar",
 				"desc" => "Afficher la scrollbar ? (Non par défaut)",
 				"type" => "bool",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => [],
 				"group" => "Slider",
 			],[
@@ -77,7 +77,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "direction",
 				"desc" => "Sens de défilement des slides (Horizontal par défaut)",
 				"type" => "select",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => ["Horizontal:horizontal","Vertical:vertical"],
 				"group" => "Slider",
 			],[
@@ -93,7 +93,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "speed",
 				"desc" => "Vitesse de défilement des slides en millisecondes (5000 par défaut)",
 				"type" => "int",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => [],
 				"group" => "Slider",
 			],[
@@ -101,7 +101,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "autoplay",
 				"desc" => "Est-ce que les slides défilent automatiquement ? (Oui par défaut)",
 				"type" => "bool",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => [],
 				"group" => "Slider",
 			],[
@@ -109,7 +109,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "loop",
 				"desc" => "Est-ce que les slides défilent à l'infini ? (Oui par défaut)",
 				"type" => "bool",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => [],
 				"group" => "Slider",
 			],[
@@ -117,7 +117,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "slides_per_view",
 				"desc" => "Nombre de slides visibles en même temps (1 par défaut)",
 				"type" => "int",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => [],
 				"group" => "Slider",
 			],[
@@ -125,7 +125,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "slides_per_view_991",
 				"desc" => "Nombre de slides visibles en même temps, format tablette (1 par défaut)",
 				"type" => "int",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => [],
 				"group" => "Slider",
 			],[
@@ -133,7 +133,7 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 				"slug" => "slides_per_view_767",
 				"desc" => "Nombre de slides visibles en même temps, format smartphone (1 par défaut)",
 				"type" => "int",
-				"entity" => "App\Entity\Platform\Administrator",
+				"entity" => "App\Entity\Platform\AG\AG",
 				"option" => [],
 				"group" => "Slider",
 			]
@@ -147,6 +147,6 @@ class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'image-gallery-component'];
+        return ['component', 'builder-components', 'image-gallery-component'];
     }
 }

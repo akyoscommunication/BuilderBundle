@@ -4,6 +4,8 @@ namespace Akyos\BuilderBundle\Twig;
 
 use Akyos\BuilderBundle\Controller\RenderComponentController;
 use Akyos\BuilderBundle\Entity\Component;
+use Exception;
+use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
@@ -11,9 +13,8 @@ use Twig\TwigFunction;
 
 class BuilderExtension extends AbstractExtension
 {
-    private $renderComponentController;
-    /** @var Environment */
-    private $environment;
+    private RenderComponentController $renderComponentController;
+    private Environment $environment;
 
     public function __construct(RenderComponentController $renderComponentController, Environment $environment)
     {
@@ -21,6 +22,9 @@ class BuilderExtension extends AbstractExtension
         $this->environment = $environment;
     }
 
+    /**
+     * @return TwigFilter[]
+     */
     public function getFilters(): array
     {
         return [
@@ -31,6 +35,9 @@ class BuilderExtension extends AbstractExtension
         ];
     }
 
+    /**
+     * @return TwigFunction[]
+     */
     public function getFunctions(): array
     {
         return [
@@ -40,7 +47,11 @@ class BuilderExtension extends AbstractExtension
         ];
     }
 
-    public function setGlobals(array $array)
+    /**
+     * @param array $array
+     * @return bool
+     */
+    public function setGlobals(array $array): bool
     {
         foreach ($array as $k => $g) {
             $this->environment->addGlobal($k, $g);
@@ -48,17 +59,39 @@ class BuilderExtension extends AbstractExtension
         return true;
     }
 
+    /**
+     * @param Component $component
+     * @param false $edit
+     * @param null $type
+     * @param null $typeId
+     * @return string|Response
+     * @throws Exception
+     */
     public function renderComponent(Component $component, $edit = false, $type = null, $typeId = null)
     {
         return $this->renderComponentController->renderComponent($component, $edit, $type, $typeId);
     }
 
+    /**
+     * @param $componentSlug
+     * @param $values
+     * @param Component|null $component
+     * @param false $edit
+     * @param null $type
+     * @param null $typeId
+     * @return string|Response
+     * @throws Exception
+     */
     public function renderComponentBySlug($componentSlug, $values, Component $component = null, $edit = false, $type = null, $typeId = null)
     {
         return $this->renderComponentController->renderComponentBySlug($componentSlug, $values, $component, $edit, $type, $typeId);
     }
 
-    public function slugify($slug)
+    /**
+     * @param $slug
+     * @return string
+     */
+    public function slugify($slug): string
     {
 
         // replace non letter or digits by -

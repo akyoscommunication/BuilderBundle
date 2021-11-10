@@ -9,7 +9,7 @@ use Doctrine\Persistence\ObjectManager;
 
 class SlideFixtures extends Fixture implements FixtureGroupInterface
 {
-    private $fixturesHelpers;
+    private FixturesHelpers $fixturesHelpers;
 
     public function __construct(FixturesHelpers $fixturesHelpers)
     {
@@ -35,6 +35,6 @@ class SlideFixtures extends Fixture implements FixtureGroupInterface
      */
     public static function getGroups(): array
     {
-        return ['component', 'component-slide'];
+        return ['component', 'builder-components', 'component-slide'];
     }
 }

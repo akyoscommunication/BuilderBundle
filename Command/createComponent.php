@@ -2,6 +2,7 @@
 
 namespace Akyos\BuilderBundle\Command;
 
+use RuntimeException;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -9,8 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class createComponent extends Command
 {
-
-    protected static $defaultName = 'app:make:component';
+    protected static string $defaultName = 'app:make:component';
 
     public function __construct()
     {
@@ -29,8 +29,8 @@ class createComponent extends Command
     {
         $componentDir = __DIR__ . '/../../../src/Components/';
         $servicesDir = __DIR__ . '/../../../config/';
-        $nameLCFirst = lcfirst(join('', array_map( function($word) { return ucfirst($word); } , explode('_', $input->getArgument('name')))));
-        $nameUCFirst = ucfirst(join('', array_map( function($word) { return ucfirst($word); } , explode('_', $input->getArgument('name')))));
+        $nameLCFirst = lcfirst(implode('', array_map( static function($word) { return ucfirst($word); } , explode('_', $input->getArgument('name')))));
+        $nameUCFirst = ucfirst(implode('', array_map( static function($word) { return ucfirst($word); } , explode('_', $input->getArgument('name')))));
         $componentComponentDir = __DIR__ . '/../../../src/Components/'.$nameUCFirst."/";
 
 
@@ -65,7 +65,9 @@ class $nameUCFirst"."ComponentController extends AbstractController implements C
             $output->writeln([
                 'Création du dossier'.$componentDir.$nameUCFirst.'...'
             ]);
-            mkdir($componentDir.$nameUCFirst , 0777);
+            if (!mkdir($concurrentDirectory = $componentDir . $nameUCFirst) && !is_dir($concurrentDirectory)) {
+                throw new RuntimeException(sprintf('Directory "%s" was not created', $concurrentDirectory));
+            }
             $output->writeln([
                 'Le dossier a bien été créé'
             ]);

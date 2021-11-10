@@ -3,10 +3,10 @@
 namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\Component;
+use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Entity\ComponentValue;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CollectionType;
-use Symfony\Component\Form\Extension\Core\Type\FormType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -14,8 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ComponentType extends AbstractType
 {
-    /** @var Request|null */
-    private $request;
+    private ?Request $request;
 
     public function __construct(RequestStack $requestStack)
     {
@@ -27,10 +26,12 @@ class ComponentType extends AbstractType
         $component = $builder->getData();
 
         if ($component instanceof Component) {
-            foreach ($component->getComponentTemplate()->getComponentFields() as $field) {
+            /** @var ComponentTemplate $componentTemplate */
+            $componentTemplate = $component->getComponentTemplate();
+            foreach ($componentTemplate->getComponentFields() as $field) {
                 $hasShortcodeValue = 0;
                 foreach($component->getComponentValues() as $componentValue) {
-                    if($componentValue->getComponentField() == $field) {
+                    if($componentValue->getComponentField() === $field) {
                         $hasShortcodeValue = 1;
                     }
                 }

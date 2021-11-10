@@ -8,13 +8,16 @@ use Twig\Extension\GlobalsInterface;
 
 class GlobalsExtension extends AbstractExtension implements GlobalsInterface
 {
-    protected $builderOptionsRepository;
+    protected BuilderOptionsRepository $builderOptionsRepository;
 
     public function __construct(BuilderOptionsRepository $builderOptionsRepository)
     {
         $this->builderOptionsRepository = $builderOptionsRepository;
     }
 
+    /**
+     * @return array
+     */
     public function getGlobals(): array
     {
         $builderOptions = $this->builderOptionsRepository->findAll();
