@@ -10,6 +10,7 @@ use Akyos\BuilderBundle\Form\Handler\BuilderHandler;
 use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
 use Akyos\CoreBundle\Services\CoreService;
 use Exception;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Component\Pager\PaginatorInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
