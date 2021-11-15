@@ -10,7 +10,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class createComponent extends Command
 {
-    protected static string $defaultName = 'app:make:component';
+    protected static $defaultName = 'app:make:component';
 
     public function __construct()
     {

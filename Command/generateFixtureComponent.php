@@ -11,7 +11,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 
 class generateFixtureComponent extends Command
 {
-    protected static string $defaultName = 'app:make:componentFixture';
+    protected static $defaultName = 'app:make:componentFixture';
     private EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
