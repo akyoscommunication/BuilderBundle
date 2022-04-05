@@ -4,7 +4,7 @@ namespace Akyos\BuilderBundle\Form\Handler;
 
 use Akyos\BuilderBundle\AkyosBuilderBundle;
 use Akyos\BuilderBundle\Entity\BuilderOptions;
-use Akyos\CoreBundle\Services\CoreService;
+use Akyos\CmsBundle\Service\CmsService;
 use Doctrine\ORM\EntityManagerInterface;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -14,18 +14,18 @@ use Symfony\Component\HttpFoundation\Request;
 class BuilderHandler extends AbstractController
 {
     private EntityManagerInterface $em;
-    private CoreService $coreService;
+    private CmsService $cmsService;
 
-    public function __construct(EntityManagerInterface $em, CoreService $coreService)
+    public function __construct(EntityManagerInterface $em, CmsService $cmsService)
     {
         $this->em = $em;
-        $this->coreService = $coreService;
+        $this->cmsService = $cmsService;
     }
 
     public function edit(FormInterface $form, Request $request, string $entityName, ContainerInterface $container): bool
     {
         $element = $form->getData();
-        $check = $this->coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entityName);
+        $check = $this->cmsService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entityName);
 
         $form->handleRequest($request);
 
@@ -47,7 +47,7 @@ class BuilderHandler extends AbstractController
 
     public function delete($entity, string $entityName, ContainerInterface $container): void
     {
-        if ($this->coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entityName)) {
+        if ($this->cmsService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entityName)) {
             $container->get('render.builder')->onDeleteEntity($entityName, $entity->getId());
         }
     }

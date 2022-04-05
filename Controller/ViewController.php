@@ -8,7 +8,7 @@ use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Form\SubmitBuilderType;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\CoreBundle\Entity\Page;
-use Akyos\CoreBundle\Services\CoreService;
+use Akyos\CoreBundle\Service\CoreService;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;

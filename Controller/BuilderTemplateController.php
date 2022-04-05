@@ -8,7 +8,7 @@ use Akyos\BuilderBundle\Entity\BuilderTemplate;
 use Akyos\BuilderBundle\Form\BuilderTemplateType;
 use Akyos\BuilderBundle\Form\Handler\BuilderHandler;
 use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
-use Akyos\CoreBundle\Services\CoreService;
+use Akyos\CoreBundle\Service\CoreService;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Component\Pager\PaginatorInterface;
@@ -20,7 +20,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * @Route("/admin/builder/templates", name="builder_template_")
- * @isGranted("modeles-du-builder")
+ * @IsGranted("modeles-du-builder")
  */
 class BuilderTemplateController extends AbstractController
 {

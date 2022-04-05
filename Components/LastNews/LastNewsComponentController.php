@@ -3,9 +3,9 @@
 namespace Akyos\BuilderBundle\Components\LastNews;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;
-use Akyos\CoreBundle\Entity\Post;
-use Akyos\CoreBundle\Repository\PostCategoryRepository;
-use Akyos\CoreBundle\Repository\PostTagRepository;
+use Akyos\BlogBundle\Entity\Post;
+use Akyos\BlogBundle\Repository\PostCategoryRepository;
+use Akyos\BlogBundle\Repository\PostTagRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\QueryBuilder;
 use Knp\Component\Pager\PaginatorInterface;

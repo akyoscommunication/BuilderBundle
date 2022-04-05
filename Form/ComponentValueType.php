@@ -4,7 +4,7 @@ namespace Akyos\BuilderBundle\Form;
 
 use Akyos\BuilderBundle\Entity\ComponentField;
 use Akyos\BuilderBundle\Entity\ComponentValue;
-use Akyos\CoreBundle\Repository\PostRepository;
+use Akyos\BlogBundle\Repository\PostRepository;
 use Akyos\FileManagerBundle\Form\Type\FileManagerCollectionType;
 use Akyos\FileManagerBundle\Form\Type\FileManagerType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -25,7 +25,7 @@ use Symfony\Component\Form\FormEvent;
 use Symfony\Component\Form\FormEvents;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Akyos\CoreBundle\Repository\PageRepository;
+use Akyos\CmsBundle\Repository\PageRepository;
 
 class ComponentValueType extends AbstractType
 {

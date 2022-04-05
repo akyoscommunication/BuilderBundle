@@ -13,7 +13,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin/builder/options", name="builder_options")
- * @isGranted ("options-du-builder")
+ * @IsGranted ("options-du-builder")
  */
 class BuilderOptionsController extends AbstractController
 {

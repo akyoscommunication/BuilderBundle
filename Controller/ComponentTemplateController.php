@@ -21,7 +21,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/admin/builder", name="templates_builder_")
- * @isGranted("builder")
+ * @IsGranted("builder")
  */
 class ComponentTemplateController extends AbstractController
 {
