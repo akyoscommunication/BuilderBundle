@@ -1,4 +1,4 @@
-{% extends "@AkyosCore/layout.html.twig" %}
+{% extends "@AkyosCms/layout.html.twig" %}
 
 {% block title %}Ajouter un composant{% endblock %}
 
@@ -7,7 +7,7 @@
 
         <div class="card">
             <div class="card-header">
-                {% include '@AkyosCore/crud/elements/_header.html.twig' with {'title': 'Ajouter un composant', 'button_back': true, 'header_route' : 'templates_builder_index'} %}
+                {% include '@AkyosCms/crud/elements/_header.html.twig' with {'title': 'Ajouter un composant', 'button_back': true, 'header_route' : 'templates_builder_index'} %}
             </div>
             <div class="card-body">
                 {{ include('@AkyosBuilder/templates_builder/_form.html.twig') }}

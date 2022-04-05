@@ -35,7 +35,7 @@
     </div>
     {% if values.paginator is defined and values.paginator %}
         <div class="w-100 d-flex justify-content-center component-last-news__paginator">
-            {% include '@AkyosCore/crud/elements/_pagination.html.twig' with {'els' : news} %}
+            {% include '@AkyosCms/crud/elements/_pagination.html.twig' with {'els' : news} %}
         </div>
     {% endif %}
 </div>

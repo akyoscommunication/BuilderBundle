@@ -8,7 +8,7 @@ use Akyos\BuilderBundle\Entity\BuilderTemplate;
 use Akyos\BuilderBundle\Form\BuilderTemplateType;
 use Akyos\BuilderBundle\Form\Handler\BuilderHandler;
 use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
-use Akyos\CoreBundle\Service\CoreService;
+use Akyos\CmsBundle\Service\CmsService;
 use Exception;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Knp\Component\Pager\PaginatorInterface;
@@ -43,7 +43,7 @@ class BuilderTemplateController extends AbstractController
         }
         $els = $paginator->paginate($query->getQuery(), $request->query->getInt('page',1),12);
 
-        return $this->render('@AkyosCore/crud/index.html.twig', [
+        return $this->render('@AkyosCms/crud/index.html.twig', [
             'els' => $els,
             'title' => 'Templates de page builder',
             'entity' => 'BuilderTemplate',
@@ -85,7 +85,7 @@ class BuilderTemplateController extends AbstractController
             return $this->redirect($request->getUri());
         }
 
-        return $this->render('@AkyosCore/crud/edit.html.twig', [
+        return $this->render('@AkyosCms/crud/edit.html.twig', [
             'el' => $builderTemplate,
             'title' => 'BuilderTemplate',
             'entity' => BuilderTemplate::class,
@@ -98,18 +98,18 @@ class BuilderTemplateController extends AbstractController
      * @Route("/{id}", name="delete", methods={"DELETE"})
      * @param Request $request
      * @param BuilderTemplate $builderTemplate
-     * @param CoreService $coreService
+     * @param CmsService $cmsService
      * @param ContainerInterface $container
      *
      * @return Response
      */
-    public function delete(Request $request, BuilderTemplate $builderTemplate, CoreService $coreService, ContainerInterface $container): Response
+    public function delete(Request $request, BuilderTemplate $builderTemplate, CmsService $cmsService, ContainerInterface $container): Response
     {
         $entity = 'BuilderTemplate';
         if ($this->isCsrfTokenValid('delete'.$builderTemplate->getId(), $request->request->get('_token'))) {
             $entityManager = $this->getDoctrine()->getManager();
 
-            if ($coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entity)) {
+            if ($cmsService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entity)) {
                 try {
                     $container->get('render.builder')->onDeleteEntity($entity, $builderTemplate->getId());
                 } catch (Exception $e) {

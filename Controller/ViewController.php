@@ -7,8 +7,8 @@ use Akyos\BuilderBundle\Entity\BuilderOptions;
 use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Form\SubmitBuilderType;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
-use Akyos\CoreBundle\Entity\Page;
-use Akyos\CoreBundle\Service\CoreService;
+use Akyos\CmsBundle\Entity\Page;
+use Akyos\CmsBundle\Service\CmsService;
 use Psr\Container\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
@@ -33,18 +33,18 @@ class ViewController extends AbstractController
      * @param Request $request
      * @param Filesystem $filesystem
      * @param KernelInterface $kernel
-     * @param CoreService $coreService
+     * @param CmsService $cmsService
      * @param ContainerInterface $container
      * @return Response
      */
-    public function view($type, $typeId, $redirect, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CoreService $coreService, ContainerInterface $container): Response
+    public function view($type, $typeId, $redirect, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CmsService $cmsService, ContainerInterface $container): Response
     {
         $type = urldecode($type);
         $em = $this->getDoctrine()->getManager();
         $el = $em->getRepository($type)->find($typeId);
         $array = explode('\\', $type);
         $entity = end($array);
-        $checkBundle = $coreService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $type);
+        $checkBundle = $cmsService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $type);
         $form = $this->createForm(SubmitBuilderType::class);
         $form->handleRequest($request);
 
@@ -68,11 +68,11 @@ class ViewController extends AbstractController
         $componentTemplates = $em->getRepository(ComponentTemplate::class)->findAll();
 
         if ($type === Page::class) {
-            $view = $el->getTemplate() ? '/page/'.$el->getTemplate().'.html.twig' : '@AkyosCore/front/content.html.twig';
+            $view = $el->getTemplate() ? '/page/'.$el->getTemplate().'.html.twig' : '@AkyosCms/front/content.html.twig';
         } else {
             $view = $filesystem->exists($kernel->getProjectDir()."/templates/${entity}/single.html.twig")
                 ? "/${entity}/single.html.twig"
-                : '@AkyosCore/front/single.html.twig';
+                : '@AkyosCms/front/single.html.twig';
         }
 
         return $this->render($view, [
