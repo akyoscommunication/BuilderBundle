@@ -53,7 +53,7 @@ class ComponentField
     private $fieldValues = [];
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true, name="field_groups)
+     * @ORM\Column(type="string", length=255, nullable=true, name="field_groups")
      */
     private $groups;
 
