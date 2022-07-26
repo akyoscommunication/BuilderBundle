@@ -30,17 +30,12 @@ use Akyos\CmsBundle\Repository\PageRepository;
 class ComponentValueType extends AbstractType
 {
     private array $pages;
-    private array $posts;
     private EntityManagerInterface $em;
 
-    public function __construct(PageRepository $pageRepository, PostRepository $postRepository, EntityManagerInterface $em) {
+    public function __construct(PageRepository $pageRepository, EntityManagerInterface $em) {
         $pages = $pageRepository->findAll();
         foreach($pages as $page) {
             $this->pages[$page->getTitle()] = $page->getId();
-        }
-        $posts = $postRepository->findAll();
-        foreach($posts as $post) {
-            $this->posts[$post->getTitle()] = $post->getId();
         }
         $this->em = $em;
     }
@@ -111,17 +106,6 @@ class ComponentValueType extends AbstractType
                                 'choices' => $this->pages,
                                 'required' => false,
                                 'label'  => $field->getName(),
-                                'help' => $field->getShortDescription(),
-                            ])
-                        ;
-                        break;
-
-                    case 'postlink':
-                        $form
-                            ->add('value', ChoiceType::class, [
-                                'choices' => $this->posts,
-                                'required' => false,
-                                'label' => $field->getName(),
                                 'help' => $field->getShortDescription(),
                             ])
                         ;

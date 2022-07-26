@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ButtonComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName(): string
+    public static function getTemplateName(): string
     {
         return '@BuilderComponents/Button/button_component.html.twig';
     }

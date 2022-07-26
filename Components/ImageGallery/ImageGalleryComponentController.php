@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class ImageGalleryComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName(): string
+    public static function getTemplateName(): string
     {
         return '@BuilderComponents/ImageGallery/imageGallery_component.html.twig';
     }

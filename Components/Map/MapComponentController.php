@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class MapComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName(): string
+    public static function getTemplateName(): string
     {
         return '@BuilderComponents/Map/map_component.html.twig';
     }

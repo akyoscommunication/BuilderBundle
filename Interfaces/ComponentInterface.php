@@ -7,7 +7,7 @@ interface ComponentInterface
     /**
      * @return string
      */
-    public function getTemplateName();
+    public static function getTemplateName();
 
     /**
      * @param $params

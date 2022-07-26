@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class RowComponentController extends AbstractController implements ComponentInterface
 {
-    public function getTemplateName(): string
+    public static function getTemplateName(): string
     {
         return '@BuilderComponents/Row/row_component.html.twig';
     }
