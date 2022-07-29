@@ -1,2 +1,4 @@
 /node_modules/
 #/Resources/public/
+.idea
+.DS_Store
