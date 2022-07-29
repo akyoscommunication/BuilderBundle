@@ -7,6 +7,7 @@ use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Entity\ComponentValue;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -18,34 +19,33 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class BuilderController extends AbstractController
 {
-    /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
-     * @param Request $request
-     * @param ComponentTemplate $componentTemplate
-     * @return Response
-     */
-    public function delete(Request $request, ComponentTemplate $componentTemplate): Response
+	/**
+	 * @Route("/{id}", name="delete", methods={"DELETE"})
+	 * @param Request $request
+	 * @param ComponentTemplate $componentTemplate
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function delete(Request $request, ComponentTemplate $componentTemplate, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$componentTemplate->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($componentTemplate);
-            $em->flush();
+            $entityManager->remove($componentTemplate);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('templates_builder_index');
     }
-
-    /**
-     * @Route("/save/instance", methods={"POST"}, options={"expose"=true})
-     * @param Request $request
-     * @param ComponentTemplateRepository $componentTemplateRepository
-     * @param ComponentRepository $componentRepository
-     *
-     * @return JsonResponse
-     */
-    public function saveInstances(Request $request, ComponentTemplateRepository $componentTemplateRepository, ComponentRepository $componentRepository): JsonResponse
+	
+	/**
+	 * @Route("/save/instance", methods={"POST"}, options={"expose"=true})
+	 * @param Request $request
+	 * @param ComponentTemplateRepository $componentTemplateRepository
+	 * @param ComponentRepository $componentRepository
+	 * @param EntityManagerInterface $entityManager
+	 * @return JsonResponse
+	 */
+    public function saveInstances(Request $request, ComponentTemplateRepository $componentTemplateRepository, ComponentRepository $componentRepository, EntityManagerInterface $entityManager): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
         $component = new Component();
         /** @var ComponentTemplate $componentTemplate */
         $componentTemplate = $componentTemplateRepository->findOneBy(['id' => $request->get('componentId')]);
@@ -78,32 +78,32 @@ class BuilderController extends AbstractController
             if (($componentTemplate->getPrototype() === 'col') && ($componentField->getSlug() === 'col')) {
                 $componentValue->setValue(12);
             }
-            $em->persist($componentValue);
+            $entityManager->persist($componentValue);
         }
 
-        $em->persist($component);
-        $em->flush();
+        $entityManager->persist($component);
+        $entityManager->flush();
 
         return new JsonResponse($component->getId());
     }
-
-    /**
-     * @Route("/reset/temp/component/{type}/{typeId}/{redirect}", name="reset_temp_component")
-     * @param $type
-     * @param $typeId
-     *
-     * @param $redirect
-     * @return Response
-     */
-    public function resetTemp($type, $typeId, $redirect):Response
+	
+	/**
+	 * @Route("/reset/temp/component/{type}/{typeId}/{redirect}", name="reset_temp_component")
+	 * @param $type
+	 * @param $typeId
+	 *
+	 * @param $redirect
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function resetTemp($type, $typeId, $redirect, EntityManagerInterface $entityManager):Response
     {
-        $tempComponents = $this->getDoctrine()->getRepository(Component::class)->findBy(['type' => urldecode($type), 'typeId' => $typeId, 'isTemp' => true]);
-        $em = $this->getDoctrine()->getManager();
+        $tempComponents = $entityManager->getRepository(Component::class)->findBy(['type' => urldecode($type), 'typeId' => $typeId, 'isTemp' => true]);
 
         foreach ($tempComponents as $tempComponent) {
-            $em->remove($tempComponent);
+            $entityManager->remove($tempComponent);
         }
-        $em->flush();
+        $entityManager->flush();
 
         return $this->redirect(urldecode($redirect));
     }

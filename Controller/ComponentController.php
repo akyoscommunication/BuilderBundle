@@ -9,6 +9,8 @@ use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentValueRepository;
 use Akyos\BuilderBundle\Twig\BuilderExtension;
+use Doctrine\ORM\EntityManagerInterface;
+use Exception;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -20,20 +22,19 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ComponentController extends AbstractController
 {
-    /**
-     * @Route("/new", name="component_new", methods={"GET","POST"})
-     * @param Request $request
-     *
-     * @return Response
-     */
-    public function new(Request $request): Response
+	/**
+	 * @Route("/new", name="component_new", methods={"GET","POST"})
+	 * @param Request $request
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $component = new Component();
         $form = $this->createForm(ComponentType::class, $component);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($component);
             $entityManager->flush();
 
@@ -45,16 +46,18 @@ class ComponentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param Component $component
-     * @param ComponentFieldRepository $componentFieldRepository
-     * @param BuilderExtension $builderExtension
-     * @return Response
-     */
-    public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository, BuilderExtension $builderExtension): Response
+	
+	/**
+	 * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+	 * @param Request $request
+	 * @param Component $component
+	 * @param ComponentFieldRepository $componentFieldRepository
+	 * @param BuilderExtension $builderExtension
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 * @throws Exception
+	 */
+    public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository, BuilderExtension $builderExtension, EntityManagerInterface $entityManager): Response
     {
         $type = $request->get('type');
         $typeId = $request->get('typeId');
@@ -64,7 +67,7 @@ class ComponentController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             $params = [];
             /** @var ComponentValue $value */
@@ -81,16 +84,16 @@ class ComponentController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/change-component-position", methods={"POST"})
-     * @param Request $request
-     *
-     * @param ComponentRepository $componentRepository
-     *
-     * @return JsonResponse
-     */
-    public function changeComponentPosition(Request $request, ComponentRepository $componentRepository): JsonResponse
+	
+	/**
+	 * @Route("/change-component-position", methods={"POST"})
+	 * @param Request $request
+	 *
+	 * @param ComponentRepository $componentRepository
+	 * @param EntityManagerInterface $entityManager
+	 * @return JsonResponse
+	 */
+    public function changeComponentPosition(Request $request, ComponentRepository $componentRepository, EntityManagerInterface $entityManager): JsonResponse
     {
         /** @var Component $component */
         $component = $componentRepository->find($request->get('component'));
@@ -98,8 +101,6 @@ class ComponentController extends AbstractController
 
         $newParent = $request->get('parent') ? $componentRepository->find($request->get('parent')) : null;
         $newPosition = (int)$request->get('position');
-
-        $em = $this->getDoctrine()->getManager();
 
         if ( $oldParent && $newParent ) {
             // TODO : If new and old parent are components
@@ -115,7 +116,7 @@ class ComponentController extends AbstractController
                 $component->setParentComponent($newParent);
                 $component->setPosition($newPosition);
 
-                $em->flush();
+                $entityManager->flush();
 
                 foreach ($oldParent->getChildComponents() as $position => $item) {
                     $item->setPosition($position);
@@ -132,7 +133,7 @@ class ComponentController extends AbstractController
                 }
                 $component->setPosition($newPosition);
 
-                $em->flush();
+                $entityManager->flush();
             }
         } elseif ($oldParent && !$newParent) {
             // TODO : If OldParent was component and now he don't has any parent
@@ -149,7 +150,7 @@ class ComponentController extends AbstractController
             $component->setParentComponent(NULL);
             $component->setPosition($newPosition);
 
-            $em->flush();
+            $entityManager->flush();
 
         } elseif (!$oldParent && $newParent ) {
             // TODO : If OldParent was 'main' and now component has got parent
@@ -164,7 +165,7 @@ class ComponentController extends AbstractController
             $component->setParentComponent($newParent);
             $component->setPosition($newPosition);
 
-            $em->flush();
+            $entityManager->flush();
 
             foreach ($componentRepository->findBy(['parentComponent' => null, 'type' => $component->getType(), 'typeId' => $component->getTypeId(), 'isTemp' => true], ['position' => 'ASC']) as $position => $item ) {
                 $item->setPosition($position);
@@ -182,45 +183,44 @@ class ComponentController extends AbstractController
             }
             $component->setPosition($newPosition);
 
-            $em->flush();
+            $entityManager->flush();
         }
 
         // TODO : Save modifications
-        $em->persist($component);
-        $em->flush();
+        $entityManager->persist($component);
+        $entityManager->flush();
 
         return new JsonResponse('valid');
     }
-
-    /**
-     * @Route("/edit/col", methods={"POST"}, options={"expose"=true})
-     * @param Request $request
-     * @param ComponentValueRepository $componentValueRepository
-     *
-     * @return JsonResponse
-     */
-    public function changeComponentCol(Request $request, ComponentValueRepository $componentValueRepository): JsonResponse
+	
+	/**
+	 * @Route("/edit/col", methods={"POST"}, options={"expose"=true})
+	 * @param Request $request
+	 * @param ComponentValueRepository $componentValueRepository
+	 * @param EntityManagerInterface $entityManager
+	 * @return JsonResponse
+	 */
+    public function changeComponentCol(Request $request, ComponentValueRepository $componentValueRepository, EntityManagerInterface $entityManager): JsonResponse
     {
-        $em = $this->getDoctrine()->getManager();
         $col = $request->get('col');
 
         $valueToChange = $componentValueRepository->findOneValueCol($request->get('component'));
         if ($valueToChange instanceof ComponentValue) {
             $valueToChange->setValue($col);
-            $em->flush();
+            $entityManager->flush();
         }
 
         return new JsonResponse('valid');
     }
-
-    /**
-     * @Route("/{id}", name="delete", methods={"POST"})
-     * @param Component $component
-     * @return Response
-     */
-    public function delete(Component $component): Response
+	
+	/**
+	 * @Route("/{id}", name="delete", methods={"POST"})
+	 * @param Component $component
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function delete(Component $component, EntityManagerInterface $entityManager): Response
     {
-        $entityManager = $this->getDoctrine()->getManager();
         $entityManager->remove($component);
         $entityManager->flush();
 

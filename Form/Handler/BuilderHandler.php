@@ -6,7 +6,7 @@ use Akyos\BuilderBundle\AkyosBuilderBundle;
 use Akyos\BuilderBundle\Entity\BuilderOptions;
 use Akyos\CmsBundle\Service\CmsService;
 use Doctrine\ORM\EntityManagerInterface;
-use Psr\Container\ContainerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\FormInterface;
 use Symfony\Component\HttpFoundation\Request;

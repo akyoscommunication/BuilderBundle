@@ -14,9 +14,7 @@ use Doctrine\ORM\Query;
 use Doctrine\ORM\QueryBuilder;
 use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
 use Gedmo\Translatable\TranslatableListener;
-use Psr\Container\ContainerExceptionInterface;
-use Psr\Container\ContainerInterface;
-use Psr\Container\NotFoundExceptionInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -55,8 +53,6 @@ class Builder
      * @param $objectType
      * @param $objectId
      * @return string|RedirectResponse
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
@@ -125,8 +121,6 @@ class Builder
      * @param $type
      * @param $typeId
      * @return bool
-     * @throws ContainerExceptionInterface
-     * @throws NotFoundExceptionInterface
      */
     public function initCloneComponents($type, $typeId): bool
     {

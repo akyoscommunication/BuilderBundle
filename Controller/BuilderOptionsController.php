@@ -5,6 +5,7 @@ namespace Akyos\BuilderBundle\Controller;
 use Akyos\BuilderBundle\Entity\BuilderOptions;
 use Akyos\BuilderBundle\Form\BuilderOptionsType;
 use Akyos\BuilderBundle\Repository\BuilderOptionsRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -17,13 +18,14 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
  */
 class BuilderOptionsController extends AbstractController
 {
-    /**
-     * @Route("/", name="", methods={"GET", "POST"})
-     * @param BuilderOptionsRepository $builderOptionsRepository
-     * @param Request $request
-     * @return Response
-     */
-    public function index(BuilderOptionsRepository $builderOptionsRepository, Request $request): Response
+	/**
+	 * @Route("/", name="", methods={"GET", "POST"})
+	 * @param BuilderOptionsRepository $builderOptionsRepository
+	 * @param Request $request
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function index(BuilderOptionsRepository $builderOptionsRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $builderOptions = $builderOptionsRepository->findAll();
         if(!$builderOptions) {
@@ -33,8 +35,7 @@ class BuilderOptionsController extends AbstractController
         }
 
         $entities = [];
-        $em =$this->getDoctrine()->getManager();
-        $meta = $em->getMetadataFactory()->getAllMetadata();
+        $meta = $entityManager->getMetadataFactory()->getAllMetadata();
         foreach ($meta as $m) {
             if(!preg_match('/Component|Option|Menu|ContactForm|Seo|User|PostCategory/i', $m->getName())) {
                 $entities[] = $m->getName();
@@ -47,7 +48,6 @@ class BuilderOptionsController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($builderOptions);
             $entityManager->flush();
 

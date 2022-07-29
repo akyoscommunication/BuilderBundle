@@ -10,6 +10,7 @@ use Akyos\BuilderBundle\Entity\ComponentTemplate;
 use Akyos\BuilderBundle\Form\ComponentTemplateType;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Console\Output\NullOutput;
@@ -30,7 +31,6 @@ class ComponentTemplateController extends AbstractController
      * @param ComponentTemplateRepository $componentTemplateRepository
      * @param PaginatorInterface $paginator
      * @param Request $request
-     *
      * @return Response
      */
     public function index(ComponentTemplateRepository $componentTemplateRepository, PaginatorInterface $paginator, Request $request): Response
@@ -57,16 +57,15 @@ class ComponentTemplateController extends AbstractController
             ],
         ]);
     }
-
-    /**
-     * @Route("/new", name="new", methods={"GET","POST"})
-     * @param Request $request
-     * @param KernelInterface $kernel
-     *
-     * @return Response
-     * @throws Exception
-     */
-    public function new(Request $request, KernelInterface $kernel): Response
+	
+	/**
+	 * @Route("/new", name="new", methods={"GET","POST"})
+	 * @param Request $request
+	 * @param KernelInterface $kernel
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function new(Request $request, KernelInterface $kernel, EntityManagerInterface $entityManager): Response
     {
         $componentTemplate = new ComponentTemplate();
         $field = new ComponentField();
@@ -75,9 +74,8 @@ class ComponentTemplateController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($componentTemplate);
-            $em->flush();
+            $entityManager->persist($componentTemplate);
+            $entityManager->flush();
 
             $application = new Application($kernel);
             $application->setAutoExit(false);
@@ -99,21 +97,21 @@ class ComponentTemplateController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-
-    /**
-     * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
-     * @param Request $request
-     * @param ComponentTemplate $componentTemplate
-     *
-     * @return Response
-     */
-    public function edit(Request $request, ComponentTemplate $componentTemplate): Response
+	
+	/**
+	 * @Route("/{id}/edit", name="edit", methods={"GET","POST"})
+	 * @param Request $request
+	 * @param ComponentTemplate $componentTemplate
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function edit(Request $request, ComponentTemplate $componentTemplate, EntityManagerInterface $entityManager): Response
     {
         $form = $this->createForm(ComponentTemplateType::class, $componentTemplate);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $entityManager->flush();
 
             return $this->redirectToRoute('templates_builder_index');
         }
@@ -127,9 +125,7 @@ class ComponentTemplateController extends AbstractController
     /**
      * @Route("/{id}/generate-fixture", name="generate_fixture", methods={"GET"})
      * @param ComponentTemplate $componentTemplate
-     *
      * @param KernelInterface $kernel
-     *
      * @return Response
      * @throws Exception
      */
@@ -151,31 +147,30 @@ class ComponentTemplateController extends AbstractController
             'id' => $componentTemplate->getId()
         ]);
     }
-
-    /**
-     * @Route("/{id}", name="delete", methods={"DELETE"})
-     * @param Request $request
-     * @param ComponentTemplate $componentTemplate
-     * @param ComponentRepository $componentRepository
-     *
-     * @return Response
-     */
-    public function delete(Request $request, ComponentTemplate $componentTemplate, ComponentRepository $componentRepository): Response
+	
+	/**
+	 * @Route("/{id}", name="delete", methods={"DELETE"})
+	 * @param Request $request
+	 * @param ComponentTemplate $componentTemplate
+	 * @param ComponentRepository $componentRepository
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function delete(Request $request, ComponentTemplate $componentTemplate, ComponentRepository $componentRepository, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$componentTemplate->getId(), $request->request->get('_token'))) {
-            $em = $this->getDoctrine()->getManager();
             $instanceComponents = $componentRepository->findBy(['componentTemplate' => $componentTemplate->getId()]);
 
             foreach ($instanceComponents as $instanceComponent) {
                 foreach ($instanceComponent->getChildComponents() as $childComponent){
                     $instanceComponent->removeChildComponent($childComponent);
-                    $em->remove($childComponent);
+                    $entityManager->remove($childComponent);
                 }
-                $em->remove($instanceComponent);
+                $entityManager->remove($instanceComponent);
             }
 
-            $em->remove($componentTemplate);
-            $em->flush();
+            $entityManager->remove($componentTemplate);
+            $entityManager->flush();
         }
 
         return $this->redirectToRoute('templates_builder_index');

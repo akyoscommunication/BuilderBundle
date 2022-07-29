@@ -9,7 +9,8 @@ use Akyos\BuilderBundle\Form\SubmitBuilderType;
 use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Akyos\CmsBundle\Entity\Page;
 use Akyos\CmsBundle\Service\CmsService;
-use Psr\Container\ContainerInterface;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,24 +25,24 @@ use Symfony\Component\Routing\Annotation\Route;
  */
 class ViewController extends AbstractController
 {
-    /**
-     * @Route("/view_edit/{type}/{typeId}/{redirect}", name="view_edit", methods={"GET","POST"})
-     * @param $type
-     * @param $typeId
-     * @param $redirect
-     * @param ComponentRepository $componentRepository
-     * @param Request $request
-     * @param Filesystem $filesystem
-     * @param KernelInterface $kernel
-     * @param CmsService $cmsService
-     * @param ContainerInterface $container
-     * @return Response
-     */
-    public function view($type, $typeId, $redirect, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CmsService $cmsService, ContainerInterface $container): Response
+	/**
+	 * @Route("/view_edit/{type}/{typeId}/{redirect}", name="view_edit", methods={"GET","POST"})
+	 * @param $type
+	 * @param $typeId
+	 * @param $redirect
+	 * @param ComponentRepository $componentRepository
+	 * @param Request $request
+	 * @param Filesystem $filesystem
+	 * @param KernelInterface $kernel
+	 * @param CmsService $cmsService
+	 * @param ContainerInterface $container
+	 * @param EntityManagerInterface $entityManager
+	 * @return Response
+	 */
+    public function view($type, $typeId, $redirect, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CmsService $cmsService, ContainerInterface $container, EntityManagerInterface $entityManager): Response
     {
         $type = urldecode($type);
-        $em = $this->getDoctrine()->getManager();
-        $el = $em->getRepository($type)->find($typeId);
+        $el = $entityManager->getRepository($type)->find($typeId);
         $array = explode('\\', $type);
         $entity = end($array);
         $checkBundle = $cmsService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $type);
@@ -56,7 +57,7 @@ class ViewController extends AbstractController
             if ($checkBundle) {
                 $container->get('render.builder')->tempToProd($type, $el->getId());
             }
-            $em->flush();
+            $entityManager->flush();
             return $this->redirect($request->getUri());
         }
 
@@ -65,7 +66,7 @@ class ViewController extends AbstractController
         }
 
         $components = $componentRepository->findBy(['type' => $type, 'typeId' => $typeId, 'isTemp' => true, 'parentComponent' => null], ['position' => 'ASC']);
-        $componentTemplates = $em->getRepository(ComponentTemplate::class)->findAll();
+        $componentTemplates = $entityManager->getRepository(ComponentTemplate::class)->findAll();
 
         if ($type === Page::class) {
             $view = $el->getTemplate() ? '/page/'.$el->getTemplate().'.html.twig' : '@AkyosCms/front/content.html.twig';
