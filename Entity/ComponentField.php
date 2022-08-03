@@ -3,63 +3,46 @@
 namespace Akyos\BuilderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Doctrine\ORM\Mapping\UniqueConstraint;
+use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 
-/**
- * @ORM\Entity(repositoryClass="Akyos\BuilderBundle\Repository\ComponentFieldRepository")
- * @ORM\Table(uniqueConstraints={@UniqueConstraint(name="update_constraint", columns={"name", "component_template_id"})})
- */
+#[ORM\Entity(repositoryClass: ComponentFieldRepository::class)]
+#[ORM\Table]
+#[UniqueConstraint(name: 'update_constraint', columns: ['name', 'component_template_id'])]
 class ComponentField
 {
     use TimestampableEntity;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $shortDescription;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $type;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $slug;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Akyos\BuilderBundle\Entity\ComponentTemplate", inversedBy="componentFields")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: ComponentTemplate::class, inversedBy: 'componentFields')]
+    #[ORM\JoinColumn(nullable: false)]
     private $componentTemplate;
 
-    /**
-     * @ORM\Column(type="simple_array", nullable=true)
-     */
+    #[ORM\Column(type: 'simple_array', nullable: true)]
     private $fieldValues = [];
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true, name="field_groups")
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true, name: 'field_groups')]
     private $groups;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $entity;
 
     public function getId(): ?int

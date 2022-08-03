@@ -11,17 +11,11 @@ class MakeTemplateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title', TextType::class, [
-                'label' => 'Titre du template',
-                'help' => 'Enregistrer un template à partir de cette page.',
-            ])
-        ;
+        $builder->add('title', TextType::class, ['label' => 'Titre du template', 'help' => 'Enregistrer un template à partir de cette page.',]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-        ]);
+        $resolver->setDefaults([]);
     }
 }

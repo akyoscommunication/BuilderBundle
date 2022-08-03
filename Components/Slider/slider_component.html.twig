@@ -10,8 +10,13 @@
     {% set slides_per_view_991 = values.slides_per_view_991 is defined and values.slides_per_view_991 is not null ? values.slides_per_view_991 : 1 %}
     {% set slides_per_view_767 = values.slides_per_view_767 is defined and values.slides_per_view_767 is not null ? values.slides_per_view_767 : 1 %}
 
-    <div class="component-slider{{ customClasses is defined ? ' '~customClasses : '' }}" style="{{ values.height is defined and values.height != "" ? 'height:'~values.height~';' : '' }}">
-        <div id="slider{{ component.id }}" class="swiper-container" data-direction="{{ direction }}" data-speed="{{ speed }}" data-autoplay="{{ autoplay }}" data-loop="{{ loop }}" data-slides_per_view="{{ slides_per_view }}" data-slides_per_view_991="{{ slides_per_view_991 }}" data-slides_per_view_767="{{ slides_per_view_767 }}" data-pagination="{{ pagination }}" data-navigation="{{ navigation }}" data-scrollbar="{{ scrollbar }}">
+    <div class="component-slider{{ customClasses is defined ? ' '~customClasses : '' }}"
+         style="{{ values.height is defined and values.height != "" ? 'height:'~values.height~';' : '' }}">
+        <div id="slider{{ component.id }}" class="swiper-container" data-direction="{{ direction }}"
+             data-speed="{{ speed }}" data-autoplay="{{ autoplay }}" data-loop="{{ loop }}"
+             data-slides_per_view="{{ slides_per_view }}" data-slides_per_view_991="{{ slides_per_view_991 }}"
+             data-slides_per_view_767="{{ slides_per_view_767 }}" data-pagination="{{ pagination }}"
+             data-navigation="{{ navigation }}" data-scrollbar="{{ scrollbar }}">
             <div class="swiper-wrapper builder-component--container">
                 {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}
             </div>

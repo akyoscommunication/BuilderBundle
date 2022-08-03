@@ -21,11 +21,9 @@ class GlobalsExtension extends AbstractExtension implements GlobalsInterface
     public function getGlobals(): array
     {
         $builderOptions = $this->builderOptionsRepository->findAll();
-        if($builderOptions) {
-           $builderOptions = $builderOptions[0];
+        if ($builderOptions) {
+            $builderOptions = $builderOptions[0];
         }
-        return [
-            'builder_options' => $builderOptions
-        ];
+        return ['builder_options' => $builderOptions];
     }
 }

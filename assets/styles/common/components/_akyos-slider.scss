@@ -5,17 +5,17 @@
 
 .component-slider {
 
-	.swiper-container {
-		width: 100%;
-		height: 100%;
+    .swiper-container {
+        width: 100%;
+        height: 100%;
 
-		.swiper-pagination-bullet {
-			background-color: white;
-			opacity: 1;
+        .swiper-pagination-bullet {
+            background-color: white;
+            opacity: 1;
 
-			&-active {
-				background-color: var(--secondary);
-			}
-		}
-	}
+            &-active {
+                background-color: var(--secondary);
+            }
+        }
+    }
 }

@@ -11,17 +11,11 @@ class BuilderTemplateType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('title', null, [
-                'label' => 'Titre du template',
-            ])
-        ;
+        $builder->add('title', null, ['label' => 'Titre du template',]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => BuilderTemplate::class,
-        ]);
+        $resolver->setDefaults(['data_class' => BuilderTemplate::class,]);
     }
 }

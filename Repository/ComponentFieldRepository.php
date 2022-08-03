@@ -21,14 +21,7 @@ class ComponentFieldRepository extends ServiceEntityRepository
 
     public function getUniqueFieldsGroups($componentTemplate): array
     {
-        return $this->createQueryBuilder('f')
-            ->select('f.groups')
-            ->andWhere('f.componentTemplate = :template')
-            ->setParameter('template', $componentTemplate)
-            ->distinct()
-            ->getQuery()
-            ->getArrayResult()
-            ;
+        return $this->createQueryBuilder('f')->select('f.groups')->andWhere('f.componentTemplate = :template')->setParameter('template', $componentTemplate)->distinct()->getQuery()->getArrayResult();
     }
 
     // /**

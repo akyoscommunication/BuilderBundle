@@ -1,4 +1,4 @@
-.aky-builder-components{
+.aky-builder-components {
     background-color: white;
     position: fixed;
     top: 175px;
@@ -17,6 +17,7 @@
         align-items: center;
         margin-bottom: 2rem;
     }
+
     &-content {
         overflow-y: scroll;
         height: 100%;
@@ -44,11 +45,11 @@
             background: #555;
         }
 
-        .aky-builder-component{
+        .aky-builder-component {
             box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.05);
             flex: 1 0 30%;
             margin: 10px;
-            max-width: calc(100%/3);
+            max-width: calc(100% / 3);
             height: 15vh;
             background-color: var(--secondary);
             color: white;
@@ -65,6 +66,7 @@
                 font-weight: bold;
                 color: black;
             }
+
             &__desc {
                 font-size: .8rem;
                 font-weight: lighter;
@@ -83,6 +85,7 @@
             }
         }
     }
+
     &.active {
         transform: translateX(0%);
         box-shadow: 0 4px 20px 0 rgba(0, 0, 0, 0.30);
@@ -91,7 +94,7 @@
 }
 
 
-#componentsRenderContainer{
+#componentsRenderContainer {
     > .aky-builder-component-sortable {
         .aky-builder-component {
             padding-top: 10px;
@@ -116,7 +119,8 @@
             }
         }
     }
-    .aky-builder-component{
+
+    .aky-builder-component {
         flex: initial;
         max-width: 100%;
         height: auto;
@@ -126,16 +130,18 @@
         position: relative;
         text-align: left;
         width: 100%;
-        background-color: rgba(241,241,241, .5);
+        background-color: rgba(241, 241, 241, .5);
 
-        &-sortable{
+        &-sortable {
 
             &.ui-sortable-helper {
                 background-color: transparent !important;
                 border: 1px solid black !important;
+
                 > .aky-builder-component {
                     background-color: var(--secondary) !important;
                     color: white;
+
                     .aky-builder-component-child-render {
                         color: black;
                     }
@@ -160,11 +166,12 @@
             font-size: 0.9rem;
         }
 
-        &-info{
+        &-info {
             position: relative;
             cursor: help;
             display: inline-flex;
-            &-content{
+
+            &-content {
                 display: none;
                 color: white;
                 background-color: black;
@@ -192,9 +199,11 @@
                     font-size: 1rem;
                     font-weight: bold;
                 }
+
                 &__value {
                     font-size: .8rem;
                     font-weight: lighter;
+
                     &:last-child {
                         margin-bottom: 0;
                     }
@@ -208,12 +217,13 @@
             }
         }
 
-        &.isParent{
+        &.isParent {
             padding: 1rem 1rem 0;
-            background-color: rgba(241,241,241, .5);
+            background-color: rgba(241, 241, 241, .5);
         }
-        &.onDeleting{
-            .aky-builder-component{
+
+        &.onDeleting {
+            .aky-builder-component {
                 &-header {
                     right: 15px;
                     top: 15px;
@@ -250,7 +260,7 @@
             padding-bottom: 0;
             min-height: 20px;
 
-            .aky-builder-component{
+            .aky-builder-component {
                 padding: 1rem;
                 background-color: white;
 
@@ -259,6 +269,7 @@
                     background-color: #f1f1f1;
                     border: 1px solid #c7c7c7;
                 }
+
                 &:first-child {
                     margin-top: 1rem;
                 }
@@ -267,12 +278,13 @@
     }
 }
 
-.aky-builder-component{
+.aky-builder-component {
     border-radius: 15px;
     position: relative;
+
     .loader {
         z-index: 9999;
-        background-color: rgba(0,0,0,.5);
+        background-color: rgba(0, 0, 0, .5);
         position: absolute;
         left: 0;
         top: 0;
@@ -283,6 +295,7 @@
         align-items: center;
         justify-content: center;
     }
+
     &.active {
         .aky-builder-component-header {
             display: flex;

@@ -11,16 +11,11 @@ class SubmitBuilderType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-            ->add('submit', SubmitType::class, [
-                'label' => 'Enregistrer les modifications',
-            ])
-        ;
+        $builder->add('submit', SubmitType::class, ['label' => 'Enregistrer les modifications',]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-        ]);
+        $resolver->setDefaults([]);
     }
 }

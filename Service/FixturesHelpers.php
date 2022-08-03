@@ -11,7 +11,9 @@ use Doctrine\ORM\EntityManagerInterface;
 class FixturesHelpers
 {
     private ComponentTemplateRepository $componentTemplateRepository;
+
     private ComponentFieldRepository $componentFieldRepository;
+
     private EntityManagerInterface $entityManager;
 
     public function __construct(ComponentTemplateRepository $componentTemplateRepository, ComponentFieldRepository $componentFieldRepository, EntityManagerInterface $entityManager)
@@ -41,8 +43,7 @@ class FixturesHelpers
         $component->setIsContainer($isContainer);
         $component->setPrototype($prototype);
 
-        foreach ($componentFieldsValues as $componentFieldValues)
-        {
+        foreach ($componentFieldsValues as $componentFieldValues) {
             $componentFieldExists = $this->componentFieldRepository->findOneBy(['slug' => $componentFieldValues['slug'], 'componentTemplate' => $component]);
             $componentField = $componentFieldExists ?: new ComponentField();
 
@@ -55,12 +56,12 @@ class FixturesHelpers
             $componentField->setFieldValues($componentFieldValues['option']);
             $componentField->setGroups($componentFieldValues['group']);
 
-            if(!$componentFieldExists) {
+            if (!$componentFieldExists) {
                 $this->entityManager->persist($componentField);
             }
         }
 
-        if(!$componentExists) {
+        if (!$componentExists) {
             $this->entityManager->persist($component);
         }
 

@@ -5,42 +5,45 @@
 {% block page_content %}
     <div class="aky-header-page">
         <h1 class="aky-header-page__title">Liste des composants</h1>
-        <a href=" {{ path('templates_builder_new') }}" data-toggle="tooltip" title="Créer un composant" class="btn btn-outline-primary">Ajouter <i class="fa fa-plus"></i></a>
+        <a href=" {{ path('templates_builder_new') }}" data-toggle="tooltip" title="Créer un composant"
+           class="btn btn-outline-primary">Ajouter <i class="fa fa-plus"></i></a>
     </div>
 
     <table class="table aky-table">
         <thead class="aky-table-head">
-            <tr>
-                <th>Id</th>
-                <th>Nom</th>
-                <th>Slug</th>
-                <th>Description</th>
-                <th>Conteneur ?</th>
-                <th>Créé le</th>
-                <th>Mis à jour le</th>
-                <th>Actions</th>
-            </tr>
+        <tr>
+            <th>Id</th>
+            <th>Nom</th>
+            <th>Slug</th>
+            <th>Description</th>
+            <th>Conteneur ?</th>
+            <th>Créé le</th>
+            <th>Mis à jour le</th>
+            <th>Actions</th>
+        </tr>
         </thead>
         <tbody class="aky-table-body">
-            {% for template in component_templates %}
-                <tr>
-                    <td><a href="{{ path('templates_builder_show', { 'id': template.id }) }}">{{ template.id }}</a></td>
-                    <td>{{ template.name }}</td>
-                    <td>{{ template.slug }}</td>
-                    <td>{{ template.shortDescription }}</td>
-                    <td>{{ template.isContainer ? 'Oui' : 'Non' }}</td>
-                    <td>{% if template.createdAt %}{{ template.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>{% if template.updatedAt %}{{ template.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
-                    <td>
-                        <a class="btn btn-outline-secondary" href="{{ path('templates_builder_show', { 'id': template.id }) }}">Voir le détail</a>
-                        <a class="btn btn-outline-primary" href="{{ path('templates_builder_edit', { 'id': template.id }) }}">Éditer</a>
-                    </td>
-                </tr>
-            {% else %}
-                <tr class="active">
-                    <td colspan="8"><strong>Aucun template de shortcode</strong></td>
-                </tr>
-            {% endfor %}
+        {% for template in component_templates %}
+            <tr>
+                <td><a href="{{ path('templates_builder_show', { 'id': template.id }) }}">{{ template.id }}</a></td>
+                <td>{{ template.name }}</td>
+                <td>{{ template.slug }}</td>
+                <td>{{ template.shortDescription }}</td>
+                <td>{{ template.isContainer ? 'Oui' : 'Non' }}</td>
+                <td>{% if template.createdAt %}{{ template.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>{% if template.updatedAt %}{{ template.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
+                <td>
+                    <a class="btn btn-outline-secondary"
+                       href="{{ path('templates_builder_show', { 'id': template.id }) }}">Voir le détail</a>
+                    <a class="btn btn-outline-primary"
+                       href="{{ path('templates_builder_edit', { 'id': template.id }) }}">Éditer</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr class="active">
+                <td colspan="8"><strong>Aucun template de shortcode</strong></td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 

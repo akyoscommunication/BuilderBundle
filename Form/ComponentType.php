@@ -30,12 +30,12 @@ class ComponentType extends AbstractType
             $componentTemplate = $component->getComponentTemplate();
             foreach ($componentTemplate->getComponentFields() as $field) {
                 $hasShortcodeValue = 0;
-                foreach($component->getComponentValues() as $componentValue) {
-                    if($componentValue->getComponentField() === $field) {
+                foreach ($component->getComponentValues() as $componentValue) {
+                    if ($componentValue->getComponentField() === $field) {
                         $hasShortcodeValue = 1;
                     }
                 }
-                if(!$hasShortcodeValue) {
+                if (!$hasShortcodeValue) {
                     $newComponentValue = new ComponentValue();
                     $newComponentValue->setComponentField($field);
                     $newComponentValue->setTranslatableLocale($this->request->getLocale());
@@ -44,29 +44,13 @@ class ComponentType extends AbstractType
             }
         }
 
-        $builder
-            ->add('customId')
-            ->add('customClasses')
+        $builder->add('customId')->add('customClasses')
 //            ->add('position')
-            ->add('visibilityXS')
-            ->add('visibilityS')
-            ->add('visibilityM')
-            ->add('visibilityL')
-            ->add('visibilityXL')
-            ->add('componentValues', CollectionType::class, [
-                'entry_type'    => ComponentValueType::class,
-                'entry_options' => [
-                    'label' => false
-                ],
-                'label' => false
-            ])
-        ;
+            ->add('visibilityXS')->add('visibilityS')->add('visibilityM')->add('visibilityL')->add('visibilityXL')->add('componentValues', CollectionType::class, ['entry_type' => ComponentValueType::class, 'entry_options' => ['label' => false], 'label' => false]);
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
-        $resolver->setDefaults([
-            'data_class' => Component::class,
-        ]);
+        $resolver->setDefaults(['data_class' => Component::class,]);
     }
 }

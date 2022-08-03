@@ -16,6 +16,14 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
         $this->fixturesHelpers = $fixturesHelpers;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getGroups(): array
+    {
+        return ['component', 'builder-components', 'component-text'];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $slug = "text";
@@ -23,25 +31,8 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
         $shortDescription = "Insérez un bloc de texte";
         $isContainer = false;
         $prototype = "default";
-        $componentFields = [
-            [
-                'name' => 'Contenu',
-                'slug' => 'content',
-                'desc' => 'Insérez un contenu',
-                'type' => 'textarea_html',
-                'option' => [],
-                'group' => 'Général',
-            ],
-        ];
+        $componentFields = [['name' => 'Contenu', 'slug' => 'content', 'desc' => 'Insérez un contenu', 'type' => 'textarea_html', 'option' => [], 'group' => 'Général',],];
 
         $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getGroups(): array
-    {
-        return ['component', 'builder-components', 'component-text'];
     }
 }

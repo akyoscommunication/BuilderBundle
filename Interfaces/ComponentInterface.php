@@ -11,7 +11,6 @@ interface ComponentInterface
 
     /**
      * @param $params
-     *
      * @return array
      */
     public function getParameters($params);

@@ -13,7 +13,9 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 class BuilderFixComponentsNamespacesCommand extends Command
 {
     protected static $defaultName = 'builder:fix-components-namespaces';
+
     private EntityManagerInterface $em;
+
     private CoreExtension $coreExtension;
 
     public function __construct(EntityManagerInterface $em, CoreExtension $coreExtension)
@@ -24,9 +26,7 @@ class BuilderFixComponentsNamespacesCommand extends Command
 
     protected function configure()
     {
-        $this
-            ->setDescription('Fix les namespaces des components pour les mettres en namespace complet.')
-        ;
+        $this->setDescription('Fix les namespaces des components pour les mettres en namespace complet.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int

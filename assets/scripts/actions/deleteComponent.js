@@ -27,25 +27,25 @@ class DeleteComponent {
 
                 $.ajax({
                     method: 'POST',
-                    url: '/admin/builder/component/'+parent.data('componentid'),
+                    url: '/admin/builder/component/' + parent.data('componentid'),
                     success: function (res) {
                         console.log(res, 'success');
-                        if ( res === 'valid'){
+                        if (res === 'valid') {
                             parent.parent().remove();
-                            new Toast('Composant supprimé', 'info', 'Succès', 5000 );
+                            new Toast('Composant supprimé', 'info', 'Succès', 5000);
                         } else {
                             parent.find('.loader').fadeOut('slow', function () {
                                 $(this).remove();
                                 parent.removeClass('onDeleting');
-                                new Toast('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000 );
+                                new Toast('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000);
                             });
                         }
                     },
-                    error: function(er) {
+                    error: function (er) {
                         parent.find('.loader').fadeOut('slow', function () {
                             $(this).remove();
                             parent.removeClass('onDeleting');
-                            new Toast('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000 );
+                            new Toast('Composant non supprimé', 'danger', 'Une erreur s\'est produite...', 5000);
                         });
                         console.log(er, 'error');
                     }

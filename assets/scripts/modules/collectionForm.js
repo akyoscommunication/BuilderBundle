@@ -1,6 +1,5 @@
 class CollectionForm {
-    static addCloneForm($collectionHolder)
-    {
+    static addCloneForm($collectionHolder) {
         // get the new index
         const index = $collectionHolder.data('index');
 
@@ -19,12 +18,11 @@ class CollectionForm {
         $collectionHolder.append($prototype);
     }
 
-    static addCloneFormDeleteLink($newForm)
-    {
+    static addCloneFormDeleteLink($newForm) {
         const $deleteFormLink = $('<a href="#" class="btn btn-outline-danger">Supprimer ce champ <i class="fas fa-times"></i></a>');
         $newForm.append($deleteFormLink);
 
-        $deleteFormLink.on('click', function(e) {
+        $deleteFormLink.on('click', function (e) {
             e.preventDefault();
 
             // remove the div for the invitationProduct form
@@ -32,4 +30,5 @@ class CollectionForm {
         });
     }
 }
+
 export default CollectionForm

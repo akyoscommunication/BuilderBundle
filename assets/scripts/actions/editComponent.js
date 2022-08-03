@@ -2,7 +2,6 @@ import Modal from "../modules/modal";
 import Toast from "../../../../CoreBundle/assets/scripts/modules/Toast";
 import FixCKEDitor from "../../../../CoreBundle/assets/scripts/modules/FixCKEditor";
 import FileManager from "../../../../FileManagerBundle/assets/scripts/main";
-import SortableJs from "../modules/sortable";
 
 class EditComponent {
     static editComponent() {
@@ -13,10 +12,10 @@ class EditComponent {
             const type = c.data('type')
             const typeId = c.attr('data-typeid')
             const url = $(this).attr('data-url')
-            const path = url+'?type='+type+'&typeId='+typeId
+            const path = url + '?type=' + type + '&typeId=' + typeId
             const parent = $(this).parents('.aky-builder-component[data-componentid]')
             const comp = parent.parent()
-            
+
             $('#modalEdit').addClass('active');
 
             fetch(path)
@@ -38,14 +37,14 @@ class EditComponent {
                                     data: $(this).serialize(),
                                     success: function (res) {
                                         const newComp = $(res)
-                                        
+
                                         if ($('.visual-editor').length > 0) {
                                             /**
                                              * Clone les btn pour les re append dans le nouveau composant
                                              */
                                             const cloneParent = parent.clone()
                                             parent.remove(comp)
-    
+
                                             /**
                                              * Remet les btns des enfants dans leurs composants respectifs
                                              * Avant de remplacer le composant parent édité
@@ -53,26 +52,26 @@ class EditComponent {
                                             newComp.find('.aky-builder-component[data-componentid]').each(function (i) {
                                                 const next = $(this).next()
                                                 next.addClass('aky-builder-component-sortable position-relative')
-        
-                                                if($(next)[0]){
+
+                                                if ($(next)[0]) {
                                                     $(next)[0].appendChild(this)
                                                 }
                                             })
-    
+
                                             comp.replaceWith(newComp)
                                             $(newComp)[0].appendChild(cloneParent[0])
                                             $(newComp).addClass('aky-builder-component-sortable position-relative')
                                             cloneParent.addClass('position-absolute')
                                         }
-                                        
+
                                         $('#modalEdit').removeClass('active');
-                                        
+
                                         Modal.checkModal('#modalEdit', '#modalEditComponent');
-                                        new Toast('Composant édité', 'success', 'Succès', 5000 );
+                                        new Toast('Composant édité', 'success', 'Succès', 5000);
                                     },
-                                    error: function(er) {
+                                    error: function (er) {
                                         console.log(er, 'error');
-                                        new Toast('Une erreur s\'est produite...', 'error', 'L\'édition du composant n\'a pas eu lieu', 5000 );
+                                        new Toast('Une erreur s\'est produite...', 'error', 'L\'édition du composant n\'a pas eu lieu', 5000);
                                     }
                                 });
                             });

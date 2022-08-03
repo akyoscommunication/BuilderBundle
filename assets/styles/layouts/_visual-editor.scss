@@ -9,46 +9,46 @@
 @import "../../lib/CoreBundle/assets/styles/common/shortcodes/akyos-toast";
 
 form[name="submit_builder"] {
-	position: fixed;
-	top: 50%;
-	right: 10px;
-	transform: translateY(-50%);
-	z-index: 9999;
+    position: fixed;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    z-index: 9999;
 }
 
 #componentsRenderContainer {
-	> .aky-builder-component-sortable {
-		.aky-builder-component {
-			padding: 1rem;
-			background-color: #f1f1f1;
-		}
-	}
+    > .aky-builder-component-sortable {
+        .aky-builder-component {
+            padding: 1rem;
+            background-color: #f1f1f1;
+        }
+    }
 }
 
 .aky-builder-component-sortable {
-	width: 100%;
-	padding: 2rem;
-	z-index: 1;
-	border: 1px solid blue;
+    width: 100%;
+    padding: 2rem;
+    z-index: 1;
+    border: 1px solid blue;
 
-	.aky-builder-component {
-		top: 0;
-		left: 0;
-		right: 0;
-		display: none;
-	}
+    .aky-builder-component {
+        top: 0;
+        left: 0;
+        right: 0;
+        display: none;
+    }
 
-	&:hover {
-		border: 1px black solid;
-		border-radius: 4px;
+    &:hover {
+        border: 1px black solid;
+        border-radius: 4px;
 
-		> .aky-builder-component {
-			display: block;
-		}
-	}
+        > .aky-builder-component {
+            display: block;
+        }
+    }
 }
 
 .draggable--over {
-	background-color: grey;
-	border: 1px solid black;
+    background-color: grey;
+    border: 1px solid black;
 }

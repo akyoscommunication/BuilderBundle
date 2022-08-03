@@ -31,7 +31,7 @@
             height: 3px;
         }
 
-        &.component-title{
+        &.component-title {
             &--right {
                 &:after {
                     left: initial;
@@ -51,16 +51,19 @@
                     background-color: var(--light);
                 }
             }
+
             &--black {
                 &:after {
                     background-color: var(--dark);
                 }
             }
+
             &--primary {
                 &:after {
                     background-color: var(--primary);
                 }
             }
+
             &--secondary {
                 &:after {
                     background-color: var(--secondary);

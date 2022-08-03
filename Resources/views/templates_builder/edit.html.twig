@@ -8,8 +8,10 @@
         <div class="card">
             <div class="card-header d-flex justify-content-between">
                 <h3 class="block-title">Éditer le composant</h3>
-                <a href="{{ path('templates_builder_generate_fixture', {'id' : form.vars.value.id }) }}" class="btn btn-outline-secondary"><i class="fas fa-file-download"></i> Générer les fixtures</a>
-                <a href="{{ path('templates_builder_index') }}" class="btn btn-outline-secondary"><i class="fas fa-arrow-left"></i> Retour</a>
+                <a href="{{ path('templates_builder_generate_fixture', {'id' : form.vars.value.id }) }}"
+                   class="btn btn-outline-secondary"><i class="fas fa-file-download"></i> Générer les fixtures</a>
+                <a href="{{ path('templates_builder_index') }}" class="btn btn-outline-secondary"><i
+                            class="fas fa-arrow-left"></i> Retour</a>
             </div>
             <div class="card-body">
                 {{ include('@AkyosBuilder/templates_builder/_form.html.twig') }}

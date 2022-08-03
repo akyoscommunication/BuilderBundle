@@ -16,6 +16,14 @@ class MapFixtures extends Fixture implements FixtureGroupInterface
         $this->fixturesHelpers = $fixturesHelpers;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getGroups(): array
+    {
+        return ['component', 'builder-components', 'component-map'];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $slug = "map";
@@ -23,52 +31,8 @@ class MapFixtures extends Fixture implements FixtureGroupInterface
         $shortDescription = "Affiche une carte avec Leaflet";
         $isContainer = false;
         $prototype = "default";
-        $componentFields = [
-            [
-                "name" => "Latitude",
-                "slug" => "latitude",
-                "desc" => "Coordonnées GPS",
-                "type" => "text",
-                "entity" => "App\Entity\Back\Job",
-                "option" => [],
-                "group" => "Général",
-            ],[
-                "name" => "Longitude",
-                "slug" => "longitude",
-                "desc" => "Coordonnées GPS",
-                "type" => "text",
-                "entity" => "App\Entity\Back\Job",
-                "option" => [],
-                "group" => "Général",
-            ],[
-                "name" => "Zoom",
-                "slug" => "zoom",
-                "desc" => "Zoom (nombre entre 1 et 18)",
-                "type" => "int",
-                "entity" => "App\Entity\Back\Job",
-                "option" => [],
-                "group" => "Général",
-            ],[
-                "name" => "Style",
-                "slug" => "layer",
-                "desc" => "Type d'affichage de la carte",
-                "type" => "select",
-                "entity" => "App\Entity\Back\Job",
-                "option" => [
-                    "Satellite:satellite",
-                ],
-                "group" => "Général",
-            ],
-        ];
+        $componentFields = [["name" => "Latitude", "slug" => "latitude", "desc" => "Coordonnées GPS", "type" => "text", "entity" => "App\Entity\Back\Job", "option" => [], "group" => "Général",], ["name" => "Longitude", "slug" => "longitude", "desc" => "Coordonnées GPS", "type" => "text", "entity" => "App\Entity\Back\Job", "option" => [], "group" => "Général",], ["name" => "Zoom", "slug" => "zoom", "desc" => "Zoom (nombre entre 1 et 18)", "type" => "int", "entity" => "App\Entity\Back\Job", "option" => [], "group" => "Général",], ["name" => "Style", "slug" => "layer", "desc" => "Type d'affichage de la carte", "type" => "select", "entity" => "App\Entity\Back\Job", "option" => ["Satellite:satellite",], "group" => "Général",],];
 
         $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getGroups(): array
-    {
-        return ['component', 'builder-components','component-map'];
     }
 }

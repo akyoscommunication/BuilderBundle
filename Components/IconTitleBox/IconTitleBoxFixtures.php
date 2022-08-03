@@ -16,6 +16,14 @@ class IconTitleBoxFixtures extends Fixture implements FixtureGroupInterface
         $this->fixturesHelpers = $fixturesHelpers;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getGroups(): array
+    {
+        return ['component', 'builder-components', 'component-icon-title-box'];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $slug = "icon_title_box";
@@ -23,50 +31,8 @@ class IconTitleBoxFixtures extends Fixture implements FixtureGroupInterface
         $shortDescription = "Icône, titre et texte";
         $isContainer = false;
         $prototype = "default";
-        $componentFields = [
-            [
-                "name" => "Icône",
-                "slug" => "icon",
-                "desc" => "Choisissez l'icône",
-                "type" => "image",
-                "entity" => "App\Entity\Platform\AG\AG",
-                "option" => [],
-                "group" => "Général",
-            ],[
-                "name" => "Titre",
-                "slug" => "title",
-                "desc" => "Contenu du titre",
-                "type" => "text",
-                "entity" => "App\Entity\Platform\AG\AG",
-                "option" => [],
-                "group" => "Général",
-            ],[
-                "name" => "Description",
-                "slug" => "description",
-                "desc" => "Contenu de la description",
-                "type" => "text",
-                "entity" => "App\Entity\Platform\AG\AG",
-                "option" => [],
-                "group" => "Général",
-            ],[
-                "name" => "Icone en class",
-                "slug" => "icon_class",
-                "desc" => "Icone en class",
-                "type" => "text",
-                "entity" => "App\Entity\Platform\AG\AG",
-                "option" => [],
-                "group" => "Général",
-            ],
-        ];
+        $componentFields = [["name" => "Icône", "slug" => "icon", "desc" => "Choisissez l'icône", "type" => "image", "entity" => "App\Entity\Platform\AG\AG", "option" => [], "group" => "Général",], ["name" => "Titre", "slug" => "title", "desc" => "Contenu du titre", "type" => "text", "entity" => "App\Entity\Platform\AG\AG", "option" => [], "group" => "Général",], ["name" => "Description", "slug" => "description", "desc" => "Contenu de la description", "type" => "text", "entity" => "App\Entity\Platform\AG\AG", "option" => [], "group" => "Général",], ["name" => "Icone en class", "slug" => "icon_class", "desc" => "Icone en class", "type" => "text", "entity" => "App\Entity\Platform\AG\AG", "option" => [], "group" => "Général",],];
 
         $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getGroups(): array
-    {
-        return ['component', 'builder-components', 'component-icon-title-box'];
     }
 }

@@ -16,6 +16,8 @@
     {% endif %}
 
     <div class="component-button{{ values.position is defined and values.position != "" ? " justify-content-"~values.position : false }}{{ values.anchor is defined and values.anchor == 1 ? " component-button-anchor" : false }}{{ customClasses is defined ? ' '~customClasses : false }}">
-        <a class="component-button__link{{ values.color is defined and values.color is not null ? ' component-button-'~values.color : false }}{{ values.text_color is defined and values.text_color is not null ? ' component-button-text-'~values.text_color : false }}" href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }} style="{{ padding }}{{ margin }}{{ border_radius }}">{{ values.button_text }}</a>
+        <a class="component-button__link{{ values.color is defined and values.color is not null ? ' component-button-'~values.color : false }}{{ values.text_color is defined and values.text_color is not null ? ' component-button-text-'~values.text_color : false }}"
+           href="{{ values.link }}" {{ values.target is defined and values.target is not null ? 'target="_blank" rel="noopener noreferrer"' : "" }}
+           style="{{ padding }}{{ margin }}{{ border_radius }}">{{ values.button_text }}</a>
     </div>
 {% endapply %}

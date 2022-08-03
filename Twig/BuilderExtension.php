@@ -14,6 +14,7 @@ use Twig\TwigFunction;
 class BuilderExtension extends AbstractExtension
 {
     private RenderComponentController $renderComponentController;
+
     private Environment $environment;
 
     public function __construct(RenderComponentController $renderComponentController, Environment $environment)
@@ -27,12 +28,10 @@ class BuilderExtension extends AbstractExtension
      */
     public function getFilters(): array
     {
-        return [
-            // If your filter generates SAFE HTML, you should add a third
+        return [// If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-            new TwigFilter('slugify', [$this, 'slugify']),
-        ];
+            new TwigFilter('slugify', [$this, 'slugify']),];
     }
 
     /**
@@ -40,11 +39,7 @@ class BuilderExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return [
-            new TwigFunction('setGlobals', [$this, 'setGlobals']),
-            new TwigFunction('renderComponent', [$this, 'renderComponent']),
-            new TwigFunction('renderComponentBySlug', [$this, 'renderComponentBySlug']),
-        ];
+        return [new TwigFunction('setGlobals', [$this, 'setGlobals']), new TwigFunction('renderComponent', [$this, 'renderComponent']), new TwigFunction('renderComponentBySlug', [$this, 'renderComponentBySlug']),];
     }
 
     /**
@@ -93,7 +88,6 @@ class BuilderExtension extends AbstractExtension
      */
     public function slugify($slug): string
     {
-
         // replace non letter or digits by -
         $slug = preg_replace('~[^\pL\d]+~u', '-', $slug);
 

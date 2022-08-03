@@ -34,27 +34,30 @@
         {% set container = true %}
     {% endif %}
 
-    <div class="component-row--container{{ customClasses is defined and customClasses ? ' '~customClasses : '' }}" style="{{ margin }}">
+    <div class="component-row--container{{ customClasses is defined and customClasses ? ' '~customClasses : '' }}"
+         style="{{ margin }}">
         {% if values.row_width %}
-        <div class="{{ values.row_width is not null and (values.row_width == "full-width" or values.row_width == "full-background") ? "" : (values.row_width == "full-width-with-padding" ? "container-fluid" : "container") }} component-row{{ values.background_image is not null and values.background_size is not null ? " component-row--"~values.background_size : false }}{{ values.background_position is defined and values.background_position ? " component-row--bg-position-"~values.background_position : false }}" style="{{ bg }}">
+        <div class="{{ values.row_width is not null and (values.row_width == "full-width" or values.row_width == "full-background") ? "" : (values.row_width == "full-width-with-padding" ? "container-fluid" : "container") }} component-row{{ values.background_image is not null and values.background_size is not null ? " component-row--"~values.background_size : false }}{{ values.background_position is defined and values.background_position ? " component-row--bg-position-"~values.background_position : false }}"
+             style="{{ bg }}">
             {% endif %}
 
-                <div class="{{ values.row_width is not null and values.row_width != "full-background" or values.row_width is null ? (values.row_width == "full-width" ? "no-gutters row" : "row") : "" }}{{ container ? false : ' builder-component--container' }}" style="{{ values.row_width is null ? bg : '' }} {{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? padding : '' }}">
-                    {% if values.row_width is not null and values.row_width == "full-background" %}
+            <div class="{{ values.row_width is not null and values.row_width != "full-background" or values.row_width is null ? (values.row_width == "full-width" ? "no-gutters row" : "row") : "" }}{{ container ? false : ' builder-component--container' }}"
+                 style="{{ values.row_width is null ? bg : '' }} {{ values.row_width is not null and values.row_width != "full-background" or  values.row_width is null ? padding : '' }}">
+                {% if values.row_width is not null and values.row_width == "full-background" %}
 
-                        <div class="container">
-                            <div class="row{{ container ? ' builder-component--container' : false }}" style="{{ padding }}">
-                                {% endif %}
+                <div class="container">
+                    <div class="row{{ container ? ' builder-component--container' : false }}" style="{{ padding }}">
+                        {% endif %}
 
-                                {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}
+                        {% include '@AkyosBuilder/front/render_components.html.twig' with {'components' : component.childComponents} %}
 
-                                {% if values.row_width is not null and values.row_width == "full-background" %}
-                            </div>
-                        </div>
-
-                    {% endif %}
-
+                        {% if values.row_width is not null and values.row_width == "full-background" %}
+                    </div>
                 </div>
+
+                {% endif %}
+
+            </div>
 
             {% if values.row_width %}
         </div>

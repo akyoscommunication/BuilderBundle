@@ -13,7 +13,7 @@ services:
 
     Akyos\BuilderBundle\:
         resource: './../../*'
-        tags: ['controller.service_arguments']
+        tags: [ 'controller.service_arguments' ]
         public: true
 
     render.builder:

@@ -1,5 +1,5 @@
 <?php
-        
+
 namespace Akyos\BuilderBundle\Components\Slider;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;

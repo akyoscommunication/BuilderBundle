@@ -19,10 +19,10 @@ class EditColComponent {
                     console.log(res, 'success');
                     if (res === 'valid') {
                         new Toast('Composant mis à jour', 'success', 'Succès', 5000);
-                        parentComponent.parent().removeClass(function(i, className){
-                            return (className.match (/\bcol-md-\S+/g) || []).join(' ');
+                        parentComponent.parent().removeClass(function (i, className) {
+                            return (className.match(/\bcol-md-\S+/g) || []).join(' ');
                         });
-                        parentComponent.parent().addClass('col-md-'+newVal);
+                        parentComponent.parent().addClass('col-md-' + newVal);
                     }
                 },
                 error: function (er) {

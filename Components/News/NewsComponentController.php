@@ -1,5 +1,5 @@
 <?php
-        
+
 namespace Akyos\BuilderBundle\Components\News;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;

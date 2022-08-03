@@ -1,4 +1,5 @@
-<a class="component-news--link {{ customClasses is defined ? ' '~customClasses : '' }}" href="{{ path('single', {'entitySlug':'articles', 'slug':values.post.slug}) }}">
+<a class="component-news--link {{ customClasses is defined ? ' '~customClasses : '' }}"
+   href="{{ path('single', {'entitySlug':'articles', 'slug':values.post.slug}) }}">
     <article class="component-news">
         <div class="component-news__thumb">
             <span class="component-news__thumb__date">{{ values.post.createdAt|format_date(locale="fr", pattern=('d MMMM Y')) }}</span>

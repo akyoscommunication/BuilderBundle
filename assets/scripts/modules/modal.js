@@ -5,8 +5,9 @@ class Modal {
             Modal.checkModal('#modalEdit', '#modalEditComponent');
         });
     }
+
     static checkModal(target, content) {
-        if (!($(target).hasClass('active'))){
+        if (!($(target).hasClass('active'))) {
             $(target).find(content).html('<spinning-dots />');
         }
     }

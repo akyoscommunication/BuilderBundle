@@ -6,49 +6,35 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
+use Akyos\BuilderBundle\Entity\ComponentField;
+use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
 
-/**
- * @ORM\Entity(repositoryClass="Akyos\BuilderBundle\Repository\ComponentTemplateRepository")
- */
+#[ORM\Entity(repositoryClass: ComponentTemplateRepository::class)]
 class ComponentTemplate
 {
     use TimestampableEntity;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $name;
 
-    /**
-     * @ORM\Column(type="string", length=255, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, unique: true)]
     private $slug;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $shortDescription;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $isContainer;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Akyos\BuilderBundle\Entity\ComponentField", mappedBy="componentTemplate", orphanRemoval=true, cascade={"persist"})
-     */
+    #[ORM\OneToMany(targetEntity: ComponentField::class, mappedBy: 'componentTemplate', orphanRemoval: true, cascade: ['persist'])]
     private $componentFields;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $prototype;
 
     public function __construct()

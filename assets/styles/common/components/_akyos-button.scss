@@ -1,121 +1,121 @@
 .component-button {
-	@include flex(row, wrap, center, center);
+    @include flex(row, wrap, center, center);
 
-	&.justify-content-full {
-		> .component-button__link {
-			width: 100%;
-		}
-	}
+    &.justify-content-full {
+        > .component-button__link {
+            width: 100%;
+        }
+    }
 
-	&__link {
-		width: fit-content;
-		text-align: center;
-		transition: .3s;
+    &__link {
+        width: fit-content;
+        text-align: center;
+        transition: .3s;
 
-		&.component-button {
-			&-primary {
-				background-color: var(--primary);
-				border: 1px solid var(--primary);
-			}
+        &.component-button {
+            &-primary {
+                background-color: var(--primary);
+                border: 1px solid var(--primary);
+            }
 
-			&-secondary {
-				background-color: var(--secondary);
-				border: 1px solid var(--secondary);
-			}
+            &-secondary {
+                background-color: var(--secondary);
+                border: 1px solid var(--secondary);
+            }
 
-			&-white {
-				background-color: var(--light);
-				border: 1px solid var(--light);
-			}
+            &-white {
+                background-color: var(--light);
+                border: 1px solid var(--light);
+            }
 
-			&-black {
-				background-color: var(--dark);
-				border: 1px solid var(--dark);
-			}
+            &-black {
+                background-color: var(--dark);
+                border: 1px solid var(--dark);
+            }
 
-			&-transparent {
-				background-color: transparent;
+            &-transparent {
+                background-color: transparent;
 
-				&.component-button-text {
+                &.component-button-text {
 
-					&-primary {
-						border: 1px solid var(--primary);
-					}
+                    &-primary {
+                        border: 1px solid var(--primary);
+                    }
 
-					&-secondary {
-						border: 1px solid var(--secondary);
-					}
+                    &-secondary {
+                        border: 1px solid var(--secondary);
+                    }
 
-					&-white {
-						border: 1px solid var(--light);
-					}
+                    &-white {
+                        border: 1px solid var(--light);
+                    }
 
-					&-black {
-						border: 1px solid var(--dark);
-					}
-				}
-			}
+                    &-black {
+                        border: 1px solid var(--dark);
+                    }
+                }
+            }
 
-			&-text {
+            &-text {
 
-				&-primary {
-					color: var(--primary);
-				}
+                &-primary {
+                    color: var(--primary);
+                }
 
-				&-secondary {
-					color: var(--secondary);
-				}
+                &-secondary {
+                    color: var(--secondary);
+                }
 
-				&-white {
-					color: var(--light);
-				}
+                &-white {
+                    color: var(--light);
+                }
 
-				&-black {
-					color: var(--dark);
-				}
-			}
-		}
+                &-black {
+                    color: var(--dark);
+                }
+            }
+        }
 
-		&:hover {
-			background-color: transparent;
-			text-decoration: none;
+        &:hover {
+            background-color: transparent;
+            text-decoration: none;
 
-			&.component-button {
-				&-primary {
-					color: var(--primary);
-				}
+            &.component-button {
+                &-primary {
+                    color: var(--primary);
+                }
 
-				&-secondary {
-					color: var(--secondary);
-				}
+                &-secondary {
+                    color: var(--secondary);
+                }
 
-				&-white {
-					color: var(--light);
-				}
+                &-white {
+                    color: var(--light);
+                }
 
-				&-black {
-					color: var(--dark);
-				}
+                &-black {
+                    color: var(--dark);
+                }
 
-				//&-text {
-				//
-				//	&-primary {
-				//		background-color: var(--primary);
-				//	}
-				//
-				//	&-secondary {
-				//		background-color: var(--secondary);
-				//	}
-				//
-				//	&-white {
-				//		background-color: var(--light);
-				//	}
-				//
-				//	&-black {
-				//		background-color: var(--dark);
-				//	}
-				//}
-			}
-		}
-	}
+                //&-text {
+                //
+                //	&-primary {
+                //		background-color: var(--primary);
+                //	}
+                //
+                //	&-secondary {
+                //		background-color: var(--secondary);
+                //	}
+                //
+                //	&-white {
+                //		background-color: var(--light);
+                //	}
+                //
+                //	&-black {
+                //		background-color: var(--dark);
+                //	}
+                //}
+            }
+        }
+    }
 }

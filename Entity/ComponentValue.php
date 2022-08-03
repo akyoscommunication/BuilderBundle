@@ -8,38 +8,35 @@ use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Translatable\Translatable;
+use Akyos\BuilderBundle\Entity\ComponentField;
+use Akyos\BuilderBundle\Entity\Component;
+use Akyos\BuilderBundle\Repository\ComponentValueRepository;
 
 /**
- * @ORM\Entity(repositoryClass="Akyos\BuilderBundle\Repository\ComponentValueRepository")
  * @Gedmo\TranslationEntity(class="Akyos\BuilderBundle\Entity\ComponentValueTranslation")
  */
+#[ORM\Entity(repositoryClass: ComponentValueRepository::class)]
 class ComponentValue implements Translatable
 {
     use TimestampableEntity;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
      * @Gedmo\Translatable
      */
+    #[ORM\Column(type: 'text', nullable: true)]
     private $value;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Akyos\BuilderBundle\Entity\Component", inversedBy="componentValues")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: Component::class, inversedBy: 'componentValues')]
+    #[ORM\JoinColumn(nullable: false)]
     private $component;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Akyos\BuilderBundle\Entity\ComponentField")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: ComponentField::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $componentField;
 
     /**
@@ -49,9 +46,7 @@ class ComponentValue implements Translatable
      */
     private $locale;
 
-    /**
-     * @ORM\OneToMany(targetEntity=ComponentValueTranslation::class, mappedBy="object", cascade={"persist", "remove"})
-     */
+    #[ORM\OneToMany(targetEntity: ComponentValueTranslation::class, mappedBy: 'object', cascade: ['persist', 'remove'])]
     private $translations;
 
     public function __construct()
@@ -59,15 +54,10 @@ class ComponentValue implements Translatable
         $this->translations = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
-
     public function getValue()
     {
         $decoded = json_decode($this->value);
-        if(is_array($decoded)) {
+        if (is_array($decoded)) {
             return $decoded;
         }
 
@@ -76,15 +66,20 @@ class ComponentValue implements Translatable
 
     public function setValue($value): self
     {
-        if(is_array($value)) {
+        if (is_array($value)) {
             $value = json_encode($value);
         }
-        if(is_object($value)){
+        if (is_object($value)) {
             $value = $value->getId();
         }
         $this->value = $value;
 
         return $this;
+    }
+
+    public function getId(): ?int
+    {
+        return $this->id;
     }
 
     public function getComponent(): ?Component

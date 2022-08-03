@@ -9,96 +9,66 @@ use Doctrine\ORM\Mapping\OrderBy;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Translatable\Translatable;
+use Akyos\BuilderBundle\Entity\Component;
+use Akyos\BuilderBundle\Entity\ComponentTemplate;
+use Akyos\BuilderBundle\Entity\ComponentValue;
+use Akyos\BuilderBundle\Repository\ComponentRepository;
 
-/**
- * @ORM\Entity(repositoryClass="Akyos\BuilderBundle\Repository\ComponentRepository")
- */
+#[ORM\Entity(repositoryClass: ComponentRepository::class)]
 class Component implements Translatable
 {
     use TimestampableEntity;
 
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $customId;
 
-    /**
-     * @ORM\Column(type="string", length=255, nullable=true)
-     */
+    #[ORM\Column(type: 'string', length: 255, nullable: true)]
     private $customClasses;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $type;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $typeId;
 
-    /**
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Column(type: 'integer')]
     private $position;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $visibilityXS;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $visibilityS;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $visibilityM;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $visibilityL;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $visibilityXL;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Akyos\BuilderBundle\Entity\ComponentValue", mappedBy="component", orphanRemoval=true, cascade={"persist"})
-     */
+    #[ORM\OneToMany(targetEntity: ComponentValue::class, mappedBy: 'component', orphanRemoval: true, cascade: ['persist'])]
     private $componentValues;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Akyos\BuilderBundle\Entity\ComponentTemplate")
-     * @ORM\JoinColumn(nullable=false)
-     */
+    #[ORM\ManyToOne(targetEntity: ComponentTemplate::class)]
+    #[ORM\JoinColumn(nullable: false)]
     private $componentTemplate;
 
-    /**
-     * @ORM\ManyToOne(targetEntity="Akyos\BuilderBundle\Entity\Component", inversedBy="childComponents")
-     */
+    #[ORM\ManyToOne(targetEntity: Component::class, inversedBy: 'childComponents')]
     private $parentComponent;
 
-    /**
-     * @ORM\OneToMany(targetEntity="Akyos\BuilderBundle\Entity\Component", mappedBy="parentComponent", cascade={"remove"})
-     * @OrderBy({"position" = "ASC"})
-     */
+    #[ORM\OneToMany(targetEntity: Component::class, mappedBy: 'parentComponent', cascade: ['remove'])]
+    #[OrderBy(['position' => 'ASC'])]
     private $childComponents;
 
-    /**
-     * @ORM\Column(type="boolean")
-     */
+    #[ORM\Column(type: 'boolean')]
     private $isTemp;
 
     /**
@@ -282,18 +252,6 @@ class Component implements Translatable
         return $this;
     }
 
-    public function getParentComponent(): ?self
-    {
-        return $this->parentComponent;
-    }
-
-    public function setParentComponent(?self $parentComponent): self
-    {
-        $this->parentComponent = $parentComponent;
-
-        return $this;
-    }
-
     /**
      * @return Collection|self[]
      */
@@ -321,6 +279,18 @@ class Component implements Translatable
                 $childComponent->setParentComponent(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getParentComponent(): ?self
+    {
+        return $this->parentComponent;
+    }
+
+    public function setParentComponent(?self $parentComponent): self
+    {
+        $this->parentComponent = $parentComponent;
 
         return $this;
     }

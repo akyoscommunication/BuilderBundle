@@ -1,5 +1,5 @@
 <?php
-        
+
 namespace Akyos\BuilderBundle\Components\IconTitleBox;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;

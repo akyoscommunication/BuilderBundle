@@ -19,18 +19,21 @@
 
 <div class="tab-pane fade" id="builder" role="tabpanel" aria-labelledby="builder-tab">
     <div id="akyTabBuilderHeader" class="d-flex justify-content-between align-items-start">
-        <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}" class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
+        <a href="{{ path('templates_builder_reset_temp_component', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}"
+           class="btn btn-outline-dark">Réinitialiser les composant de la production</a>
         {% if class_exists(type) %}
-            <a href="{{ path('back_builder_view_edit', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}" class="btn btn-outline-dark">Editeur visuel</a>
+            <a href="{{ path('back_builder_view_edit', { 'type' : type|url_encode, 'typeId' : typeId, 'redirect' : app.request.uri|url_encode }) }}"
+               class="btn btn-outline-dark">Editeur visuel</a>
         {% endif %}
 
         {{ form_start(choiceBuilderTemplateForm, { 'attr' : { 'class' : 'not-submit d-flex align-items-center' }}) }}
-            {{ form_widget(choiceBuilderTemplateForm) }}
-            <button class="btn btn-outline-success ml-2" style="margin-bottom: 8px;">{{ button_label|default('Enregistrer') }}</button>
+        {{ form_widget(choiceBuilderTemplateForm) }}
+        <button class="btn btn-outline-success ml-2"
+                style="margin-bottom: 8px;">{{ button_label|default('Enregistrer') }}</button>
         {{ form_end(choiceBuilderTemplateForm) }}
         {{ form_start(makeBuilderTemplateForm, { 'attr' : { 'class' : 'not-submit d-flex align-items-center' }}) }}
-            {{ form_widget(makeBuilderTemplateForm) }}
-            <button class="btn btn-primary ml-2" style="margin-bottom: 8px;"><i class="fas fa-clone"></i></button>
+        {{ form_widget(makeBuilderTemplateForm) }}
+        <button class="btn btn-primary ml-2" style="margin-bottom: 8px;"><i class="fas fa-clone"></i></button>
         {{ form_end(makeBuilderTemplateForm) }}
     </div>
     {{ _self.render_flashbag() }}
@@ -56,16 +59,22 @@
     </div>
     <div class="aky-builder-components-content">
         {% for component in components | filter(component => components is not empty) %}
-            <div class="aky-builder-component" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
+            <div class="aky-builder-component" data-componentid="{{ component.id }}" data-type="{{ type }}"
+                 data-typeid="{{ typeId }}">
                 <div class="aky-builder-component-header">
                     {% if component.prototype == 'col' %}
-                        <input class="form-control changeColInput" type="number" name="col" value="12" min="1" max="12"/>
+                        <input class="form-control changeColInput" type="number" name="col" value="12" min="1"
+                               max="12"/>
                     {% endif %}
                     {% if component.isContainer %}
-                        <button type="button" class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab"><i class="fas fa-plus"></i></button>
+                        <button type="button"
+                                class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab">
+                            <i class="fas fa-plus"></i></button>
                     {% endif %}
-                    <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit" data-url="{{ path('component_edit', {'id': '#id#'}) }}"><i class="fas fa-edit"></i></button>
-                    <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i class="fas fa-times"></i></button>
+                    <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit"
+                            data-url="{{ path('component_edit', {'id': '#id#'}) }}"><i class="fas fa-edit"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i
+                                class="fas fa-times"></i></button>
                 </div>
                 <h3 class="aky-builder-component__title">{{ component.name }}</h3>
                 <i class="aky-builder-component__desc">{{ component.shortDescription }}</i>
@@ -89,16 +98,23 @@
         {% set proto = 'col-md-12' %}
     {% endif %}
     <div class="aky-builder-component-sortable {{ proto }}">
-        <div class="aky-builder-component active {{ component.parentComponent is null or component.childComponents is not empty ? 'isParent' : '' }}" data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
+        <div class="aky-builder-component active {{ component.parentComponent is null or component.childComponents is not empty ? 'isParent' : '' }}"
+             data-componentid="{{ component.id }}" data-type="{{ type }}" data-typeid="{{ typeId }}">
             <div class="aky-builder-component-header">
                 {% if component.componentTemplate.prototype == 'col' %}
-                    <input class="form-control changeColInput" type="number" name="col" value="{{ valProto ? valProto.value : '12' }}" min="1" max="12"/>
+                    <input class="form-control changeColInput" type="number" name="col"
+                           value="{{ valProto ? valProto.value : '12' }}" min="1" max="12"/>
                 {% endif %}
                 {% if component.componentTemplate.isContainer %}
-                    <button type="button" class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab"><i class="fas fa-plus"></i></button>
+                    <button type="button"
+                            class="btn btn-sm btn-secondary aky-builder-component-header__addTo toggleComponentTab"><i
+                                class="fas fa-plus"></i></button>
                 {% endif %}
-                <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit" data-url="{{ path('component_edit', {'id':component.id}) }}"><i class="fas fa-edit"></i></button>
-                <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i class="fas fa-times"></i></button>
+                <button type="button" class="btn btn-sm btn-primary aky-builder-component-header__edit"
+                        data-url="{{ path('component_edit', {'id':component.id}) }}"><i class="fas fa-edit"></i>
+                </button>
+                <button type="button" class="btn btn-sm btn-danger aky-builder-component-header__delete"><i
+                            class="fas fa-times"></i></button>
             </div>
             <h3 class="aky-builder-component__title">{{ component.componentTemplate.name }}</h3>
             <i class="aky-builder-component__desc">{{ component.componentTemplate.shortDescription }}</i>
@@ -142,7 +158,8 @@
             </button>
         </div>
         <div class="aky-modal-content-body" id="modalEditComponent">
-            <img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader" width="128" height="128">
+            <img class="loader" border="0" src="http://www.pictureshack.us/images/16942_Preloader_10.gif" alt="loader"
+                 width="128" height="128">
         </div>
     </div>
 </div>

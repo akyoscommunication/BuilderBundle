@@ -11,7 +11,8 @@
 
 {% block meta %}
     {% if seo.metaDescription is not null %}
-        <meta name="description" content="{{ seo.metaDescription is not null ? seo.metaDescription : element.content }}">
+        <meta name="description"
+              content="{{ seo.metaDescription is not null ? seo.metaDescription : element.content }}">
     {% endif %}
 {% endblock %}
 

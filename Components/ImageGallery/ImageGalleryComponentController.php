@@ -1,5 +1,5 @@
 <?php
-        
+
 namespace Akyos\BuilderBundle\Components\ImageGallery;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;

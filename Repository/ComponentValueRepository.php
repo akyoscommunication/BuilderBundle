@@ -4,8 +4,8 @@ namespace Akyos\BuilderBundle\Repository;
 
 use Akyos\BuilderBundle\Entity\ComponentValue;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Persistence\ManagerRegistry;
 use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method ComponentValue|null find($id, $lockMode = null, $lockVersion = null)
@@ -23,22 +23,11 @@ class ComponentValueRepository extends ServiceEntityRepository
     public function findOneValueCol($component)
     {
         try {
-            return $this->createQueryBuilder('cv')
-                ->innerJoin('cv.component', 'c')
-                ->innerJoin('c.componentTemplate', 'ct')
-                ->innerJoin('cv.componentField', 'cf')
-                ->andWhere('cv.component = :component')
-                ->andWhere('cf.slug = :col')
-                ->andWhere('ct.prototype = :col')
-                ->setParameter('component', $component)
-                ->setParameter('col', 'col')
-                ->getQuery()
-                ->getOneOrNullResult();
+            return $this->createQueryBuilder('cv')->innerJoin('cv.component', 'c')->innerJoin('c.componentTemplate', 'ct')->innerJoin('cv.componentField', 'cf')->andWhere('cv.component = :component')->andWhere('cf.slug = :col')->andWhere('ct.prototype = :col')->setParameter('component', $component)->setParameter('col', 'col')->getQuery()->getOneOrNullResult();
         } catch (NonUniqueResultException $e) {
             return 'Aucun résultat';
         }
     }
-
     /*
     public function findOneBySomeField($value): ?ComponentValue
     {

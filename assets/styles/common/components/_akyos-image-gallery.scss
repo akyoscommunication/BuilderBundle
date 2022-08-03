@@ -1,46 +1,46 @@
 .aky-gallery {
 
-	.pictures {
-		@include flex(row, wrap, flex-start, center);
-		width: 100%;
+    .pictures {
+        @include flex(row, wrap, flex-start, center);
+        width: 100%;
 
-		.picture {
-			width: calc(25% - 15px);
-			margin-bottom: 20px;
-			cursor: pointer;
-			position: relative;
-			overflow: hidden;
+        .picture {
+            width: calc(25% - 15px);
+            margin-bottom: 20px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
 
-			img {
-				position: absolute;
-				top: 0;
-				bottom: 0;
-				right: 0;
-				left: 0;
-				width: 100%;
-				height: 100%;
-				object-fit: cover;
-			}
+            img {
+                position: absolute;
+                top: 0;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+            }
 
-			&:not(:nth-child(4n + 4)) {
-				margin-right: 20px;
-			}
+            &:not(:nth-child(4n + 4)) {
+                margin-right: 20px;
+            }
 
-			&:after {
-				content: "";
-				display: block;
-				padding-top: 100%;
-			}
-		}
+            &:after {
+                content: "";
+                display: block;
+                padding-top: 100%;
+            }
+        }
 
-		&.contain {
-			.picture {
-				img {
-					object-fit: contain;
-				}
-			}
-		}
-	}
+        &.contain {
+            .picture {
+                img {
+                    object-fit: contain;
+                }
+            }
+        }
+    }
 
     .component-slider {
         width: 100%;
@@ -61,72 +61,72 @@
 
 .gallery-modal {
 
-	.modal-dialog {
-		width: fit-content;
+    .modal-dialog {
+        width: fit-content;
 
-		.modal-body {
+        .modal-body {
 
-			.slide {
-				@include flex(row, nowrap, center, center);
+            .slide {
+                @include flex(row, nowrap, center, center);
 
-				img {
-					width: 100%;
-					height: 100%;
-					max-height: 90vh;
-					object-fit: contain;
-				}
-			}
-		}
+                img {
+                    width: 100%;
+                    height: 100%;
+                    max-height: 90vh;
+                    object-fit: contain;
+                }
+            }
+        }
 
-		.modal-footer {
-			@include flex(row, wrap, space-between, center);
+        .modal-footer {
+            @include flex(row, wrap, space-between, center);
 
-			.controls-container {
-				filter: grayscale(1);
+            .controls-container {
+                filter: grayscale(1);
 
-				ul {
-					@include flex(row, nowrap, space-between, stretch);
-					list-style-type: none;
-					margin-bottom: 0;
-					width: 90px;
-					padding: 0;
+                ul {
+                    @include flex(row, nowrap, space-between, stretch);
+                    list-style-type: none;
+                    margin-bottom: 0;
+                    width: 90px;
+                    padding: 0;
 
-					svg {
-						color: color(purple);
-						font-size: 24px;
-					}
+                    svg {
+                        color: color(purple);
+                        font-size: 24px;
+                    }
 
-					.slides-controls {
-						&.prev {
-							img {
-								transform: rotate(180deg);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+                    .slides-controls {
+                        &.prev {
+                            img {
+                                transform: rotate(180deg);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
 }
 
 @media screen and (max-width: 767px) {
-	body {
-		.aky-gallery {
-			.pictures {
-				.picture {
+    body {
+        .aky-gallery {
+            .pictures {
+                .picture {
 
-					width: calc(50% - 10px);
+                    width: calc(50% - 10px);
 
-					&:not(:nth-child(4n + 4)) {
-						margin-right: 0;
-					}
+                    &:not(:nth-child(4n + 4)) {
+                        margin-right: 0;
+                    }
 
-					&:not(:nth-child(2n + 2)) {
-						margin-right: 20px;
-					}
-				}
-			}
-		}
-	}
+                    &:not(:nth-child(2n + 2)) {
+                        margin-right: 20px;
+                    }
+                }
+            }
+        }
+    }
 }

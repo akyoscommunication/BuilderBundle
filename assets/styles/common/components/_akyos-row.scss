@@ -1,28 +1,31 @@
 .component-row {
-	background-repeat: no-repeat;
+    background-repeat: no-repeat;
 
-	&--cover {
-		background-size: cover !important;
-	}
+    &--cover {
+        background-size: cover !important;
+    }
 
-	&--contain {
-		background-size: contain !important;
-	}
+    &--contain {
+        background-size: contain !important;
+    }
 
-	&--bg{
-		&-position {
-			&-top {
-				background-position: top !important;
-			}
-			&-bottom {
-				background-position: bottom !important;
-			}
-			&-left {
-				background-position: left !important;
-			}
-			&-right {
-				background-position: right !important;
-			}
-		}
-	}
+    &--bg {
+        &-position {
+            &-top {
+                background-position: top !important;
+            }
+
+            &-bottom {
+                background-position: bottom !important;
+            }
+
+            &-left {
+                background-position: left !important;
+            }
+
+            &-right {
+                background-position: right !important;
+            }
+        }
+    }
 }

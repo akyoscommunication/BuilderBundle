@@ -1,91 +1,92 @@
 .component-col {
-	background-repeat: no-repeat;
-	padding-left:7.5px;
-	padding-right:7.5px;
+    background-repeat: no-repeat;
+    padding-left: 7.5px;
+    padding-right: 7.5px;
 
-	&--padding{}
+    &--padding {
+    }
 
-	// BACKGROUND-SIZE
-	&--cover {
-		background-size: cover;
-	}
+    // BACKGROUND-SIZE
+    &--cover {
+        background-size: cover;
+    }
 
-	&--contain {
-		background-size: contain;
-	}
+    &--contain {
+        background-size: contain;
+    }
 
-	// DISPLAY
-	&--block {
-		display: block;
-	}
+    // DISPLAY
+    &--block {
+        display: block;
+    }
 
-	&--flex {
-		display: flex;
-	}
+    &--flex {
+        display: flex;
+    }
 
-	// FLEX DIRECTION
-	&--flex-row {
-		flex-direction: row;
-	}
+    // FLEX DIRECTION
+    &--flex-row {
+        flex-direction: row;
+    }
 
-	&--flex-column {
-		flex-direction: column;
-	}
+    &--flex-column {
+        flex-direction: column;
+    }
 
-	// FLEX WRAP
-	&--flex-wrap {
-		flex-wrap: wrap;
-	}
+    // FLEX WRAP
+    &--flex-wrap {
+        flex-wrap: wrap;
+    }
 
-	&--flex-nowrap {
-		flex-wrap: nowrap;
-	}
+    &--flex-nowrap {
+        flex-wrap: nowrap;
+    }
 
-	// JUSTIFY CONTENT
-	&--flex-jc-center {
-		justify-content: center;
-	}
+    // JUSTIFY CONTENT
+    &--flex-jc-center {
+        justify-content: center;
+    }
 
-	&--flex-jc-start {
-		justify-content: flex-start;
-	}
+    &--flex-jc-start {
+        justify-content: flex-start;
+    }
 
-	&--flex-jc-end {
-		justify-content: flex-end;
-	}
+    &--flex-jc-end {
+        justify-content: flex-end;
+    }
 
-	&--flex-jc-space-b {
-		justify-content: space-between;
-	}
+    &--flex-jc-space-b {
+        justify-content: space-between;
+    }
 
-	&--flex-jc-space-a {
-		justify-content: space-around;
-	}
+    &--flex-jc-space-a {
+        justify-content: space-around;
+    }
 
-	// ALIGN ITEMS
-	&--flex-ai-center {
-		align-items: center;
-	}
+    // ALIGN ITEMS
+    &--flex-ai-center {
+        align-items: center;
+    }
 
-	&--flex-ai-start {
-		align-items: flex-start;
-	}
+    &--flex-ai-start {
+        align-items: flex-start;
+    }
 
-	&--flex-ai-end {
-		align-items: flex-end;
-	}
+    &--flex-ai-end {
+        align-items: flex-end;
+    }
 
-	&--flex-ai-stretch {
-		align-items: stretch;
-	}
+    &--flex-ai-stretch {
+        align-items: stretch;
+    }
 }
 
 @media screen and (max-width: 768px) {
-	.component-col {
-		margin-bottom: 1rem;
-		//&--padding {
-		//    padding-left: 0 !important;
-		//    padding-right: 0 !important;
-		//}
-	}
+    .component-col {
+        margin-bottom: 1rem;
+        //&--padding {
+        //    padding-left: 0 !important;
+        //    padding-right: 0 !important;
+        //}
+    }
 }

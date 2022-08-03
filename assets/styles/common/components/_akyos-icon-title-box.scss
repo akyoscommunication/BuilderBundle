@@ -1,14 +1,16 @@
 .component-icon-title-box {
-	@include flex(column, nowrap, space-around, center);
-	flex: 1;
+    @include flex(column, nowrap, space-around, center);
+    flex: 1;
 
-	&__icon {
-		@include flex(row, nowrap, center, center);
-	}
-	&__title {
+    &__icon {
+        @include flex(row, nowrap, center, center);
+    }
 
-	}
-	&__description {
+    &__title {
 
-	}
+    }
+
+    &__description {
+
+    }
 }

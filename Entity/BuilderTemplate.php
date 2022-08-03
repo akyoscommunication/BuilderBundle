@@ -3,22 +3,17 @@
 namespace Akyos\BuilderBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
 
-/**
- * @ORM\Entity(repositoryClass="Akyos\BuilderBundle\Repository\BuilderTemplateRepository")
- */
+#[ORM\Entity(repositoryClass: BuilderTemplateRepository::class)]
 class BuilderTemplate
 {
-    /**
-     * @ORM\Id()
-     * @ORM\GeneratedValue()
-     * @ORM\Column(type="integer")
-     */
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     private $title;
 
     public function getId(): ?int

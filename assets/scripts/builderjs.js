@@ -9,7 +9,8 @@ import collectionForm from './modules/collectionForm'
 import modal from './modules/modal'
 
 class Builder {
-    constructor() {}
+    constructor() {
+    }
 
     static init() {
         this.toggleComponentTab();
@@ -20,20 +21,20 @@ class Builder {
         editComponent.editComponent();
         deleteComponent.deleteComponent();
         editColComponent.changeCol();
-        
+
         modal.init();
-        
+
         if ($('.visual-editor').length > 0) {
             $('#componentsRenderContainer .aky-builder-component[data-componentid]').each(function (i) {
                 const next = $(this).next()
                 next.addClass('aky-builder-component-sortable position-relative')
-        
-                if($(next)[0]){
+
+                if ($(next)[0]) {
                     $(next)[0].appendChild(this)
                 }
             })
         }
-        
+
         setTimeout(() => {
             SortableJs.init();
         }, 800)
@@ -46,49 +47,49 @@ class Builder {
         const addFieldLink = $('#add_component');
         collectionHolder.data('index', collectionHolder.children('.form-group').length);
 
-        collectionHolder.children('.form-group').each(function() {
+        collectionHolder.children('.form-group').each(function () {
             collectionForm.addCloneFormDeleteLink($(this));
         });
 
-        addFieldLink.on('click', function(e) {
+        addFieldLink.on('click', function (e) {
             e.preventDefault();
             collectionForm.addCloneForm(collectionHolder);
             const lastChild = collectionHolder.children('.form-group').last();
             that.newFieldOptionsCollectionForm(lastChild);
         });
     }
-    
+
     static newFieldOptionsCollectionForm($newField) {
-        
+
         const collectionHolder = $newField.find('.options_collection');
-        collectionHolder.after('<button id="add_'+collectionHolder.attr('id')+'" class="btn btn-outline-primary">Ajouter une option</button>');
-        const addFieldLink = $('#add_'+collectionHolder.attr('id'));
+        collectionHolder.after('<button id="add_' + collectionHolder.attr('id') + '" class="btn btn-outline-primary">Ajouter une option</button>');
+        const addFieldLink = $('#add_' + collectionHolder.attr('id'));
         collectionHolder.data('index', collectionHolder.children('.form-group').length);
-    
-        collectionHolder.children('.form-group').each(function() {
+
+        collectionHolder.children('.form-group').each(function () {
             collectionForm.addCloneFormDeleteLink(collectionHolder);
         });
-    
-        addFieldLink.on('click', function(e) {
+
+        addFieldLink.on('click', function (e) {
             e.preventDefault();
             collectionForm.addCloneForm(collectionHolder);
         });
     }
-    
+
     static initFieldsOptionsCollectionForm() {
-        
+
         const collectionHolder = $('.options_collection');
-        collectionHolder.each( function() {
+        collectionHolder.each(function () {
             const currentOption = $(this);
-            $(this).after('<button id="add_'+currentOption.attr('id')+'" class="btn btn-outline-primary">Ajouter une option</button>');
-            const addFieldLink = $('#add_'+currentOption.attr('id'));
+            $(this).after('<button id="add_' + currentOption.attr('id') + '" class="btn btn-outline-primary">Ajouter une option</button>');
+            const addFieldLink = $('#add_' + currentOption.attr('id'));
             collectionHolder.data('index', collectionHolder.children('.form-group').length);
-    
-            currentOption.children('.form-group').each(function() {
+
+            currentOption.children('.form-group').each(function () {
                 collectionForm.addCloneFormDeleteLink($(this));
             });
-            
-            addFieldLink.on('click', function(e) {
+
+            addFieldLink.on('click', function (e) {
                 e.preventDefault();
                 collectionForm.addCloneForm(currentOption);
             });
@@ -103,7 +104,7 @@ class Builder {
             modal.toggleClass('active');
             const parent = $(this).parents('[data-componentid]');
             let componentId;
-            
+
             if (!parent.length) {
                 if (!$(this).parents('#componentTab').length) {
                     componentId = 'main'
@@ -115,6 +116,7 @@ class Builder {
         });
     }
 }
+
 export default Builder
 
 jQuery(document).ready(function () {

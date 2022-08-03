@@ -16,6 +16,14 @@ class SlideFixtures extends Fixture implements FixtureGroupInterface
         $this->fixturesHelpers = $fixturesHelpers;
     }
 
+    /**
+     * @inheritDoc
+     */
+    public static function getGroups(): array
+    {
+        return ['component', 'builder-components', 'component-slide'];
+    }
+
     public function load(ObjectManager $manager): void
     {
         $slug = "slide";
@@ -24,17 +32,9 @@ class SlideFixtures extends Fixture implements FixtureGroupInterface
         $isContainer = true;
         $prototype = "default";
         $componentFields = [
-            
+
         ];
 
         $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
-    }
-
-    /**
-     * @inheritDoc
-     */
-    public static function getGroups(): array
-    {
-        return ['component', 'builder-components', 'component-slide'];
     }
 }

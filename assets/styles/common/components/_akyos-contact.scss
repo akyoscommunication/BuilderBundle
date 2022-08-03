@@ -103,6 +103,7 @@
 
         .socials {
             @include flex(column, nowrap, flex-start, flex-start);
+
             .title {
                 font-size: 17px;
                 color: black;
