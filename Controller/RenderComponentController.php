@@ -13,18 +13,11 @@ use Twig\Environment;
 
 class RenderComponentController
 {
-    private EntityManagerInterface $entityManager;
-
-    private ContainerInterface $container;
-
-    private Environment $twig;
-
-    public function __construct(EntityManagerInterface $entityManager, ContainerInterface $container, Environment $twig)
-    {
-        $this->entityManager = $entityManager;
-        $this->container = $container;
-        $this->twig = $twig;
-    }
+    public function __construct(
+        private readonly EntityManagerInterface $entityManager,
+        private readonly ContainerInterface $container,
+        private readonly Environment $twig
+    ) {}
 
     /**
      * @param Component $component
@@ -39,9 +32,6 @@ class RenderComponentController
         $em = $this->entityManager;
         $slug = $component->getComponentTemplate()->getSlug();
 
-        $builderClassName = '\Akyos\BuilderBundle\Components\\' . self::camelCase($slug) . '\\' . self::camelCase($slug) . 'ComponentController';
-        $appClassName = '\App\Components\\' . self::camelCase($slug) . '\\' . self::camelCase($slug) . 'ComponentController';
-
         $params['edit'] = $edit;
         $params['type'] = $type;
         $params['typeId'] = $typeId;
@@ -49,40 +39,21 @@ class RenderComponentController
         $params['values'] = [];
         $params['customClasses'] = $component->getCustomClasses();
         $params['customId'] = $component->getCustomId();
-
-        if (class_exists($appClassName)) {
-            $view = $appClassName::getTemplateName();
-            foreach ($component->getComponentValues() as $value) {
-                /** @var ComponentField $componentField */
-                $componentField = $value->getComponentField();
-                if ($componentField->getType() === 'entity') {
-                    $params['values'][$componentField->getSlug()] = $em->getRepository($componentField->getEntity())->find((int)$value->getValue());
-                } else {
-                    $params['values'][$componentField->getSlug()] = $value->getValue();
-                }
+        foreach ($component->getComponentValues() as $value) {
+            /** @var ComponentField $componentField */
+            $componentField = $value->getComponentField();
+            if ($componentField->getType() === 'entity') {
+                $params['values'][$componentField->getSlug()] = $em->getRepository($componentField->getEntity())->find((int)$value->getValue());
+            } else {
+                $params['values'][$componentField->getSlug()] = $value->getValue();
             }
-
-            $params = $this->container->get('component.' . strtolower($slug))->getParameters($params);
-            if ($params instanceof Response) {
-                return $params;
-            }
-
-            return $this->twig->render('@Components/' . $view, $params);
         }
 
-        if (class_exists($builderClassName)) {
-            $view = $builderClassName::getTemplateName();
-            foreach ($component->getComponentValues() as $value) {
-                /** @var ComponentField $componentField */
-                $componentField = $value->getComponentField();
-                if ($componentField->getType() === 'entity') {
-                    $params['values'][$componentField->getSlug()] = $em->getRepository($componentField->getEntity())->find((int)$value->getValue());
-                } else {
-                    $params['values'][$componentField->getSlug()] = $value->getValue();
-                }
-            }
-
-            $params = $this->container->get('component.' . strtolower($slug))->getParameters($params);
+        $classExists = $this->container->has('component.'.$slug);
+        if ($classExists) {
+            $componentController = $this->container->get('component.'.$slug);
+            $view = $componentController->getTemplateName();
+            $params = $componentController->getParameters($params);
             if ($params instanceof Response) {
                 return $params;
             }
@@ -122,8 +93,7 @@ class RenderComponentController
      */
     public function renderComponentBySlug($componentSlug, $values, $component, $edit, $type, $typeId)
     {
-        $builderClassName = '\Akyos\BuilderBundle\Components\\' . self::camelCase($componentSlug) . '\\' . self::camelCase($componentSlug) . 'ComponentController';
-        $appClassName = '\App\Components\\' . self::camelCase($componentSlug) . '\\' . self::camelCase($componentSlug) . 'ComponentController';
+        $classExists = $this->container->has('component.'.$componentSlug);
 
         $params['values'] = $values;
         $params['component'] = $component;
@@ -131,18 +101,10 @@ class RenderComponentController
         $params['type'] = $type;
         $params['typeId'] = $typeId;
 
-        if (class_exists($appClassName)) {
-            $view = $appClassName::getTemplateName();
-            $params = $this->container->get('component.' . strtolower($componentSlug))->getParameters($params);
-            if ($params instanceof Response) {
-                return $params;
-            }
-            return $this->twig->render('@Components/' . $view, $params);
-        }
-
-        if (class_exists($builderClassName)) {
-            $view = $builderClassName::getTemplateName();
-            $params = $this->container->get('component.' . strtolower($componentSlug))->getParameters($params);
+        if ($classExists) {
+            $componentController = $this->container->get('component.'.$componentSlug);
+            $view = $componentController->getTemplateName();
+            $params = $componentController->getParameters($params);
             if ($params instanceof Response) {
                 return $params;
             }
