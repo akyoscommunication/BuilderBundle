@@ -22,6 +22,7 @@ class BuilderFixComponentsNamespacesCommand extends Command
     {
         $this->em = $em;
         $this->coreExtension = $coreExtension;
+        parent::__construct();
     }
 
     protected function configure()
