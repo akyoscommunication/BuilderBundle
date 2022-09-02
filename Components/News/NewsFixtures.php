@@ -3,7 +3,7 @@
 namespace Akyos\BuilderBundle\Components\News;
 
 use Akyos\BuilderBundle\Service\FixturesHelpers;
-use Akyos\CoreBundle\Entity\Post;
+use Akyos\BlogBundle\Entity\Post;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;

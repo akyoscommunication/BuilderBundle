@@ -3,7 +3,7 @@
 namespace Akyos\BuilderBundle\Components\Image;
 
 use Akyos\BuilderBundle\Service\FixturesHelpers;
-use Akyos\CoreBundle\Entity\Page;
+use Akyos\CmsBundle\Entity\Page;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
