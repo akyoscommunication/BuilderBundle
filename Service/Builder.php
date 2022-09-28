@@ -15,6 +15,7 @@ use Doctrine\ORM\QueryBuilder;
 use Gedmo\Translatable\Query\TreeWalker\TranslationWalker;
 use Gedmo\Translatable\TranslatableListener;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\Form\FormFactoryInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -25,21 +26,13 @@ use Twig\Error\SyntaxError;
 
 class Builder
 {
-    private ?Request $request;
-
-    private EntityManagerInterface $em;
-
-    private Environment $environment;
-
-    private ContainerInterface $container;
-
-    public function __construct(RequestStack $requestStack, EntityManagerInterface $em, Environment $environment, ContainerInterface $container)
-    {
-        $this->request = $requestStack->getCurrentRequest();
-        $this->em = $em;
-        $this->environment = $environment;
-        $this->container = $container;
-    }
+    public function __construct(
+        private readonly RequestStack $requestStack,
+        private readonly EntityManagerInterface $em,
+        private readonly Environment $environment,
+        private readonly ContainerInterface $container,
+        private readonly FormFactoryInterface $formFactory,
+    ) {}
 
     /**
      * @return string
@@ -78,7 +71,7 @@ class Builder
 
         $components = $this->em->getRepository(ComponentTemplate::class)->findAll();
 
-        $choiceBuilderTemplateForm = $this->container->get('form.factory')->create(ChoiceBuilderTemplateType::class, null, []);
+        $choiceBuilderTemplateForm = $this->formFactory->create(ChoiceBuilderTemplateType::class, null, []);
         $choiceBuilderTemplateForm->handleRequest($this->request);
         if ($choiceBuilderTemplateForm->isSubmitted() && $choiceBuilderTemplateForm->isValid()) {
             /** @var BuilderTemplate $template */
@@ -88,7 +81,7 @@ class Builder
             return new RedirectResponse($this->request->getUri(), 302);
         }
 
-        $makeBuilderTemplateForm = $this->container->get('form.factory')->create(MakeTemplateType::class, null, []);
+        $makeBuilderTemplateForm = $this->formFactory->create(MakeTemplateType::class, null, []);
         $makeBuilderTemplateForm->handleRequest($this->request);
         if ($makeBuilderTemplateForm->isSubmitted() && $makeBuilderTemplateForm->isValid()) {
             /** @var BuilderTemplate $template */
