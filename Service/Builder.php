@@ -55,7 +55,7 @@ class Builder
      */
     public function getTabContent($objectType, $objectId)
     {
-        $request = $this->request->getCurrentRequest();
+        $request = $this->requestStack->getCurrentRequest();
         /** @var QueryBuilder $qbc */
         $qbc = $this->em->getRepository(Component::class)->createQueryBuilder('c');
         $qbc->andWhere($qbc->expr()->eq('c.type', ':type'))->andWhere($qbc->expr()->eq('c.typeId', ':typeId'))->andWhere($qbc->expr()->eq('c.isTemp', true))->andWhere($qbc->expr()->isNull('c.parentComponent'))->orderBy('c.position', 'ASC')->setParameters(['type' => $objectType, 'typeId' => $objectId,]);
