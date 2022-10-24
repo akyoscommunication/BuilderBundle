@@ -27,7 +27,7 @@ use Twig\Error\SyntaxError;
 class Builder
 {
     public function __construct(
-        private readonly RequestStack $requestStack,
+        private readonly RequestStack $request,
         private readonly EntityManagerInterface $em,
         private readonly Environment $environment,
         private readonly ContainerInterface $container,
@@ -55,6 +55,7 @@ class Builder
      */
     public function getTabContent($objectType, $objectId)
     {
+        $request = $this->request->getCurrentRequest();
         /** @var QueryBuilder $qbc */
         $qbc = $this->em->getRepository(Component::class)->createQueryBuilder('c');
         $qbc->andWhere($qbc->expr()->eq('c.type', ':type'))->andWhere($qbc->expr()->eq('c.typeId', ':typeId'))->andWhere($qbc->expr()->eq('c.isTemp', true))->andWhere($qbc->expr()->isNull('c.parentComponent'))->orderBy('c.position', 'ASC')->setParameters(['type' => $objectType, 'typeId' => $objectId,]);
@@ -72,22 +73,22 @@ class Builder
         $components = $this->em->getRepository(ComponentTemplate::class)->findAll();
 
         $choiceBuilderTemplateForm = $this->formFactory->create(ChoiceBuilderTemplateType::class, null, []);
-        $choiceBuilderTemplateForm->handleRequest($this->request);
+        $choiceBuilderTemplateForm->handleRequest($request);
         if ($choiceBuilderTemplateForm->isSubmitted() && $choiceBuilderTemplateForm->isValid()) {
             /** @var BuilderTemplate $template */
             $template = $choiceBuilderTemplateForm->get('choice_template')->getData();
             $this->cloneTemplateBuilder($objectType, $objectId, $template->getId());
 
-            return new RedirectResponse($this->request->getUri(), 302);
+            return new RedirectResponse($request->getUri(), 302);
         }
 
         $makeBuilderTemplateForm = $this->formFactory->create(MakeTemplateType::class, null, []);
-        $makeBuilderTemplateForm->handleRequest($this->request);
+        $makeBuilderTemplateForm->handleRequest($request);
         if ($makeBuilderTemplateForm->isSubmitted() && $makeBuilderTemplateForm->isValid()) {
             /** @var BuilderTemplate $template */
             $templateTitle = $makeBuilderTemplateForm->get('title')->getData();
             $this->makeTemplate($objectType, $objectId, $templateTitle);
-            return new RedirectResponse($this->request->getUri(), 302);
+            return new RedirectResponse($request->getUri(), 302);
         }
 
         return $this->environment->render('@AkyosBuilder/builder/render.html.twig', ['makeBuilderTemplateForm' => $makeBuilderTemplateForm->createView(), 'choiceBuilderTemplateForm' => $choiceBuilderTemplateForm->createView(), 'instance_components' => $instance_components, 'type' => $objectType, 'typeId' => $objectId, 'components' => $components,]);
