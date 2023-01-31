@@ -226,7 +226,7 @@ class Builder
             $dateTimeProd = $componentsProd[0]->getUpdatedAt();
             foreach ($componentsTemp as $temp) {
                 if ($temp->getUpdatedAt() > $dateTimeProd) {
-                    $this->container->get('session')->getFlashBag()->add("warning", "L'élément n'est pas à jour en production.");
+                    $this->container->get('request_stack')->getSession()->getFlashBag()->add("warning", "L'élément n'est pas à jour en production.");
                     break;
                 }
             }
