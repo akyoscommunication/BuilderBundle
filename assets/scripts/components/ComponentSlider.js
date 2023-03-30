@@ -17,7 +17,6 @@ class ComponentSlider {
 				const speed = container.data('speed');
 				const slides_per_view_991 = container.data('slides_per_view_991');
 				const slides_per_view_767 = container.data('slides_per_view_767');
-				console.log(slides_per_view);
 				let navigation = container.data('navigation');
 				if(navigation) {
 					navigation = {

@@ -1,4 +1,11 @@
 .component-image {
+	--width: initial;
+	--height: initial;
+	--margin: 0;
+
+	width: clamp(1px, 100%, var(--width));
+	height: clamp(1px, 100%, var(--height));
+	margin: var(--margin);
 
 	img {
 		width: 100%;

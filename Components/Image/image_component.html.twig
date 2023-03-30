@@ -1,6 +1,11 @@
+{% set vars = {} %}
+{% set vars = vars|merge({'--width' : values.width|default(false)}) %}
+{% set vars = vars|merge({'--height' : values.height|default(false)}) %}
+{% set vars = vars|merge({'--margin' : values.margin|default(false)}) %}
+
 {% apply spaceless %}
         <div class="component-image{{ values.size is defined and values.size ? ' component-image--'~values.size : '' }}{{ values.position is defined and values.position ? ' component-image--position-'~values.position : '' }}{{ customClasses is defined and customClasses ? ' '~customClasses : '' }}"
-                style="{{ values.height is defined and values.height is not empty ? 'height : ' ~ values.height ~ ';' : '' }}{{ values.margin is defined and values.margin is not empty ? 'margin : ' ~ values.margin ~ ';' : '' }}{{ values.width is defined and values.width is not empty ? 'width : ' ~ values.width ~ ';' : '' }}"
+                style="{% for k, v in vars|filter(v => v) %}{{ k~':'~v~';' }}{% endfor %}"
         >
             {% if values.redirection is defined and values.redirection is not empty %}
                 <a href="{{ getPermalinkById('Page', values.redirection) }}">
