@@ -1,27 +1,27 @@
 {
   "name": "akyos/builder-bundle",
-  "description": "AkyosCMS for Symfony - Builder",
+  "description": "AkyosCMS for Symfony - Page Builder",
   "type": "symfony-bundle",
+  "license": "MIT",
+	"authors": [
+	    {
+	      "name": "Lilian Carneau",
+	      "email": "lilian@akyos.com"
+	    },
+	    {
+	      "name": "Thomas Sebert",
+	      "email": "thomas@akyos.com"
+	    },
+	    {
+	      "name": "Akyos Communication",
+	       "homepage": "https://akyos.com"
+	    }
+	],
   "require": {
     "php": ">=7.4"
   },
   "require-dev": {
   },
-  "license": "proprietary",
-  "authors": [
-    {
-      "name": "Lilian Carneau",
-      "email": "lilian@akyos.com"
-    },
-    {
-      "name": "Johan JOULKVA",
-      "email": "johan@akyos.com"
-    },
-    {
-      "name": "Thomas Sebert",
-      "email": "thomas@akyos.com"
-    }
-  ],
   "scripts": {
     "after-install-dependencies": [
       "echo $'\n' >> config/routes.yaml",
