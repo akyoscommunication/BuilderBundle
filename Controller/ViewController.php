@@ -37,7 +37,7 @@ class ViewController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    #[Route(path: '/view_edit/{type}/{typeId}/{redirect}', name: 'view_edit', methods: ['GET', 'POST'])]
+    #[Route(path: '/view_edit/{type}/{typeId}/{redirect}', requirements: ['redirect' => '.+'], name: 'view_edit', methods: ['GET', 'POST'])]
     public function view($type, $typeId, $redirect, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CmsService $cmsService, ContainerInterface $container, EntityManagerInterface $entityManager): Response
     {
         $type = urldecode($type);
