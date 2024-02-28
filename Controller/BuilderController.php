@@ -86,7 +86,7 @@ class BuilderController extends AbstractController
      * @param EntityManagerInterface $entityManager
      * @return Response
      */
-    #[Route(path: '/reset/temp/component/{type}/{typeId}/{redirect}', name: 'reset_temp_component')]
+    #[Route(path: '/reset/temp/component/{type}/{typeId}/{redirect}', requirements: ['redirect' => '.+'], name: 'reset_temp_component')]
     public function resetTemp($type, $typeId, $redirect, EntityManagerInterface $entityManager): Response
     {
         $tempComponents = $entityManager->getRepository(Component::class)->findBy(['type' => urldecode($type), 'typeId' => $typeId, 'isTemp' => true]);
