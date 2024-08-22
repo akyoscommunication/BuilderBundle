@@ -29,7 +29,7 @@ class generateFixtureComponent extends Command
         $this->addArgument('id', InputArgument::REQUIRED, 'Id of Component');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         /** @var ComponentTemplate $component */
         $component = $this->em->getRepository(ComponentTemplate::class)->find($input->getArgument('id'));
