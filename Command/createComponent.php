@@ -24,7 +24,7 @@ class createComponent extends Command
         $this->addArgument('name', InputArgument::REQUIRED, 'Name of Component');
     }
 
-    protected function execute(InputInterface $input, OutputInterface $output)
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $componentDir = __DIR__ . '/../../../src/Components/';
         $servicesDir = __DIR__ . '/../../../config/';
