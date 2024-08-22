@@ -5,15 +5,17 @@ namespace Akyos\BuilderBundle\Command;
 use Akyos\BuilderBundle\Entity\Component;
 use Akyos\CoreBundle\Twig\CoreExtension;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Console\Attribute\AsCommand;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
+#[AsCommand(
+    name: 'builder:fix-components-namespaces',
+)]
 class BuilderFixComponentsNamespacesCommand extends Command
 {
-    protected static $defaultName = 'builder:fix-components-namespaces';
-
     private EntityManagerInterface $em;
 
     private CoreExtension $coreExtension;
