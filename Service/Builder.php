@@ -60,7 +60,7 @@ class Builder
         $qbc = $this->em->getRepository(Component::class)->createQueryBuilder('c');
         $qbc->andWhere($qbc->expr()->eq('c.type', ':type'))->andWhere($qbc->expr()->eq('c.typeId', ':typeId'))->andWhere($qbc->expr()->eq('c.isTemp', true))->andWhere($qbc->expr()->isNull('c.parentComponent'))->orderBy('c.position', 'ASC')->setParameters(['type' => $objectType, 'typeId' => $objectId,]);
 
-        foreach ($this->em->getEventManager()->getListeners() as $event => $listeners) {
+        foreach ($this->em->getEventManager()->getAllListeners() as $event => $listeners) {
             foreach ($listeners as $hash => $listener) {
                 if ($listener instanceof TranslatableListener) {
                     $qbc->getQuery()->setHint(Query::HINT_CUSTOM_OUTPUT_WALKER, TranslationWalker::class);
