@@ -58,7 +58,15 @@ class Builder
         $request = $this->requestStack->getCurrentRequest();
         /** @var QueryBuilder $qbc */
         $qbc = $this->em->getRepository(Component::class)->createQueryBuilder('c');
-        $qbc->andWhere($qbc->expr()->eq('c.type', ':type'))->andWhere($qbc->expr()->eq('c.typeId', ':typeId'))->andWhere($qbc->expr()->eq('c.isTemp', true))->andWhere($qbc->expr()->isNull('c.parentComponent'))->orderBy('c.position', 'ASC')->setParameters(['type' => $objectType, 'typeId' => $objectId,]);
+        $qbc
+            ->andWhere($qbc->expr()->eq('c.type', ':type'))
+            ->andWhere($qbc->expr()->eq('c.typeId', ':typeId'))
+            ->andWhere($qbc->expr()->eq('c.isTemp', true))
+            ->andWhere($qbc->expr()->isNull('c.parentComponent'))
+            ->addOrderBy('c.position', 'ASC')
+            ->setParameter('type', $objectType)
+            ->setParameter('typeId', $objectId);
+        ;
 
         foreach ($this->em->getEventManager()->getAllListeners() as $event => $listeners) {
             foreach ($listeners as $hash => $listener) {
