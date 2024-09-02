@@ -207,7 +207,7 @@ class Component implements Translatable
     }
 
     /**
-     * @return Collection|ComponentValue[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComponentValues(): Collection
     {
@@ -250,7 +250,7 @@ class Component implements Translatable
     }
 
     /**
-     * @return Collection|self[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getChildComponents(): Collection
     {

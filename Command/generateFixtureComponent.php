@@ -46,14 +46,14 @@ class generateFixtureComponent extends Command
 
         $fixtureContent = "<?php
 
-namespace App\Components\\${nameUCFirst};
+namespace App\Components\\{$nameUCFirst};
 
 use Akyos\BuilderBundle\Service\FixturesHelpers;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Bundle\FixturesBundle\FixtureGroupInterface;
 use Doctrine\Persistence\ObjectManager;
 
-class ${nameUCFirst}" . "Fixtures extends Fixture implements FixtureGroupInterface
+class {$nameUCFirst}" . "Fixtures extends Fixture implements FixtureGroupInterface
 {
     private \$fixturesHelpers;
 

@@ -11,12 +11,12 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpFoundation\Response;
 use Twig\Environment;
 
-class RenderComponentController
+readonly class RenderComponentController
 {
     public function __construct(
-        private readonly EntityManagerInterface $entityManager,
-        private readonly ContainerInterface $container,
-        private readonly Environment $twig
+        private EntityManagerInterface $entityManager,
+        private ContainerInterface     $container,
+        private Environment            $twig
     ) {}
 
     /**
@@ -42,7 +42,7 @@ class RenderComponentController
         foreach ($component->getComponentValues() as $value) {
             $valueValue = $value->getValue();
             $currentLocale = $this->container->get('request_stack')->getCurrentRequest()->getLocale();
-            if($value && $value->getTranslations()) {
+            if($value->getTranslations()) {
                 foreach ($value->getTranslations() as $translation) {
                     if($translation->getLocale() === $currentLocale) {
                         $valueValue = $translation->getContent();
@@ -84,10 +84,10 @@ class RenderComponentController
         $str = trim($str);
         // uppercase the first character of each word
         $str = ucwords($str);
-        $str = str_replace(" ", "", $str);
-//        $str = lcfirst($str);
 
-        return $str;
+        //        $str = lcfirst($str);
+
+        return str_replace(" ", "", $str);
     }
 
     /**

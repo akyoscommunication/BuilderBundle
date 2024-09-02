@@ -30,10 +30,9 @@ class NewsFixtures extends Fixture implements FixtureGroupInterface
         $slug = "news";
         $name = "Actualité";
         $shortDescription = "Affichage d'une actualité";
-        $isContainer = false;
         $prototype = "default";
         $componentFields = [["name" => "Actualité", "slug" => "post", "desc" => "Actualité", "type" => "entity", "entity" => Post::class, "option" => [], "group" => "Général",],];
 
-        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, false, $prototype, $componentFields);
     }
 }

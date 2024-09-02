@@ -102,7 +102,7 @@ class ComponentValue implements Translatable
     }
 
     /**
-     * @return Collection|ComponentValueTranslation[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getTranslations(): Collection
     {

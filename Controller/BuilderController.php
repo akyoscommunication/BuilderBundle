@@ -53,9 +53,9 @@ class BuilderController extends AbstractController
             /** @var Component $parentComponent */
             $parentComponent = $componentRepository->findOneBy(['id' => $request->get('parentComponentId')]);
             $component->setParentComponent($parentComponent);
-            $component->setPosition((int)count($componentRepository->findBy(['type' => $request->get('type'), 'typeId' => $request->get('typeId'), 'parentComponent' => $parentComponent->getId(), 'isTemp' => true])));
+            $component->setPosition(count($componentRepository->findBy(['type' => $request->get('type'), 'typeId' => $request->get('typeId'), 'parentComponent' => $parentComponent->getId(), 'isTemp' => true])));
         } else {
-            $component->setPosition((int)count($componentRepository->findBy(['type' => $request->get('type'), 'typeId' => $request->get('typeId'), 'parentComponent' => null, 'isTemp' => true])));
+            $component->setPosition(count($componentRepository->findBy(['type' => $request->get('type'), 'typeId' => $request->get('typeId'), 'parentComponent' => null, 'isTemp' => true])));
         }
         $component->setVisibilityXS(true);
         $component->setVisibilityS(true);

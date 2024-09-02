@@ -24,14 +24,14 @@ use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
 
-class Builder
+readonly class Builder
 {
     public function __construct(
-        private readonly RequestStack $requestStack,
-        private readonly EntityManagerInterface $em,
-        private readonly Environment $environment,
-        private readonly ContainerInterface $container,
-        private readonly FormFactoryInterface $formFactory,
+        private RequestStack           $requestStack,
+        private EntityManagerInterface $em,
+        private Environment            $environment,
+        private ContainerInterface     $container,
+        private FormFactoryInterface   $formFactory,
     ) {}
 
     /**
@@ -66,7 +66,6 @@ class Builder
             ->addOrderBy('c.position', 'ASC')
             ->setParameter('type', $objectType)
             ->setParameter('typeId', $objectId);
-        ;
 
         foreach ($this->em->getEventManager()->getAllListeners() as $event => $listeners) {
             foreach ($listeners as $hash => $listener) {
@@ -132,7 +131,7 @@ class Builder
      * @param false $makeTemplate
      * @return bool
      */
-    public function cloneComponent(Component $component, $parent = null, $changeType = null, $changeTypeId = null, int $nextPos = null, $makeTemplate = false): bool
+    public function cloneComponent(Component $component, $parent = null, $changeType = null, $changeTypeId = null, int $nextPos = null, ?bool $makeTemplate = false): bool
     {
         $clone = clone $component;
         // Clone each component of page and set isTemp to true
@@ -146,7 +145,7 @@ class Builder
             $clone->setTypeId($changeTypeId);
             $clone->setPosition((int)$nextPos);
         }
-        if ($parent && $parent instanceof Component) {
+        if ($parent instanceof Component) {
             $clone->setParentComponent($parent);
             $parent->addChildComponent($clone);
         }
@@ -271,7 +270,6 @@ class Builder
             foreach ($componentsProd as $deleteComponent) {
                 $this->em->remove($deleteComponent);
             }
-            $this->em->flush();
         } else {
             // Toggle isTemp of each component
             foreach ($newComponents as $newComponent) {
@@ -286,9 +284,8 @@ class Builder
                     $this->em->remove($deleteComponent);
                 }
             }
-
-            $this->em->flush();
         }
+        $this->em->flush();
 
         return true;
     }

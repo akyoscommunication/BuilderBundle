@@ -65,7 +65,7 @@ class ViewController extends AbstractController
         if ($type === Page::class) {
             $view = $el->getTemplate() ? '/page/' . $el->getTemplate() . '.html.twig' : '@AkyosCms/front/content.html.twig';
         } else {
-            $view = $filesystem->exists($kernel->getProjectDir() . "/templates/${entity}/single.html.twig") ? "/${entity}/single.html.twig" : '@AkyosCms/front/single.html.twig';
+            $view = $filesystem->exists($kernel->getProjectDir() . "/templates/{$entity}/single.html.twig") ? "/{$entity}/single.html.twig" : '@AkyosCms/front/single.html.twig';
         }
         return $this->render($view, ['componentTemplates' => $componentTemplates, 'components' => $components, 'page' => $el, 'element' => $el, 'type' => $type, 'typeId' => $typeId, 'back_url' => urldecode($redirect), 'edit' => true, 'first' => true, 'form' => $form->createView(),]);
     }

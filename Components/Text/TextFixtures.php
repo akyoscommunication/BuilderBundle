@@ -29,10 +29,9 @@ class TextFixtures extends Fixture implements FixtureGroupInterface
         $slug = "text";
         $name = "Bloc de texte";
         $shortDescription = "Insérez un bloc de texte";
-        $isContainer = false;
         $prototype = "default";
         $componentFields = [['name' => 'Contenu', 'slug' => 'content', 'desc' => 'Insérez un contenu', 'type' => 'textarea_html', 'option' => [], 'group' => 'Général',],];
 
-        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, false, $prototype, $componentFields);
     }
 }

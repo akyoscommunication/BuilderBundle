@@ -62,7 +62,7 @@ class BuilderExtension extends AbstractExtension
      * @return string|Response
      * @throws Exception
      */
-    public function renderComponent(Component $component, $edit = false, $type = null, $typeId = null)
+    public function renderComponent(Component $component, ?bool $edit = false, $type = null, $typeId = null)
     {
         return $this->renderComponentController->renderComponent($component, $edit, $type, $typeId);
     }

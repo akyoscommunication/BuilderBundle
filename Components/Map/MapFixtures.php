@@ -29,10 +29,9 @@ class MapFixtures extends Fixture implements FixtureGroupInterface
         $slug = "map";
         $name = "Map";
         $shortDescription = "Affiche une carte avec Leaflet";
-        $isContainer = false;
         $prototype = "default";
         $componentFields = [["name" => "Latitude", "slug" => "latitude", "desc" => "Coordonnées GPS", "type" => "text", "entity" => "App\Entity\Back\Job", "option" => [], "group" => "Général",], ["name" => "Longitude", "slug" => "longitude", "desc" => "Coordonnées GPS", "type" => "text", "entity" => "App\Entity\Back\Job", "option" => [], "group" => "Général",], ["name" => "Zoom", "slug" => "zoom", "desc" => "Zoom (nombre entre 1 et 18)", "type" => "int", "entity" => "App\Entity\Back\Job", "option" => [], "group" => "Général",], ["name" => "Style", "slug" => "layer", "desc" => "Type d'affichage de la carte", "type" => "select", "entity" => "App\Entity\Back\Job", "option" => ["Satellite:satellite",], "group" => "Général",],];
 
-        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, false, $prototype, $componentFields);
     }
 }

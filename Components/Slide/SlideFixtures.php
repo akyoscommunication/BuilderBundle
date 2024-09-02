@@ -29,12 +29,11 @@ class SlideFixtures extends Fixture implements FixtureGroupInterface
         $slug = "slide";
         $name = "Slide";
         $shortDescription = "Slide du slider";
-        $isContainer = true;
         $prototype = "default";
         $componentFields = [
 
         ];
 
-        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFields);
+        $this->fixturesHelpers->updateBdd($slug, $name, $shortDescription, true, $prototype, $componentFields);
     }
 }

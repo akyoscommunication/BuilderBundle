@@ -95,7 +95,7 @@ class ComponentTemplate
     }
 
     /**
-     * @return Collection|ComponentField[]
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getComponentFields(): Collection
     {
