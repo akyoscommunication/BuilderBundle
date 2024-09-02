@@ -2,11 +2,10 @@
 
 namespace Akyos\BuilderBundle\Entity;
 
+use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\UniqueConstraint;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
-use Akyos\BuilderBundle\Repository\ComponentFieldRepository;
 
 #[ORM\Entity(repositoryClass: ComponentFieldRepository::class)]
 #[ORM\Table]

@@ -2,19 +2,15 @@
 
 namespace Akyos\BuilderBundle\Entity;
 
+use Akyos\BuilderBundle\Repository\ComponentValueRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Translatable\Translatable;
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Entity\Component;
-use Akyos\BuilderBundle\Repository\ComponentValueRepository;
 
-/**
- * @Gedmo\TranslationEntity(class="Akyos\BuilderBundle\Entity\ComponentValueTranslation")
- */
+#[Gedmo\TranslationEntity(class: ComponentValueTranslation::class)]
 #[ORM\Entity(repositoryClass: ComponentValueRepository::class)]
 class ComponentValue implements Translatable
 {
@@ -25,9 +21,7 @@ class ComponentValue implements Translatable
     #[ORM\Column(type: 'integer')]
     private $id;
 
-    /**
-     * @Gedmo\Translatable
-     */
+    #[Gedmo\Translatable]
     #[ORM\Column(type: 'text', nullable: true)]
     private $value;
 
@@ -39,11 +33,7 @@ class ComponentValue implements Translatable
     #[ORM\JoinColumn(nullable: false)]
     private $componentField;
 
-    /**
-     * @Gedmo\Locale
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     */
+    #[Gedmo\Locale]
     private $locale;
 
     #[ORM\OneToMany(targetEntity: ComponentValueTranslation::class, mappedBy: 'object', cascade: ['persist', 'remove'])]

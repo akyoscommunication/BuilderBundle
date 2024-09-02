@@ -2,8 +2,8 @@
 
 namespace Akyos\BuilderBundle\Entity;
 
-use Doctrine\ORM\Mapping as ORM;
 use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
+use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BuilderTemplateRepository::class)]
 class BuilderTemplate

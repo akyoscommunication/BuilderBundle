@@ -2,6 +2,7 @@
 
 namespace Akyos\BuilderBundle\Entity;
 
+use Akyos\BuilderBundle\Repository\ComponentRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
@@ -9,10 +10,6 @@ use Doctrine\ORM\Mapping\OrderBy;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
 use Gedmo\Translatable\Translatable;
-use Akyos\BuilderBundle\Entity\Component;
-use Akyos\BuilderBundle\Entity\ComponentTemplate;
-use Akyos\BuilderBundle\Entity\ComponentValue;
-use Akyos\BuilderBundle\Repository\ComponentRepository;
 
 #[ORM\Entity(repositoryClass: ComponentRepository::class)]
 class Component implements Translatable

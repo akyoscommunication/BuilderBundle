@@ -2,12 +2,11 @@
 
 namespace Akyos\BuilderBundle\Entity;
 
+use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Timestampable\Traits\TimestampableEntity;
-use Akyos\BuilderBundle\Entity\ComponentField;
-use Akyos\BuilderBundle\Repository\ComponentTemplateRepository;
 
 #[ORM\Entity(repositoryClass: ComponentTemplateRepository::class)]
 class ComponentTemplate
