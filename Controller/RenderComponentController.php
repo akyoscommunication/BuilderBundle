@@ -40,12 +40,21 @@ class RenderComponentController
         $params['customClasses'] = $component->getCustomClasses();
         $params['customId'] = $component->getCustomId();
         foreach ($component->getComponentValues() as $value) {
+            $valueValue = $value->getValue();
+            $currentLocale = $this->container->get('request_stack')->getCurrentRequest()->getLocale();
+            if($value && $value->getTranslations()) {
+                foreach ($value->getTranslations() as $translation) {
+                    if($translation->getLocale() === $currentLocale) {
+                        $valueValue = $translation->getContent();
+                    }
+                }
+            }
             /** @var ComponentField $componentField */
             $componentField = $value->getComponentField();
             if ($componentField->getType() === 'entity') {
-                $params['values'][$componentField->getSlug()] = $em->getRepository($componentField->getEntity())->find((int)$value->getValue());
+                $params['values'][$componentField->getSlug()] = $em->getRepository($componentField->getEntity())->find((int)$valueValue);
             } else {
-                $params['values'][$componentField->getSlug()] = $value->getValue();
+                $params['values'][$componentField->getSlug()] = $valueValue;
             }
         }
 
