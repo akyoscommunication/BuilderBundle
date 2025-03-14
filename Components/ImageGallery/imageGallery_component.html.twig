@@ -1,4 +1,5 @@
 {% set random = random() %}
+{% set images = values.images|is_array ? values.images : values.images|json_decode %}
 
 <div class="aky-gallery gallery{{ random }}" data-gallery="{{ random }}">
     <div class="images {{ values.isSlider is defined and values.isSlider ? '' : 'pictures' }} {{ values.background_size }}">
@@ -46,7 +47,7 @@
                 </div>
             </div>
         {% else %}
-            {% for key, image in values.images %}
+            {% for key, image in images %}
                 <div class="picture" data-index="{{ key }}" data-caption="{{ getImageAltById(image) }}"
                      data-image="{{ getImagePathById(image) }}" data-title="{{ getImageNameById(image) }}">
                     {{ renderFileManager(image)|raw }}
@@ -60,7 +61,7 @@
         <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
             <div class="modal-content">
                 <div class="modal-body">
-                    {% for key, image in values.images %}
+                    {% for key, image in images %}
                         <div class="slide">
                             {{ renderFileManager(image, false)|raw }}
                         </div>
