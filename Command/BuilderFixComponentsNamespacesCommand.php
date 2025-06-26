@@ -18,7 +18,7 @@ class BuilderFixComponentsNamespacesCommand extends Command
     /** @var CoreExtension */
     private $coreExtension;
 
-    public function __construct(string $name = null, EntityManagerInterface $em, CoreExtension $coreExtension)
+    public function __construct(EntityManagerInterface $em, CoreExtension $coreExtension)
     {
         parent::__construct($name);
         $this->em = $em;
