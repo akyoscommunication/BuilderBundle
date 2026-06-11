@@ -68,11 +68,7 @@ class Component implements Translatable
     #[ORM\Column(type: 'boolean')]
     private $isTemp;
 
-    /**
-     * @Gedmo\Locale
-     * Used locale to override Translation listener`s locale
-     * this is not a mapped field of entity metadata, just a simple property
-     */
+    #[Gedmo\Locale]
     private $locale;
 
     public function __construct()

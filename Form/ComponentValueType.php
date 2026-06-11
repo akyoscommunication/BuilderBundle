@@ -41,7 +41,7 @@ class ComponentValueType extends AbstractType
         $this->em = $em;
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $formModifier = function (FormInterface $form, ComponentValue $componentValue = null) {
             if ($componentValue) {
@@ -125,7 +125,7 @@ class ComponentValueType extends AbstractType
         });
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => ComponentValue::class,]);
     }

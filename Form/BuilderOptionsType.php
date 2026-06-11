@@ -10,14 +10,14 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class BuilderOptionsType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder->add('hasBuilderEntities', ChoiceType::class, ['label' => 'Activer le page builder sur les entités :', 'choices' => $options['entities'], 'choice_label' => function ($choice, $key, $value) {
                 return $value;
             }, 'multiple' => true, 'expanded' => true]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => BuilderOptions::class, 'entities' => []]);
     }

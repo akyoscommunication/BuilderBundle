@@ -3,32 +3,33 @@
   "description": "AkyosCMS for Symfony - Page Builder",
   "type": "symfony-bundle",
   "license": "MIT",
-	"authors": [
-	    {
-	      "name": "Lilian Carneau",
-	      "email": "lilian@akyos.com"
-	    },
-	    {
-	      "name": "Thomas Sebert",
-	      "email": "thomas@akyos.com"
-	    },
-	    {
-	      "name": "Akyos Communication",
-	       "homepage": "https://akyos.com"
-	    }
-	],
+  "authors": [
+    {
+      "name": "Lilian Carneau",
+      "email": "lilian@akyos.com"
+    },
+    {
+      "name": "Thomas Sebert",
+      "email": "thomas@akyos.com"
+    },
+    {
+      "name": "Akyos Communication",
+      "homepage": "https://akyos.com"
+    }
+  ],
   "require": {
-    "php": ">=8.2",
-    "ext-iconv": "*"
+    "php": ">=8.4",
+    "ext-iconv": "*",
+    "akyos/core-bundle": "^8.0",
+    "symfony/framework-bundle": "^8.0"
   },
-  "require-dev": {
-  },
+  "require-dev": {},
   "scripts": {
     "after-install-dependencies": [
       "echo $'\n' >> config/routes.yaml",
       "echo 'builder:' >> config/routes.yaml",
       "echo '    resource: \"../lib/BuilderBundle/Controller/\"' >> config/routes.yaml",
-      "echo '    type: annotation' >> config/routes.yaml",
+      "echo '    type: attribute' >> config/routes.yaml",
       "mv lib/BuilderBundle/InstallFiles/Config/twig.yaml config/packages",
       "mv lib/BuilderBundle/InstallFiles/Templates/content.html.twig templates/bundles/AkyosCoreBundle/front",
       "rm -rf lib/BuilderBundle/InstallFiles",
@@ -40,7 +41,7 @@
       "mkdir src/Components"
     ]
   },
-  "minimum-stability": "dev",
+  "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
       "Akyos\\BuilderBundle\\": ""

@@ -21,7 +21,7 @@ class ComponentType extends AbstractType
         $this->request = $requestStack->getCurrentRequest();
     }
 
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $component = $builder->getData();
 
@@ -49,7 +49,7 @@ class ComponentType extends AbstractType
             ->add('visibilityXS')->add('visibilityS')->add('visibilityM')->add('visibilityL')->add('visibilityXL')->add('componentValues', CollectionType::class, ['entry_type' => ComponentValueType::class, 'entry_options' => ['label' => false], 'label' => false]);
     }
 
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults(['data_class' => Component::class,]);
     }
