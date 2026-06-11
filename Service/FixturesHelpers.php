@@ -10,16 +10,10 @@ use Doctrine\ORM\EntityManagerInterface;
 
 class FixturesHelpers
 {
-    private ComponentTemplateRepository $componentTemplateRepository;
+    private readonly EntityManagerInterface $entityManager;
 
-    private ComponentFieldRepository $componentFieldRepository;
-
-    private EntityManagerInterface $entityManager;
-
-    public function __construct(ComponentTemplateRepository $componentTemplateRepository, ComponentFieldRepository $componentFieldRepository, EntityManagerInterface $entityManager)
+    public function __construct(private readonly ComponentTemplateRepository $componentTemplateRepository, private readonly ComponentFieldRepository $componentFieldRepository, EntityManagerInterface $entityManager)
     {
-        $this->componentTemplateRepository = $componentTemplateRepository;
-        $this->componentFieldRepository = $componentFieldRepository;
         $this->entityManager = $entityManager;
     }
 
@@ -32,7 +26,7 @@ class FixturesHelpers
      * @param $componentFieldsValues
      * @return bool
      */
-    public function updateBdd($slug, $name, $shortDescription, $isContainer, $prototype, $componentFieldsValues): bool
+    public function updateBdd(string $slug, string $name, string $shortDescription, bool $isContainer, ?string $prototype, $componentFieldsValues): bool
     {
         $componentExists = $this->componentTemplateRepository->findOneBy(['slug' => $slug]);
         $component = $componentExists ?: new ComponentTemplate();

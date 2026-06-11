@@ -89,11 +89,11 @@ class BuilderController extends AbstractController
     #[Route(path: '/reset/temp/component/{type}/{typeId}/{redirect}', requirements: ['redirect' => '.+'], name: 'reset_temp_component')]
     public function resetTemp($type, $typeId, $redirect, EntityManagerInterface $entityManager): Response
     {
-        $tempComponents = $entityManager->getRepository(Component::class)->findBy(['type' => urldecode($type), 'typeId' => $typeId, 'isTemp' => true]);
+        $tempComponents = $entityManager->getRepository(Component::class)->findBy(['type' => urldecode((string) $type), 'typeId' => $typeId, 'isTemp' => true]);
         foreach ($tempComponents as $tempComponent) {
             $entityManager->remove($tempComponent);
         }
         $entityManager->flush();
-        return $this->redirect(urldecode($redirect));
+        return $this->redirect(urldecode((string) $redirect));
     }
 }

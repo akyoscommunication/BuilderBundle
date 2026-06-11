@@ -14,7 +14,7 @@ use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class ComponentType extends AbstractType
 {
-    private ?Request $request;
+    private readonly ?Request $request;
 
     public function __construct(RequestStack $requestStack)
     {
@@ -35,7 +35,7 @@ class ComponentType extends AbstractType
                         $hasShortcodeValue = 1;
                     }
                 }
-                if (!$hasShortcodeValue) {
+                if ($hasShortcodeValue === 0) {
                     $newComponentValue = new ComponentValue();
                     $newComponentValue->setComponentField($field);
                     $newComponentValue->setTranslatableLocale($this->request->getLocale());

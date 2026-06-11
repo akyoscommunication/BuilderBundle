@@ -6,7 +6,7 @@ use Akyos\BuilderBundle\Repository\BuilderTemplateRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: BuilderTemplateRepository::class)]
-class BuilderTemplate
+class BuilderTemplate implements \Stringable
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,8 +33,8 @@ class BuilderTemplate
         return $this;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
-        return $this->title;
+        return (string) $this->title;
     }
 }

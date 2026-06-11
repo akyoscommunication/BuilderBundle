@@ -16,19 +16,15 @@ use Symfony\Component\Console\Style\SymfonyStyle;
 )]
 class BuilderFixComponentsNamespacesCommand extends Command
 {
-    private EntityManagerInterface $em;
+    private readonly EntityManagerInterface $em;
 
-    private CoreExtension $coreExtension;
-
-    public function __construct(EntityManagerInterface $em, CoreExtension $coreExtension)
+    public function __construct(EntityManagerInterface $em, private readonly CoreExtension $coreExtension)
     {
         $this->em = $em;
-        $this->coreExtension = $coreExtension;
         parent::__construct();
     }
 
-    protected function configure()
-    {
+    protected function configure(): void    {
         $this->setDescription('Fix les namespaces des components pour les mettres en namespace complet.');
     }
 

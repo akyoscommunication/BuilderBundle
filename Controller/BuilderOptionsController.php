@@ -26,15 +26,11 @@ class BuilderOptionsController extends AbstractController
     public function index(BuilderOptionsRepository $builderOptionsRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $builderOptions = $builderOptionsRepository->findAll();
-        if (!$builderOptions) {
-            $builderOptions = new BuilderOptions();
-        } else {
-            $builderOptions = $builderOptions[0];
-        }
+        $builderOptions = $builderOptions ? $builderOptions[0] : new BuilderOptions();
         $entities = [];
         $meta = $entityManager->getMetadataFactory()->getAllMetadata();
         foreach ($meta as $m) {
-            if (!preg_match('/Component|Option|Menu|ContactForm|Seo|User|PostCategory/i', $m->getName())) {
+            if (!preg_match('/Component|Option|Menu|ContactForm|Seo|User|PostCategory/i', (string) $m->getName())) {
                 $entities[] = $m->getName();
             }
         }

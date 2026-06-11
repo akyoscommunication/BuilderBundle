@@ -131,7 +131,7 @@ readonly class Builder
      * @param false $makeTemplate
      * @return bool
      */
-    public function cloneComponent(Component $component, $parent = null, $changeType = null, $changeTypeId = null, int $nextPos = null, ?bool $makeTemplate = false): bool
+    public function cloneComponent(Component $component, $parent = null, $changeType = null, $changeTypeId = null, ?int $nextPos = null, ?bool $makeTemplate = false): bool
     {
         $clone = clone $component;
         // Clone each component of page and set isTemp to true
@@ -200,7 +200,7 @@ readonly class Builder
      * @param $templateTitle
      * @return bool
      */
-    public function makeTemplate($type, $typeId, $templateTitle): bool
+    public function makeTemplate($type, $typeId, string $templateTitle): bool
     {
         $builderTemplate = new BuilderTemplate();
         $builderTemplate->setTitle($templateTitle);

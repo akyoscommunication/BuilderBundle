@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Akyos\BuilderBundle\Components\ImageGallery;
 
 use Akyos\BuilderBundle\Service\FixturesHelpers;
@@ -9,11 +11,8 @@ use Doctrine\Persistence\ObjectManager;
 
 class ImageGalleryFixtures extends Fixture implements FixtureGroupInterface
 {
-    private FixturesHelpers $fixturesHelpers;
-
-    public function __construct(FixturesHelpers $fixturesHelpers)
+    public function __construct(private readonly FixturesHelpers $fixturesHelpers)
     {
-        $this->fixturesHelpers = $fixturesHelpers;
     }
 
     /**

@@ -13,13 +13,10 @@ use Twig\TwigFunction;
 
 class BuilderExtension extends AbstractExtension
 {
-    private RenderComponentController $renderComponentController;
+    private readonly Environment $environment;
 
-    private Environment $environment;
-
-    public function __construct(RenderComponentController $renderComponentController, Environment $environment)
+    public function __construct(private readonly RenderComponentController $renderComponentController, Environment $environment)
     {
-        $this->renderComponentController = $renderComponentController;
         $this->environment = $environment;
     }
 
@@ -31,7 +28,7 @@ class BuilderExtension extends AbstractExtension
         return [// If your filter generates SAFE HTML, you should add a third
             // parameter: ['is_safe' => ['html']]
             // Reference: https://twig.symfony.com/doc/2.x/advanced.html#automatic-escaping
-            new TwigFilter('slugify', [$this, 'slugify']),
+            new TwigFilter('slugify', $this->slugify(...)),
             new TwigFilter('in_array', 'in_array'),
         ];
 
@@ -42,7 +39,7 @@ class BuilderExtension extends AbstractExtension
      */
     public function getFunctions(): array
     {
-        return [new TwigFunction('setGlobals', [$this, 'setGlobals']), new TwigFunction('renderComponent', [$this, 'renderComponent']), new TwigFunction('renderComponentBySlug', [$this, 'renderComponentBySlug']),];
+        return [new TwigFunction('setGlobals', $this->setGlobals(...)), new TwigFunction('renderComponent', $this->renderComponent(...)), new TwigFunction('renderComponentBySlug', $this->renderComponentBySlug(...)),];
     }
 
     /**
@@ -80,7 +77,7 @@ class BuilderExtension extends AbstractExtension
      * @return string|Response
      * @throws Exception
      */
-    public function renderComponentBySlug($componentSlug, $values, Component $component = null, $edit = false, $type = null, $typeId = null)
+    public function renderComponentBySlug($componentSlug, $values, ?Component $component = null, $edit = false, $type = null, $typeId = null)
     {
         return $this->renderComponentController->renderComponentBySlug($componentSlug, $values, $component, $edit, $type, $typeId);
     }
@@ -92,24 +89,24 @@ class BuilderExtension extends AbstractExtension
     public function slugify($slug): string
     {
         // replace non letter or digits by -
-        $slug = preg_replace('~[^\pL\d]+~u', '-', $slug);
+        $slug = preg_replace('~[^\pL\d]+~u', '-', (string) $slug);
 
         // transliterate
         $slug = iconv('utf-8', 'us-ascii//TRANSLIT', $slug);
 
         // remove unwanted characters
-        $slug = preg_replace('~[^-\w]+~', '', $slug);
+        $slug = preg_replace('~[^\-\w]+~', '', $slug);
 
         // trim
-        $slug = trim($slug, '-');
+        $slug = trim((string) $slug, '-');
 
         // remove duplicate -
         $slug = preg_replace('~-+~', '-', $slug);
 
         // lowercase
-        $slug = strtolower($slug);
+        $slug = strtolower((string) $slug);
 
-        if (empty($slug)) {
+        if ($slug === '' || $slug === '0') {
             return 'n-a';
         }
 

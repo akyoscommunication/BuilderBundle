@@ -24,7 +24,7 @@ class ComponentValueRepository extends ServiceEntityRepository
     {
         try {
             return $this->createQueryBuilder('cv')->innerJoin('cv.component', 'c')->innerJoin('c.componentTemplate', 'ct')->innerJoin('cv.componentField', 'cf')->andWhere('cv.component = :component')->andWhere('cf.slug = :col')->andWhere('ct.prototype = :col')->setParameter('component', $component)->setParameter('col', 'col')->getQuery()->getOneOrNullResult();
-        } catch (NonUniqueResultException $e) {
+        } catch (NonUniqueResultException) {
             return 'Aucun résultat';
         }
     }

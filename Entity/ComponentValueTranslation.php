@@ -20,7 +20,7 @@ class ComponentValueTranslation extends AbstractPersonalTranslation
      * @param string|null $field
      * @param string|null $value
      */
-    public function __construct(string $locale = null, string $field = null, string $value = null)
+    public function __construct(?string $locale = null, ?string $field = null, ?string $value = null)
     {
         $this->setLocale($locale);
         $this->setField($field);

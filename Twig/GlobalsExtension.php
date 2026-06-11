@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Akyos\BuilderBundle\Twig;
 
 use Akyos\BuilderBundle\Repository\BuilderOptionsRepository;
@@ -8,11 +10,8 @@ use Twig\Extension\GlobalsInterface;
 
 class GlobalsExtension extends AbstractExtension implements GlobalsInterface
 {
-    protected BuilderOptionsRepository $builderOptionsRepository;
-
-    public function __construct(BuilderOptionsRepository $builderOptionsRepository)
+    public function __construct(protected BuilderOptionsRepository $builderOptionsRepository)
     {
-        $this->builderOptionsRepository = $builderOptionsRepository;
     }
 
     /**

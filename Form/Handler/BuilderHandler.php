@@ -13,14 +13,11 @@ use Symfony\Component\HttpFoundation\Request;
 
 class BuilderHandler extends AbstractController
 {
-    private EntityManagerInterface $em;
+    private readonly EntityManagerInterface $em;
 
-    private CmsService $cmsService;
-
-    public function __construct(EntityManagerInterface $em, CmsService $cmsService)
+    public function __construct(EntityManagerInterface $em, private readonly CmsService $cmsService)
     {
         $this->em = $em;
-        $this->cmsService = $cmsService;
     }
 
     public function edit(FormInterface $form, Request $request, string $entityName, ContainerInterface $container): bool

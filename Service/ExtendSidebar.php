@@ -8,9 +8,9 @@ use Symfony\Bundle\SecurityBundle\Security;
 
 class ExtendSidebar
 {
-    private UrlGeneratorInterface $router;
+    private readonly UrlGeneratorInterface $router;
 
-    private Security $security;
+    private readonly Security $security;
 
     public function __construct(UrlGeneratorInterface $router, Security $security)
     {
@@ -26,10 +26,10 @@ class ExtendSidebar
     {
         $template = '';
         if ($this->security->isGranted('builder')) {
-            $template .= '<li class="' . (str_contains($route, "templates_builder") ? "active" : "") . '"><a href="' . $this->router->generate('templates_builder_index') . '">Builder</a></li>';
+            $template .= '<li class="' . (str_contains((string) $route, "templates_builder") ? "active" : "") . '"><a href="' . $this->router->generate('templates_builder_index') . '">Builder</a></li>';
         }
         if ($this->security->isGranted('modeles-du-builder')) {
-            $template .= '<li class="' . (str_contains($route, "builder_template") ? "active" : "") . '"><a href="' . $this->router->generate('builder_template_index') . '">Template du builder</a></li>';
+            $template .= '<li class="' . (str_contains((string) $route, "builder_template") ? "active" : "") . '"><a href="' . $this->router->generate('builder_template_index') . '">Template du builder</a></li>';
         }
         return new Response($template);
     }
@@ -42,7 +42,7 @@ class ExtendSidebar
     {
         $template = '';
         if ($this->security->isGranted('options-du-builder')) {
-            $template = '<li class="' . (str_contains($route, "builder_options") ? "active" : "") . '"><a href="' . $this->router->generate('builder_options') . '">BuilderBundle</a></li>';
+            $template = '<li class="' . (str_contains((string) $route, "builder_options") ? "active" : "") . '"><a href="' . $this->router->generate('builder_options') . '">BuilderBundle</a></li>';
         }
         return new Response($template);
     }

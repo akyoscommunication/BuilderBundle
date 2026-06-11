@@ -46,7 +46,7 @@ class ComponentValue implements Translatable
 
     public function getValue()
     {
-        $decoded = json_decode($this->value);
+        $decoded = json_decode((string) $this->value);
         if (is_array($decoded)) {
             return $decoded;
         }
@@ -96,7 +96,7 @@ class ComponentValue implements Translatable
         return $this;
     }
 
-    public function setTranslatableLocale($locale)
+    public function setTranslatableLocale($locale): void
     {
         $this->locale = $locale;
     }

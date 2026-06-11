@@ -87,7 +87,7 @@ class BuilderTemplateController extends AbstractController
             if ($cmsService->checkIfBundleEnable(AkyosBuilderBundle::class, BuilderOptions::class, $entity)) {
                 try {
                     $container->get('render.builder')->onDeleteEntity($entity, $builderTemplate->getId());
-                } catch (Exception $e) {
+                } catch (Exception) {
                 }
             }
 

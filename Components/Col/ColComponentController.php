@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Akyos\BuilderBundle\Components\Col;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;

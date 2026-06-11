@@ -19,8 +19,7 @@ class createComponent extends Command
         parent::__construct();
     }
 
-    protected function configure()
-    {
+    protected function configure(): void    {
         $this->setDescription('')->setHelp('');
 
         $this->addArgument('name', InputArgument::REQUIRED, 'Name of Component');
@@ -30,12 +29,8 @@ class createComponent extends Command
     {
         $componentDir = __DIR__ . '/../../../src/Components/';
         $servicesDir = __DIR__ . '/../../../config/';
-        $nameLCFirst = lcfirst(implode('', array_map(static function ($word) {
-            return ucfirst($word);
-        }, explode('_', $input->getArgument('name')))));
-        $nameUCFirst = ucfirst(implode('', array_map(static function ($word) {
-            return ucfirst($word);
-        }, explode('_', $input->getArgument('name')))));
+        $nameLCFirst = lcfirst(implode('', array_map(static fn($word) => ucfirst((string) $word), explode('_', $input->getArgument('name')))));
+        $nameUCFirst = ucfirst(implode('', array_map(static fn($word) => ucfirst((string) $word), explode('_', $input->getArgument('name')))));
         $componentComponentDir = __DIR__ . '/../../../src/Components/' . $nameUCFirst . "/";
 
         $controller_content = "<?php

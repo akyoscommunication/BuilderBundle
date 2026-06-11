@@ -40,7 +40,7 @@ class ViewController extends AbstractController
     #[Route(path: '/view_edit/{type}/{typeId}/{redirect}', requirements: ['redirect' => '.+'], name: 'view_edit', methods: ['GET', 'POST'])]
     public function view($type, $typeId, $redirect, ComponentRepository $componentRepository, Request $request, Filesystem $filesystem, KernelInterface $kernel, CmsService $cmsService, ContainerInterface $container, EntityManagerInterface $entityManager): Response
     {
-        $type = urldecode($type);
+        $type = urldecode((string) $type);
         $el = $entityManager->getRepository($type)->find($typeId);
         $array = explode('\\', $type);
         $entity = end($array);
@@ -67,6 +67,6 @@ class ViewController extends AbstractController
         } else {
             $view = $filesystem->exists($kernel->getProjectDir() . "/templates/{$entity}/single.html.twig") ? "/{$entity}/single.html.twig" : '@AkyosCms/front/single.html.twig';
         }
-        return $this->render($view, ['componentTemplates' => $componentTemplates, 'components' => $components, 'page' => $el, 'element' => $el, 'type' => $type, 'typeId' => $typeId, 'back_url' => urldecode($redirect), 'edit' => true, 'first' => true, 'form' => $form->createView(),]);
+        return $this->render($view, ['componentTemplates' => $componentTemplates, 'components' => $components, 'page' => $el, 'element' => $el, 'type' => $type, 'typeId' => $typeId, 'back_url' => urldecode((string) $redirect), 'edit' => true, 'first' => true, 'form' => $form->createView(),]);
     }
 }

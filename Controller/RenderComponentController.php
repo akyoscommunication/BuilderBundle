@@ -77,10 +77,10 @@ readonly class RenderComponentController
      * @param array $noStrip
      * @return string|string[]
      */
-    public static function camelCase($str, array $noStrip = [])
+    public static function camelCase($str, array $noStrip = []): string
     {
         // non-alpha and non-numeric characters become spaces
-        $str = preg_replace('/[^a-z0-9' . implode("", $noStrip) . ']+/i', ' ', $str);
+        $str = preg_replace('/[^a-z0-9' . implode("", $noStrip) . ']+/i', ' ', (string) $str);
         $str = trim($str);
         // uppercase the first character of each word
         $str = ucwords($str);
@@ -100,7 +100,7 @@ readonly class RenderComponentController
      * @return string|Response
      * @throws Exception
      */
-    public function renderComponentBySlug($componentSlug, $values, $component, $edit, $type, $typeId)
+    public function renderComponentBySlug(string $componentSlug, $values, $component, $edit, $type, $typeId)
     {
         $classExists = $this->container->has('component.'.$componentSlug);
 

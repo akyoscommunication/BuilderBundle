@@ -12,9 +12,7 @@ class BuilderOptionsType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $builder->add('hasBuilderEntities', ChoiceType::class, ['label' => 'Activer le page builder sur les entités :', 'choices' => $options['entities'], 'choice_label' => function ($choice, $key, $value) {
-                return $value;
-            }, 'multiple' => true, 'expanded' => true]);
+        $builder->add('hasBuilderEntities', ChoiceType::class, ['label' => 'Activer le page builder sur les entités :', 'choices' => $options['entities'], 'choice_label' => fn($choice, $key, $value) => $value, 'multiple' => true, 'expanded' => true]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void

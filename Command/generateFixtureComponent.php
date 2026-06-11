@@ -17,7 +17,7 @@ class generateFixtureComponent extends Command
 {
     protected static $defaultName = 'app:make:componentFixture';
 
-    private EntityManagerInterface $em;
+    private readonly EntityManagerInterface $em;
 
     public function __construct(EntityManagerInterface $em)
     {
@@ -26,8 +26,7 @@ class generateFixtureComponent extends Command
         $this->em = $em;
     }
 
-    protected function configure()
-    {
+    protected function configure(): void    {
         $this->setDescription('')->setHelp('');
 
         $this->addArgument('id', InputArgument::REQUIRED, 'Id of Component');
@@ -39,9 +38,7 @@ class generateFixtureComponent extends Command
         $component = $this->em->getRepository(ComponentTemplate::class)->find($input->getArgument('id'));
         $name = $component->getSlug();
 
-        $nameUCFirst = ucfirst(implode('', array_map(static function ($word) {
-            return ucfirst($word);
-        }, explode('_', $name))));
+        $nameUCFirst = ucfirst(implode('', array_map(static fn($word) => ucfirst((string) $word), explode('_', (string) $name))));
         $componentComponentDir = __DIR__ . '/../../../src/Components/' . $nameUCFirst . "/";
 
         $fixtureContent = "<?php
@@ -79,9 +76,7 @@ class {$nameUCFirst}" . "Fixtures extends Fixture implements FixtureGroupInterfa
                 "desc" => "' . $field->getShortDescription() . '",
                 "type" => "' . $field->getType() . '",
                 "entity" => "' . $field->getEntity() . '",
-                "option" => [' . implode(',', array_map(static function ($e) {
-                    return '"' . $e . '"';
-                }, $field->getFieldValues())) . '],
+                "option" => [' . implode(',', array_map(static fn($e) => '"' . $e . '"', $field->getFieldValues())) . '],
                 "group" => "' . $field->getGroups() . '",
             ],';
         }

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Akyos\BuilderBundle\Components\Map;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;

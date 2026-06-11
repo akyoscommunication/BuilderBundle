@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Akyos\BuilderBundle\Components\Slide;
 
 use Akyos\BuilderBundle\Interfaces\ComponentInterface;

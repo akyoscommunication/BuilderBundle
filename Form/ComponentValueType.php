@@ -30,7 +30,7 @@ class ComponentValueType extends AbstractType
 {
     private array $pages;
 
-    private EntityManagerInterface $em;
+    private readonly EntityManagerInterface $em;
 
     public function __construct(PageRepository $pageRepository, EntityManagerInterface $em)
     {
@@ -43,8 +43,8 @@ class ComponentValueType extends AbstractType
 
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
-        $formModifier = function (FormInterface $form, ComponentValue $componentValue = null) {
-            if ($componentValue) {
+        $formModifier = function (FormInterface $form, ?ComponentValue $componentValue = null): void {
+            if ($componentValue instanceof \Akyos\BuilderBundle\Entity\ComponentValue) {
                 /** @var ComponentField $field */
                 $field = $componentValue->getComponentField();
                 switch ($field->getType()) {
@@ -68,9 +68,7 @@ class ComponentValueType extends AbstractType
                         $form->add('value', ChoiceType::class, ['choices' => $this->pages, 'required' => false, 'label' => $field->getName(), 'help' => $field->getShortDescription(),]);
                         break;
                     case 'entity':
-                        $form->add('value', EntityType::class, ['class' => $field->getEntity(), 'required' => false, 'label' => $field->getName(), 'placeholder' => "Sélectionnez un élément", 'choice_label' => function ($choice) {
-                                return $choice;
-                            }, 'data' => $this->em->getRepository($field->getEntity())->find((int)$componentValue->getValue()), 'help' => $field->getShortDescription(),]);
+                        $form->add('value', EntityType::class, ['class' => $field->getEntity(), 'required' => false, 'label' => $field->getName(), 'placeholder' => "Sélectionnez un élément", 'choice_label' => fn($choice) => $choice, 'data' => $this->em->getRepository($field->getEntity())->find((int)$componentValue->getValue()), 'help' => $field->getShortDescription(),]);
                         break;
 
                     case 'link':
@@ -118,7 +116,7 @@ class ComponentValueType extends AbstractType
             }
         };
 
-        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formModifier) {
+        $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) use ($formModifier): void {
             // this would be your entity, i.e. SportMeetup
             $data = $event->getData();
             $formModifier($event->getForm(), $data);
