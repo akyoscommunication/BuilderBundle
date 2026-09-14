@@ -44,18 +44,22 @@ class BuilderController extends AbstractController
     public function saveInstances(Request $request, ComponentTemplateRepository $componentTemplateRepository, ComponentRepository $componentRepository, EntityManagerInterface $entityManager): JsonResponse
     {
         $component = new Component();
+        $componentId = $request->query->get('componentId') ?? $request->request->get('componentId');
+        $type = $request->query->get('type') ?? $request->request->get('type');
+        $typeId = $request->query->get('typeId') ?? $request->request->get('typeId');
+        $parentComponentId = $request->query->get('parentComponentId') ?? $request->request->get('parentComponentId');
         /** @var ComponentTemplate $componentTemplate */
-        $componentTemplate = $componentTemplateRepository->findOneBy(['id' => $request->get('componentId')]);
+        $componentTemplate = $componentTemplateRepository->findOneBy(['id' => $componentId]);
         $component->setComponentTemplate($componentTemplate);
-        $component->setType($request->get('type'));
-        $component->setTypeId((int)$request->get('typeId'));
-        if ($request->get('parentComponentId') !== 'main') {
+        $component->setType($type);
+        $component->setTypeId((int)$typeId);
+        if ($parentComponentId !== 'main') {
             /** @var Component $parentComponent */
-            $parentComponent = $componentRepository->findOneBy(['id' => $request->get('parentComponentId')]);
+            $parentComponent = $componentRepository->findOneBy(['id' => $parentComponentId]);
             $component->setParentComponent($parentComponent);
-            $component->setPosition(count($componentRepository->findBy(['type' => $request->get('type'), 'typeId' => $request->get('typeId'), 'parentComponent' => $parentComponent->getId(), 'isTemp' => true])));
+            $component->setPosition(count($componentRepository->findBy(['type' => $type, 'typeId' => $typeId, 'parentComponent' => $parentComponent->getId(), 'isTemp' => true])));
         } else {
-            $component->setPosition(count($componentRepository->findBy(['type' => $request->get('type'), 'typeId' => $request->get('typeId'), 'parentComponent' => null, 'isTemp' => true])));
+            $component->setPosition(count($componentRepository->findBy(['type' => $type, 'typeId' => $typeId, 'parentComponent' => null, 'isTemp' => true])));
         }
         $component->setVisibilityXS(true);
         $component->setVisibilityS(true);

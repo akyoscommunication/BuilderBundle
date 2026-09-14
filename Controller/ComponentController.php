@@ -52,8 +52,8 @@ class ComponentController extends AbstractController
     #[Route(path: '/{id}/edit', name: 'edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Component $component, ComponentFieldRepository $componentFieldRepository, BuilderExtension $builderExtension, EntityManagerInterface $entityManager): Response
     {
-        $type = $request->get('type');
-        $typeId = $request->get('typeId');
+        $type = $request->query->get('type') ?? $request->request->get('type');
+        $typeId = $request->query->get('typeId') ?? $request->request->get('typeId');
         $form = $this->createForm(ComponentType::class, $component);
         $slug = $component->getComponentTemplate()->getSlug();
         $groups = $componentFieldRepository->getUniqueFieldsGroups($component->getComponentTemplate()->getId());
@@ -81,11 +81,13 @@ class ComponentController extends AbstractController
     #[Route(path: '/change-component-position', methods: ['POST'])]
     public function changeComponentPosition(Request $request, ComponentRepository $componentRepository, EntityManagerInterface $entityManager): JsonResponse
     {
+        $componentId = $request->query->get('component') ?? $request->request->get('component');
+        $parentId = $request->query->get('parent') ?? $request->request->get('parent');
+        $newPosition = (int)($request->query->get('position') ?? $request->request->get('position'));
         /** @var Component $component */
-        $component = $componentRepository->find($request->get('component'));
+        $component = $componentRepository->find($componentId);
         $oldParent = $component->getParentComponent();
-        $newParent = $request->get('parent') ? $componentRepository->find($request->get('parent')) : null;
-        $newPosition = (int)$request->get('position');
+        $newParent = $parentId ? $componentRepository->find($parentId) : null;
         if ($oldParent && $newParent) {
             // TODO : If new and old parent are components
             if ($newParent->getId() !== $oldParent->getId()) {
@@ -183,8 +185,8 @@ class ComponentController extends AbstractController
     #[Route(path: '/edit/col', methods: ['POST'], options: ['expose' => true])]
     public function changeComponentCol(Request $request, ComponentValueRepository $componentValueRepository, EntityManagerInterface $entityManager): JsonResponse
     {
-        $col = $request->get('col');
-        $valueToChange = $componentValueRepository->findOneValueCol($request->get('component'));
+        $col = $request->query->get('col') ?? $request->request->get('col');
+        $valueToChange = $componentValueRepository->findOneValueCol($request->query->get('component') ?? $request->request->get('component'));
         if ($valueToChange instanceof ComponentValue) {
             $valueToChange->setValue($col);
             $entityManager->flush();
